@@ -65,8 +65,8 @@ export function Navbar() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
       if (e.key === "Tab" && focusables && focusables.length) {
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
+        const first = focusables[0]!;
+        const last = focusables[focusables.length - 1]!;
         if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
           last.focus();
