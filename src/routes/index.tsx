@@ -1,24 +1,41 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SmoothScrollProvider } from "@/components/motion/SmoothScrollProvider";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { Navbar } from "@/components/layout/Navbar";
+import { Hero } from "@/components/sections/Hero";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "ZYNOVATE — Build. Launch. Evolve." },
+      {
+        name: "description",
+        content:
+          "ZYNOVATE builds custom software, web and mobile apps, SaaS platforms and digital products around your ideas.",
+      },
+      { property: "og:title", content: "ZYNOVATE — Build. Launch. Evolve." },
+      {
+        property: "og:description",
+        content: "Technology solutions built around your ideas, business, and digital goals.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <SmoothScrollProvider>
+      <div className="grain">
+        <ScrollProgress />
+        <Navbar />
+        <main>
+          <Hero />
+          {/* Following sections are added in later stages */}
+        </main>
+      </div>
+    </SmoothScrollProvider>
   );
 }
