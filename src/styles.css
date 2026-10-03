@@ -1,5 +1,5 @@
 @import "tailwindcss" source(none);
-@source "../src";
+@source ".";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -10,8 +10,9 @@
  */
 
 @theme inline {
-  --font-sans: "Mona Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Mona Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-mona), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-mona), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -45,6 +46,7 @@
   --color-brown: var(--brown);
   --color-espresso: var(--espresso);
   --color-clay: var(--clay);
+  --color-clay-light: var(--clay-light);
   --color-sand: var(--sand);
   --color-blush: var(--blush);
   --color-taupe: var(--taupe);
@@ -57,9 +59,12 @@
   --brown: oklch(0.44 0.09 45);        /* #7A4426 */
   --espresso: oklch(0.22 0.03 48);     /* #2B1A10 */
   --clay: oklch(0.6 0.075 45);
+  /* Clay for text on espresso; plain clay is below 4.5:1 there. */
+  --clay-light: oklch(0.74 0.07 50);
   --sand: oklch(0.86 0.03 60);
   --blush: oklch(0.91 0.025 50);
-  --taupe: oklch(0.55 0.025 50);
+  /* 0.45 lightness keeps muted copy at 4.5:1 or better on cream and blush. */
+  --taupe: oklch(0.45 0.03 50);
 
   --background: var(--cream);
   --foreground: var(--espresso);
@@ -94,7 +99,7 @@
   );
   --hero-fade: linear-gradient(to bottom, transparent 60%, var(--cream) 100%);
   --about-shade: linear-gradient(90deg, oklch(0.13 0.01 50 / 88%) 0%, oklch(0.13 0.01 50 / 68%) 48%, oklch(0.13 0.01 50 / 44%) 100%);
-  --about-highlight: oklch(0.87 0.07 95);
+  --about-highlight: oklch(0.86 0.05 55);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -116,9 +121,14 @@
     background: var(--brown);
     color: var(--cream);
   }
+  /* Brown ring with a cream halo stays visible on both cream and espresso sections. */
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
+    box-shadow: 0 0 0 5px var(--cream);
+  }
+  html {
+    scroll-padding-top: 6rem;
   }
 }
 
@@ -179,6 +189,40 @@
   padding-bottom: 0.06em;
 }
 
+/* Blade clipped to the footer wordmark glyphs. Background-position is required so the streak stays inside the letters. */
+@keyframes wordmark-shine {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+
+.wordmark-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  white-space: nowrap;
+  pointer-events: none;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    110deg,
+    transparent 42%,
+    transparent 48%,
+    #fff 50%,
+    transparent 52%,
+    transparent 58%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: wordmark-shine 3.1s linear infinite;
+}
+
 @utility grain {
   &::after {
     content: "";
@@ -197,5 +241,98 @@
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .wordmark-shine {
+    animation: none !important;
+    visibility: hidden;
+  }
+}
+
+@utility bg-tech-grid-dark {
+  background-image:
+    linear-gradient(to right, oklch(0.955 0.017 72 / 6%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.955 0.017 72 / 6%) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility bg-tech-grid-light {
+  background-image:
+    linear-gradient(to right, oklch(0.44 0.09 45 / 7%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.44 0.09 45 / 7%) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility bg-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    oklch(0.13 0.01 50 / 22%) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+.industry-frame {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.9s var(--ease-out-expo);
+}
+
+.industry-frame img {
+  transform: scale(1.12);
+  transition: transform 1.2s var(--ease-out-expo);
+}
+
+.industry-frame[data-active="true"] {
+  z-index: 1;
+  clip-path: inset(0);
+}
+
+.industry-frame[data-active="true"] img {
+  transform: scale(1);
+}
+
+.industry-reveal {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s var(--ease-out-expo);
+}
+
+[data-industry-row][data-revealed="true"] .industry-reveal {
+  clip-path: inset(0);
+}
+
+/* Technology badges: a looping vertical bob. Transform only, staggered by inline delay. */
+@keyframes tech-wave-bob {
+  0%,
+  100% {
+    transform: translate3d(0, -8px, 0);
+  }
+  50% {
+    transform: translate3d(0, 8px, 0);
+  }
+}
+
+.tech-wave-bob {
+  animation: tech-wave-bob 2.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tech-wave-badge {
+    transition: transform 200ms ease;
+  }
+
+  .tech-wave-bob:hover .tech-wave-badge {
+    transform: translate3d(0, -6px, 0) scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-wave-bob {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .tech-wave-badge {
+    transform: none !important;
+    transition: none !important;
   }
 }

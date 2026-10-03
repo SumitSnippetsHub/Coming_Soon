@@ -3,7 +3,10 @@ import studioImage from "@/assets/about-studio.jpg";
 export const about = {
   eyebrow: "The company / ZYNOVATE",
   title: "Ideas deserve to be built well.",
-  image: { src: studioImage, alt: "Contemporary studio workspace with laptops and sketches" },
+  image: {
+    src: studioImage.src,
+    alt: "Contemporary studio workspace with laptops and sketches",
+  },
   panels: [
     {
       label: "Who we are",
@@ -21,5 +24,6 @@ export const about = {
       body: "We bring design and engineering together so every decision serves the people using the product and the business behind it.",
     },
   ],
-  scrub: "Good digital products are not just built to launch. They are built to be useful, to be understood, and to keep getting better.",
+  scrub:
+    "Good digital products are not just built to launch. They are built to be useful, to be understood, and to keep getting better.",
 };

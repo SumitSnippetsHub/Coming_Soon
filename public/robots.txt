@@ -1,14 +1,5 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
+# TODO: replace https://www.example.com with the production domain.
 User-agent: *
 Allow: /
+
+Sitemap: https://www.example.com/sitemap.xml

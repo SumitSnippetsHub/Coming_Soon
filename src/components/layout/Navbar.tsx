@@ -10,10 +10,12 @@ export function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
+  const [indicator, setIndicator] = useState<{ left: number; right: number } | null>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const listRef = useRef<HTMLUListElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
 
   // Hide on scroll down, show on scroll up
   useEffect(() => {
@@ -53,12 +55,17 @@ export function Navbar() {
     if (!el || !listRef.current) return setIndicator(null);
     const parent = listRef.current.getBoundingClientRect();
     const r = el.getBoundingClientRect();
-    setIndicator({ left: r.left - parent.left, width: r.width });
+    setIndicator({ left: r.left - parent.left, right: parent.right - r.right });
   }, [active]);
 
-  // Mobile menu: Esc + focus trap + lock
+  // Mobile menu: Esc + focus trap + lock, focus returns to the toggle on close
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      if (wasOpen.current) toggleRef.current?.focus({ preventScroll: true });
+      wasOpen.current = false;
+      return;
+    }
+    wasOpen.current = true;
     const root = menuRef.current;
     const focusables = root?.querySelectorAll<HTMLElement>("a, button");
     focusables?.[0]?.focus();
@@ -97,6 +104,7 @@ export function Navbar() {
           "fixed inset-x-0 top-4 z-50 flex justify-center px-4 transition-transform duration-500 ease-[var(--ease-out-expo)]",
           hidden && "-translate-y-[140%]",
         )}
+        onFocus={() => setHidden(false)}
       >
         <nav
           aria-label="Primary"
@@ -113,13 +121,18 @@ export function Navbar() {
           </a>
 
           <ul ref={listRef} className="relative hidden items-center gap-1 lg:flex">
-            {indicator && (
-              <span
-                aria-hidden
-                className="absolute inset-y-0 rounded-full bg-secondary transition-all duration-500 ease-[var(--ease-out-expo)]"
-                style={{ left: indicator.left, width: indicator.width }}
-              />
-            )}
+            <span
+              aria-hidden
+              className={cn(
+                "absolute inset-0 bg-secondary transition-[clip-path,opacity] duration-500 ease-[var(--ease-out-expo)]",
+                !indicator && "opacity-0",
+              )}
+              style={
+                indicator
+                  ? { clipPath: `inset(0 ${indicator.right}px 0 ${indicator.left}px round 999px)` }
+                  : undefined
+              }
+            />
             {site.nav.map((l) => {
               const id = l.href.slice(1);
               return (
@@ -130,7 +143,7 @@ export function Navbar() {
                     }}
                     href={l.href}
                     onClick={go(l.href)}
-                    aria-current={active === id ? "true" : undefined}
+                    aria-current={active === id ? "location" : undefined}
                     className="relative z-10 block rounded-full px-4 py-2 text-sm text-foreground/75 transition-colors hover:text-foreground aria-[current]:text-foreground"
                   >
                     {l.label}
@@ -150,10 +163,13 @@ export function Navbar() {
               <ArrowUpRight className="size-4" />
             </a>
             <button
+              ref={toggleRef}
               type="button"
+              suppressHydrationWarning
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               aria-expanded={open}
+              aria-controls="mobile-menu"
               className="grid size-11 place-items-center rounded-full bg-secondary text-foreground lg:hidden"
             >
               <Menu className="size-5" />
@@ -164,19 +180,29 @@ export function Navbar() {
 
       <div
         ref={menuRef}
+        id="mobile-menu"
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
         aria-hidden={!open}
+        inert={!open}
         className={cn(
           "fixed inset-0 z-[70] flex flex-col bg-background px-6 pb-10 pt-6 transition-[clip-path] duration-700 ease-[var(--ease-out-expo)] lg:hidden",
           open ? "[clip-path:inset(0_0_0_0)]" : "pointer-events-none [clip-path:inset(0_0_100%_0)]",
         )}
       >
         <div className="flex items-center justify-between">
-          <img src={site.logo.src} alt="" className="h-10 w-auto" />
+          <img
+            src={site.logo.src}
+            alt=""
+            width={site.logo.width}
+            height={site.logo.height}
+            loading="lazy"
+            className="h-10 w-auto"
+          />
           <button
             type="button"
+            suppressHydrationWarning
             onClick={() => setOpen(false)}
             aria-label="Close menu"
             tabIndex={open ? 0 : -1}
@@ -190,7 +216,7 @@ export function Navbar() {
             <li
               key={l.href}
               className={cn(
-                "transition-all duration-700 ease-[var(--ease-out-expo)]",
+                "transition-[opacity,transform] duration-700 ease-[var(--ease-out-expo)]",
                 open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0",
               )}
               style={{ transitionDelay: open ? `${120 + i * 50}ms` : "0ms" }}

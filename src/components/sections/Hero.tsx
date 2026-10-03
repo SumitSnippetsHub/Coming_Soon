@@ -6,7 +6,8 @@ import { site } from "@/data/site";
 import { images } from "@/data/images";
 import { LaptopMockup } from "@/components/mockups/LaptopMockup";
 import { PhoneMockup } from "@/components/mockups/PhoneMockup";
-import { useSmoothScroll, prefersReducedMotion } from "@/components/motion/SmoothScrollProvider";
+import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
+import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
 
 const lines = ["Build.", "Launch.", "Evolve."];
 
@@ -29,6 +30,7 @@ export function Hero() {
         .from("[data-hero-fade]", { y: 24, opacity: 0, duration: 1.1, stagger: 0.08 }, 0.9)
         .from("[data-hero-device]", { y: 80, opacity: 0, duration: 1.6, stagger: 0.15 }, 0.7);
 
+      if (isTouchDevice()) return;
       const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
       gsap.to("[data-hero-bg-img]", { scale: 1.18, yPercent: 12, ease: "none", scrollTrigger: st });
       gsap.to("[data-hero-copy]", { opacity: 0, y: -80, ease: "none", scrollTrigger: { ...st, end: "60% top" } });
@@ -47,18 +49,22 @@ export function Hero() {
     <section
       id="top"
       ref={root}
-      aria-label="Introduction"
+      aria-labelledby="hero-title"
       className="relative min-h-[100svh] overflow-hidden"
     >
-      <div data-hero-bg className="absolute inset-0 will-change-transform">
+      <div data-hero-bg aria-hidden className="absolute inset-0 will-change-transform">
         <img
           data-hero-bg-img
           src={images.hero.src}
-          alt={images.hero.alt}
+          alt=""
+          width={images.hero.width}
+          height={images.hero.height}
           className="h-full w-full object-cover will-change-transform"
           fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/85 via-cream/70 to-cream/40 lg:hidden" />
         <div className="absolute inset-0 bg-hero-fade" />
       </div>
 
@@ -67,7 +73,7 @@ export function Hero() {
           <p data-hero-fade className="eyebrow mb-6 text-primary">
             Technology & software company
           </p>
-          <h1 className="display text-display-xl text-foreground">
+          <h1 id="hero-title" className="display text-display-xl text-foreground">
             {lines.map((l, i) => (
               <span key={l} className="line-mask">
                 <span data-hero-line className={`block ${i === 2 ? "text-primary" : ""}`}>
@@ -107,7 +113,7 @@ export function Hero() {
         <div className="relative mx-auto w-full max-w-xl lg:max-w-none" aria-hidden>
           <div data-hero-laptop>
             <div data-hero-device>
-              <LaptopMockup image={images.amrut.dashboard} />
+              <LaptopMockup image={images.amrut.dashboard} priority />
             </div>
           </div>
           <div
@@ -115,7 +121,7 @@ export function Hero() {
             className="absolute -bottom-10 right-0 w-[26%] sm:-right-4 lg:-bottom-16"
           >
             <div data-hero-device>
-              <PhoneMockup image={images.amrut.mobileHome} />
+              <PhoneMockup image={images.amrut.mobileHome} priority />
             </div>
           </div>
         </div>

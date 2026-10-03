@@ -2,6 +2,11 @@ import type { NavLink } from "@/lib/types";
 
 export const site = {
   name: "ZYNOVATE",
+  /** TODO: set NEXT_PUBLIC_SITE_URL (or edit this fallback) to the real domain before launch. */
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://www.example.com").replace(/\/$/, ""),
+  title: "ZYNOVATE — Build. Launch. Evolve.",
+  metaDescription:
+    "ZYNOVATE builds custom software, web and mobile apps, SaaS platforms and digital products around your ideas.",
   tagline: "Build. Launch. Evolve.",
   description: "Technology solutions built around your ideas, business, and digital goals.",
   logo: { src: "/brand/zynovate-logo.png", alt: "ZYNOVATE", width: 600, height: 408 },

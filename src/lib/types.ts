@@ -1,6 +1,8 @@
 export type ImageAsset = {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
   credit?: string;
   isPlaceholder?: boolean;
 };
@@ -24,10 +26,16 @@ export type Project = Placeholderable & {
   url?: string;
   screenshots?: { cover: ImageAsset; dashboard: ImageAsset; mobile: ImageAsset; about: ImageAsset; tools: ImageAsset };
 };
-export type Technology = { name: string; group: string };
-export type WhyUsItem = { title: string; description: string };
-export type ProcessStep = { number: string; title: string; description: string };
-export type Industry = Placeholderable & { title: string; image?: ImageAsset };
+export type Technology = { name: string; group: string; brand: string; logo: string };
+export type WhyUsItem = { title: string; description: string; signal: string };
+export type ProcessStep = {
+  number: string;
+  title: string;
+  description: string;
+  command: string;
+  output: string;
+};
+export type Industry = Placeholderable & { title: string; focus?: string; image?: ImageAsset };
 export type Testimonial = Placeholderable & { quote: string; role: string };
 export type Faq = { question: string; answer: string };
 export type Stat = { value: string; label: string };

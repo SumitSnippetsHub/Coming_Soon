@@ -2,12 +2,12 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { about } from "@/data/about";
-import { prefersReducedMotion } from "@/components/motion/SmoothScrollProvider";
+import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
 
 export function About() {
   const root = useRef<HTMLElement>(null);
   useEffect(() => {
-    if (!root.current || prefersReducedMotion() || window.innerWidth < 768) return;
+    if (!root.current || prefersReducedMotion() || isTouchDevice() || window.innerWidth < 768) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       const panels = gsap.utils.toArray<HTMLElement>("[data-about-panel]");
@@ -22,22 +22,22 @@ export function About() {
     return () => ctx.revert();
   }, []);
 
-  return <section id="about" ref={root} className="relative bg-foreground text-background">
-    <div className="sticky top-0 h-[100svh] overflow-hidden">
-      <img src={about.image.src} alt={about.image.alt} loading="lazy" width={1536} height={1024} className="h-full w-full object-cover" />
+  return <section id="about" ref={root} aria-labelledby="about-title" className="relative bg-foreground text-background">
+    <div aria-hidden className="sticky top-0 h-[100svh] overflow-hidden">
+      <img src={about.image.src} alt="" loading="lazy" decoding="async" width={1536} height={1024} className="h-full w-full object-cover" />
       <div className="absolute inset-0 bg-about-shade" />
     </div>
     <div className="relative -mt-[100svh]">
-      {about.panels.map((panel, i) => <div key={panel.label} data-about-panel className="mx-auto flex min-h-[90svh] max-w-7xl flex-col justify-center px-6 py-28 md:min-h-[100svh] md:px-12">
+      {about.panels.map((panel, i) => <div key={panel.label} data-about-panel className="mx-auto flex min-h-[90svh] max-w-7xl flex-col justify-center px-5 py-24 sm:px-6 md:min-h-[100svh] md:px-12 md:py-28">
         <div className="max-w-3xl">
-          <p className="eyebrow mb-7 text-about-highlight">{i === 0 ? about.eyebrow : panel.label} <span className="ml-3 text-background/50">0{i + 1} / 0{about.panels.length}</span></p>
-          <h2 className="display text-4xl leading-tight md:text-6xl lg:text-7xl">{i === 0 ? about.title : panel.heading}</h2>
+          <p className="eyebrow mb-7 text-about-highlight">{i === 0 ? about.eyebrow : panel.label} <span className="ml-3 text-background/70">0{i + 1} / 0{about.panels.length}</span></p>
+          <h2 id={i === 0 ? "about-title" : undefined} className="display text-[clamp(2.25rem,6.5vw,4.5rem)] leading-tight">{i === 0 ? about.title : panel.heading}</h2>
           {i === 0 && <p className="mt-7 text-xl font-medium md:text-2xl">{panel.heading}</p>}
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-background/80">{panel.body}</p>
         </div>
       </div>)}
-      <div data-about-scrub className="mx-auto flex min-h-[75svh] max-w-7xl items-center px-6 py-28 md:px-12">
-        <p className="max-w-5xl text-3xl font-semibold leading-snug md:text-5xl lg:text-6xl">{about.scrub.split(" ").map((word, index) => <span key={index} data-about-word className="inline-block pr-[0.24em]">{word}</span>)}</p>
+      <div data-about-scrub className="mx-auto flex min-h-[75svh] max-w-7xl items-center px-5 py-24 sm:px-6 md:px-12 md:py-28">
+        <p className="max-w-5xl text-[clamp(1.75rem,5vw,3.75rem)] font-semibold leading-snug">{about.scrub.split(" ").map((word, index) => <span key={index} data-about-word className="inline-block pr-[0.24em]">{word}</span>)}</p>
       </div>
     </div>
   </section>;
