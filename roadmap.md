@@ -1,0 +1,5 @@
+- [ ] Add data-driven About storytelling section.
+- [ ] Add Services horizontal showcase and accessible mobile layout.
+- [ ] Add Products categories and interactive mockups.
+- [ ] Add Featured Work case study and coming-soon projects.
+- [ ] Verify desktop and mobile presentation and interactions.

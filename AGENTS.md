@@ -12,3 +12,4 @@
 - Frontend only (no backend/Cloud): ZYNOVATE spec forbids backend; contact uses mailto.
 - All copy/assets live in src/data/*.ts; components only render data, so content is swappable.
 - Smooth scroll = Locomotive Scroll v5 driven by gsap.ticker (autoStart false) inside SmoothScrollProvider; ScrollTrigger updates via scrollCallback.
+- Scroll storytelling lives in section components using GSAP ScrollTrigger with reduced-motion and small-screen fallbacks, so content remains readable without pinning.
