@@ -3,6 +3,11 @@ import { SmoothScrollProvider } from "@/components/motion/SmoothScrollProvider";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { About } from "@/components/sections/About";
+import { Services } from "@/components/sections/Services";
+import { Products } from "@/components/sections/Products";
+import { FeaturedWork } from "@/components/sections/FeaturedWork";
+import { images } from "@/data/images";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,6 +25,8 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: images.hero.src },
+      { name: "twitter:image", content: images.hero.src },
     ],
   }),
   component: Index,
@@ -33,7 +40,10 @@ function Index() {
         <Navbar />
         <main>
           <Hero />
-          {/* Following sections are added in later stages */}
+          <About />
+          <Services />
+          <Products />
+          <FeaturedWork />
         </main>
       </div>
     </SmoothScrollProvider>

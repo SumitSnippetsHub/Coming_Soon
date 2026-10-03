@@ -11,7 +11,19 @@ export type Placeholderable = { isPlaceholder?: boolean };
 
 export type Service = Placeholderable & { title: string; description: string; icon: string };
 export type Product = Placeholderable & { title: string; description: string };
-export type Project = Placeholderable & { id: string; title: string; category: string };
+export type Project = Placeholderable & {
+  id: string;
+  title: string;
+  category: string;
+  tagline?: string;
+  summary?: string;
+  does?: string[];
+  features?: { title: string; items: string[]; screenshot: ImageAsset }[];
+  role?: string[];
+  capabilities?: string[];
+  url?: string;
+  screenshots?: { cover: ImageAsset; dashboard: ImageAsset; mobile: ImageAsset; about: ImageAsset; tools: ImageAsset };
+};
 export type Technology = { name: string; group: string };
 export type WhyUsItem = { title: string; description: string };
 export type ProcessStep = { number: string; title: string; description: string };
