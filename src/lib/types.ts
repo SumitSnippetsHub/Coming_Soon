@@ -17,6 +17,7 @@ export type Project = Placeholderable & {
   category: string;
   tagline?: string;
   summary?: string;
+  does?: string[];
   features?: { title: string; items: string[]; screenshot: ImageAsset }[];
   role?: string[];
   capabilities?: string[];

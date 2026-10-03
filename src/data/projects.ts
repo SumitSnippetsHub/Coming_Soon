@@ -18,6 +18,7 @@ export const projects: Project[] = [
     category: "SaaS platform · AI Visibility & SEO",
     tagline: "The AI Visibility Platform That Tells You Exactly What To Do Next.",
     summary: "Amrut.ai helps brands see how AI assistants talk about them, then gives a clear plan to earn more mentions, citations and recommendations. It also bundles a suite of SEO and website-intelligence tools in one place.",
+    does: ["Tracks brand visibility across AI engines such as ChatGPT, Gemini, Perplexity and Google AI Mode", "Shows visibility score, share of voice, sentiment and competitor benchmarking", "Generates llms.txt files and AI-powered SEO analysis reports", "Offers keyword research, backlink checking, competitor ad analysis and website analytics", "Includes free utilities such as Robots.txt Generator, Sitemap Generator and Token Counter"],
     features: [
       { title: "AI Visibility", screenshot: images.amrut.dashboard, items: ["AI Visibility tracking", "AI Crawlability", "LLMS.txt Generator", "AI LLMs Traffic", "Ask AI"] },
       { title: "SEO & Content", screenshot: images.amrut.llmsTxt, items: ["AI SEO Analysis Report", "AI Content Generator (beta)", "Keyword Research", "Ranked Keywords", "Keyword Suggestions", "Keyword Extractor"] },
