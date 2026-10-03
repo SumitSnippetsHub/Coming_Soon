@@ -30,9 +30,10 @@ export function FeaturedWork() {
     return () => ctx.revert();
   }, []);
 
-  if (!project || !project.screenshots || !project.features) return null;
+  if (!project || !project.screenshots || !project.features?.length) return null;
   const features = project.features;
   const currentFeature = features[feature] ?? features[0];
+  if (!currentFeature) return null;
 
   return <section id="work" ref={root} className="bg-background">
     <div className="mx-auto max-w-7xl px-6 pt-24 md:px-10 md:pt-32">
@@ -50,6 +51,7 @@ export function FeaturedWork() {
 
         <div className="flex min-h-[360px] flex-col justify-center lg:min-h-[460px]">
           <div className="flex gap-2" aria-label="Case study stages">{workIntro.stages.map((label, i) => <span key={label} title={label} className={`h-1 flex-1 transition-colors ${i <= step ? "bg-primary" : "bg-border"}`} />)}</div>
+          <div className="mt-5 flex flex-wrap gap-2 lg:hidden">{workIntro.stages.map((label, i) => <Button key={label} type="button" size="sm" variant={step === i ? "default" : "outline"} onClick={() => setStep(i)}>{label}</Button>)}</div>
           <p className="eyebrow mt-8 text-primary">{workIntro.stages[step]} / {project.category}</p>
           <h3 className="mt-5 text-4xl font-semibold leading-tight md:text-5xl">{step === 0 ? project.title : step === 1 ? workIntro.featureHeading : step === 2 ? workIntro.roleHeading : workIntro.capabilitiesHeading}</h3>
           {step === 0 && <><p className="mt-5 text-xl font-medium leading-snug">{project.tagline}</p><p className="mt-5 text-base leading-relaxed text-muted-foreground">{project.summary}</p></>}

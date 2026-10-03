@@ -7,7 +7,7 @@ export function ScreenImage({ image }: { image: ImageAsset }) {
   if (failed)
     return (
       <div className="grid h-full w-full place-items-center bg-secondary p-4 text-center">
-        <span className="eyebrow text-muted-foreground">Screenshot placeholder</span>
+        <span className="text-sm text-muted-foreground">Screenshot unavailable: {image.alt}</span>
       </div>
     );
   return (

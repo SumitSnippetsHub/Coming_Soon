@@ -14,7 +14,8 @@ export function About() {
       panels.forEach((panel, i) => {
         if (i === 0) return;
         gsap.fromTo(panel, { opacity: 0.3, y: 45 }, { opacity: 1, y: 0, ease: "none", scrollTrigger: { trigger: panel, start: "top 78%", end: "center 50%", scrub: true } });
-        gsap.to(panels[i - 1], { opacity: 0.25, ease: "none", scrollTrigger: { trigger: panel, start: "top 85%", end: "center 50%", scrub: true } });
+        const previous = panels[i - 1];
+        if (previous) gsap.to(previous, { opacity: 0.25, ease: "none", scrollTrigger: { trigger: panel, start: "top 85%", end: "center 50%", scrub: true } });
       });
       gsap.fromTo("[data-about-word]", { opacity: 0.23 }, { opacity: 1, stagger: 0.07, ease: "none", scrollTrigger: { trigger: "[data-about-scrub]", start: "top 85%", end: "bottom 45%", scrub: true } });
     }, root);
