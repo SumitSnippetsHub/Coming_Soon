@@ -93,6 +93,8 @@
     oklch(0.44 0.09 45 / 45%) 100%
   );
   --hero-fade: linear-gradient(to bottom, transparent 60%, var(--cream) 100%);
+  --about-shade: linear-gradient(90deg, oklch(0.13 0.01 50 / 88%) 0%, oklch(0.13 0.01 50 / 68%) 48%, oklch(0.13 0.01 50 / 44%) 100%);
+  --about-highlight: oklch(0.87 0.07 95);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -161,6 +163,14 @@
 
 @utility bg-hero-fade {
   background: var(--hero-fade);
+}
+
+@utility bg-about-shade {
+  background: var(--about-shade);
+}
+
+@utility text-about-highlight {
+  color: var(--about-highlight);
 }
 
 @utility line-mask {

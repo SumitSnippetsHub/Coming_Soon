@@ -2,7 +2,14 @@ import type { Project } from "@/lib/types";
 
 import { images } from "@/data/images";
 
-export const workIntro = { eyebrow: "03 / Selected work", title: "Featured work.", description: "A closer look at something we've built." };
+export const workIntro = {
+  eyebrow: "03 / Selected work", title: "Featured work.", description: "A closer look at something we've built.",
+  stages: ["The product", "Feature groups", "Our role", "Capabilities"],
+  featureHeading: "Inside the platform", roleHeading: "From concept to launch", capabilitiesHeading: "What went into it",
+  productNote: "Product by Amrut.ai. Built by ZYNOVATE.",
+  projectButton: "View Project", contactTitle: "Have a product like this in mind? Let's build it.", contactButton: "Start a conversation",
+  upcomingTitle: "The next stories are taking shape.",
+};
 
 export const projects: Project[] = [
   {
