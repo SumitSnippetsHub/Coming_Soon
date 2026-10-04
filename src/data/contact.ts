@@ -1,9 +1,9 @@
 // TODO: replace with client content
 export const contact = {
-  email: "hello@zynovate.example",
+  email: "info@zynovate.in",
   phone: "+00 000 000 0000",
   location: "Remote-first",
-  isPlaceholder: true,
+  isPlaceholder: false,
   projectTypes: [
     "Custom website",
     "Web application",

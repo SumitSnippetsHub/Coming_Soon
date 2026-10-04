@@ -4,7 +4,13 @@ import { useState } from "react";
 import type { ImageAsset } from "@/lib/types";
 
 /** Image that falls back to a labeled placeholder frame if the file is missing. */
-export function ScreenImage({ image, priority = false }: { image: ImageAsset; priority?: boolean }) {
+export function ScreenImage({
+  image,
+  priority = false,
+}: {
+  image: ImageAsset;
+  priority?: boolean;
+}) {
   const [failed, setFailed] = useState(false);
   if (failed)
     return (
@@ -21,7 +27,7 @@ export function ScreenImage({ image, priority = false }: { image: ImageAsset; pr
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       onError={() => setFailed(true)}
-      className="h-full w-full object-cover object-top"
+      className="h-full w-full object-contain object-top"
       draggable={false}
     />
   );

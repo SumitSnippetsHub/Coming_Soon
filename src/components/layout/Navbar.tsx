@@ -233,7 +233,13 @@ export function Navbar() {
           ))}
         </ul>
         <div className="flex items-end justify-between text-sm text-muted-foreground">
-          <span>{contact.email}</span>
+          <a
+            href={`mailto:${contact.email}`}
+            tabIndex={open ? 0 : -1}
+            className="transition-colors hover:text-primary"
+          >
+            {contact.email}
+          </a>
           <a
             href={site.primaryCta.href}
             onClick={go(site.primaryCta.href)}

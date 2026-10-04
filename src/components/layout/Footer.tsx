@@ -7,6 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DotField } from "@/components/motion/DotField";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
+import { Mail } from "lucide-react";
+import { Zynovate } from "@/components/ui/Zynovate";
 import { contact } from "@/data/contact";
 import { site } from "@/data/site";
 import { social } from "@/data/social";
@@ -59,15 +61,44 @@ export function Footer() {
       </div>
       <div className="relative z-10">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 sm:px-6 md:px-10 md:py-16 lg:grid-cols-[1.2fr_1fr_1fr] lg:gap-12">
-          <a href="#top" onClick={go("#top")} aria-label="ZYNOVATE home" className="w-fit sm:col-span-2 lg:col-span-1">
-            <img src={site.logo.src} alt="" width={site.logo.width} height={site.logo.height} loading="lazy" decoding="async" className="h-14 w-auto" />
-          </a>
+          <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
+            <a
+              href="#top"
+              onClick={go("#top")}
+              aria-label="ZYNOVATE home"
+              className="w-fit"
+            >
+              <img
+                src={site.logo.src}
+                alt=""
+                width={site.logo.width}
+                height={site.logo.height}
+                loading="lazy"
+                decoding="async"
+                className="h-14 w-auto"
+              />
+            </a>
+            <div className="mt-2">
+              <p className="eyebrow text-white/80">Get in touch</p>
+              <a
+                href={`mailto:${contact.email}`}
+                className="mt-2 inline-flex items-center gap-2 text-sm text-white/90 transition-colors hover:text-white"
+              >
+                <Mail className="size-4 text-white/70" />
+                <span>{contact.email}</span>
+              </a>
+            </div>
+          </div>
           <nav aria-label="Footer">
             <p className="eyebrow text-white/80">Navigate</p>
             <ul className="mt-4 space-y-2">
               {site.nav.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} onClick={go(link.href)} className="text-sm text-white hover:text-white/70">
+                  <a
+                    href={link.href}
+                    onClick={go(link.href)}
+                    className="text-sm text-white hover:text-white/70"
+                  >
                     {link.label}
                   </a>
                 </li>
@@ -103,12 +134,23 @@ export function Footer() {
         </div>
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-5 pb-6 text-xs text-white sm:px-6 md:px-10">
           <p>
-            © {year} {site.name}
+            © {year} <Zynovate>{site.name}</Zynovate>
           </p>
-          <p>{contact.location}</p>
+          <div className="flex flex-wrap items-center gap-6 text-white/90">
+            <a
+              href={`mailto:${contact.email}`}
+              className="transition-colors hover:text-white hover:underline"
+            >
+              {contact.email}
+            </a>
+            <span>{contact.location}</span>
+          </div>
         </div>
         <div data-wordmark-wrap aria-hidden className="line-mask px-4 pb-2 md:px-8">
-          <p data-wordmark className="display relative text-[clamp(3.4rem,18vw,16rem)] text-[#C8C8C8]">
+          <p
+            data-wordmark
+            className="display relative text-[clamp(3.4rem,18vw,16rem)] text-[#C8C8C8]"
+          >
             {site.name}
             <span aria-hidden className="wordmark-shine pointer-events-none">
               {site.name}

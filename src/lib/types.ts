@@ -39,5 +39,5 @@ export type Industry = Placeholderable & { title: string; focus?: string; image?
 export type Testimonial = Placeholderable & { quote: string; role: string };
 export type Faq = { question: string; answer: string };
 export type Stat = { value: string; label: string };
-export type TeamMember = { name: string; role: string; image?: ImageAsset };
+export type TeamMember = { name: string; role: string; image?: ImageAsset; email?: string };
 export type SocialLink = Placeholderable & { label: string; href: string };

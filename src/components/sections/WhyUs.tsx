@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { images } from "@/data/images";
 import { whyIntro, whyUs } from "@/data/whyUs";
+import { HighlightZynovate } from "@/components/ui/Zynovate";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { useCanPin } from "@/hooks/use-can-pin";
 import { cn } from "@/lib/utils";
@@ -98,8 +99,12 @@ export function WhyUs() {
         <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-10 py-16">
           <div className="flex items-end justify-between gap-10">
             <div>
-              <p className="eyebrow text-clay-light">{whyIntro.eyebrow}</p>
-              <h2 id="why-title" className="display mt-4 text-5xl xl:text-6xl">{whyIntro.title}</h2>
+              <p className="eyebrow text-clay-light">
+                <HighlightZynovate text={whyIntro.eyebrow} />
+              </p>
+              <h2 id="why-title" className="display mt-4 text-5xl xl:text-6xl">
+                <HighlightZynovate text={whyIntro.title} />
+              </h2>
               <p className="mt-4 max-w-lg text-base leading-relaxed text-background/75">
                 {whyIntro.description}
               </p>
@@ -181,9 +186,15 @@ export function WhyUs() {
       </div>
 
       <div className="bg-tech-grid-dark px-5 py-20 sm:px-6 md:px-10 md:py-28 lg:hidden">
-        <p className="eyebrow text-clay-light">{whyIntro.eyebrow}</p>
-        <h2 className="display mt-4 text-[clamp(2.5rem,7vw,3.75rem)]">{whyIntro.title}</h2>
-        <p className="mt-4 max-w-xl text-base leading-relaxed text-background/75">{whyIntro.description}</p>
+        <p className="eyebrow text-clay-light">
+          <HighlightZynovate text={whyIntro.eyebrow} />
+        </p>
+        <h2 className="display mt-4 text-[clamp(2.5rem,7vw,3.75rem)]">
+          <HighlightZynovate text={whyIntro.title} />
+        </h2>
+        <p className="mt-4 max-w-xl text-base leading-relaxed text-background/75">
+          {whyIntro.description}
+        </p>
         <ol className="mt-10 grid gap-3 md:grid-cols-2 md:gap-4">
           {whyUs.map((item, index) => (
             <li key={item.title} className="border border-background/15 bg-espresso/85">
@@ -196,7 +207,9 @@ export function WhyUs() {
               <div className="p-5">
                 <p className="font-mono text-xs text-sand">{item.signal}</p>
                 <h3 className="mt-3 text-2xl font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-background/70">{item.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-background/70">
+                  {item.description}
+                </p>
               </div>
             </li>
           ))}
