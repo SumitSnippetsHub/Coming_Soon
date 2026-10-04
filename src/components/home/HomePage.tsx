@@ -18,6 +18,7 @@ import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Contact } from "@/components/sections/Contact";
 import { ParallaxCloser } from "@/components/sections/ParallaxCloser";
 import { Footer } from "@/components/layout/Footer";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 
 export function HomePage() {
   return (
@@ -31,7 +32,11 @@ export function HomePage() {
         </a>
         <ScrollProgress />
         <Navbar />
-        <main id="main" tabIndex={-1} className="focus-visible:shadow-none focus-visible:outline-none">
+        <main
+          id="main"
+          tabIndex={-1}
+          className="focus-visible:shadow-none focus-visible:outline-none"
+        >
           <Hero />
           <About />
           <Services />
@@ -48,6 +53,7 @@ export function HomePage() {
           <ParallaxCloser />
         </main>
         <Footer />
+        <CookieConsent />
       </div>
     </SmoothScrollProvider>
   );

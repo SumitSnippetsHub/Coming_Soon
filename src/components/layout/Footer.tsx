@@ -62,12 +62,7 @@ export function Footer() {
       <div className="relative z-10">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 sm:px-6 md:px-10 md:py-16 lg:grid-cols-[1.2fr_1fr_1fr] lg:gap-12">
           <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
-            <a
-              href="#top"
-              onClick={go("#top")}
-              aria-label="ZYNOVATE home"
-              className="w-fit"
-            >
+            <a href="#top" onClick={go("#top")} aria-label="ZYNOVATE home" className="w-fit">
               <img
                 src={site.logo.src}
                 alt=""
@@ -146,10 +141,14 @@ export function Footer() {
             <span>{contact.location}</span>
           </div>
         </div>
-        <div data-wordmark-wrap aria-hidden className="line-mask px-4 pb-2 md:px-8">
+        <div
+          data-wordmark-wrap
+          aria-hidden
+          className="line-mask flex justify-center overflow-hidden px-4 pb-2 md:px-8"
+        >
           <p
             data-wordmark
-            className="display relative text-[clamp(3.4rem,18vw,16rem)] text-[#C8C8C8]"
+            className="display relative w-max max-w-full whitespace-nowrap text-center text-[clamp(3.2rem,13.5vw,16rem)] text-[#C8C8C8]"
           >
             {site.name}
             <span aria-hidden className="wordmark-shine pointer-events-none">

@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -42,7 +49,13 @@ import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const Linkedin = createLucideIcon("Linkedin", [
-  ["path", { d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z", key: "linkedin-path" }],
+  [
+    "path",
+    {
+      d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z",
+      key: "linkedin-path",
+    },
+  ],
   ["rect", { width: "4", height: "12", x: "2", y: "9", key: "linkedin-rect" }],
   ["circle", { cx: "4", cy: "4", r: "2", key: "linkedin-circle" }],
 ]);
@@ -94,7 +107,8 @@ function validate(values: Values, agreed: boolean): Errors {
   if (!values.projectType) errors.projectType = contactErrors.projectType;
   if (!values.budget) errors.budget = contactErrors.budget;
   if (values.message.trim().length < 12) errors.message = contactErrors.message;
-  else if (values.message.length > contactFormCopy.message.max) errors.message = contactErrors.messageLength;
+  else if (values.message.length > contactFormCopy.message.max)
+    errors.message = contactErrors.messageLength;
   if (!agreed) errors.consent = contactErrors.consent;
   return errors;
 }
@@ -104,7 +118,11 @@ function dayKey(date: Date) {
 }
 
 function sameDay(a: Date, b: Date) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
 }
 
 function formatCallDate(date: Date) {
@@ -198,10 +216,29 @@ export function Contact() {
         defaults: { ease: "power3.out" },
         scrollTrigger: { trigger: section, start: "top 80%", once: true },
       });
-      tl.fromTo("[data-contact-copy]", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 })
-        .fromTo("[data-contact-medal]", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.1 }, "-=0.32")
-        .fromTo("[data-contact-meta]", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07 }, "-=0.28")
-        .fromTo("[data-contact-card]", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.85 }, "-=0.3");
+      tl.fromTo(
+        "[data-contact-copy]",
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
+      )
+        .fromTo(
+          "[data-contact-medal]",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.55, stagger: 0.1 },
+          "-=0.32",
+        )
+        .fromTo(
+          "[data-contact-meta]",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.07 },
+          "-=0.28",
+        )
+        .fromTo(
+          "[data-contact-card]",
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.85 },
+          "-=0.3",
+        );
     }, section);
     ScrollTrigger.refresh();
     return () => ctx.revert();
@@ -250,7 +287,14 @@ export function Contact() {
     if (callDate) lines.push(`Preferred call date: ${formatCallDate(callDate)}`);
     if (callTime) lines.push(`Preferred call time (IST): ${callTime}`);
     lines.push("", values.message.trim());
-    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+
+    const gmailUrl = new URL("https://mail.google.com/mail/");
+    gmailUrl.searchParams.set("view", "cm");
+    gmailUrl.searchParams.set("fs", "1");
+    gmailUrl.searchParams.set("to", contact.email);
+    gmailUrl.searchParams.set("su", subject);
+    gmailUrl.searchParams.set("body", lines.join("\n"));
+    window.open(gmailUrl.toString(), "_blank", "noopener,noreferrer");
     setSent(true);
   };
 
@@ -275,11 +319,20 @@ export function Contact() {
           <h2
             id="contact-title"
             data-contact-copy
-            className={cn(rise, "display mt-4 max-w-[min(10ch,100%)] pb-[0.06em] text-[clamp(2.75rem,5.6vw,4.7rem)] leading-[0.94] lg:mt-2 lg:max-w-[min(8.2ch,100%)] lg:text-[clamp(2.45rem,3.15vw,3.15rem)]")}
+            className={cn(
+              rise,
+              "display mt-4 max-w-[min(10ch,100%)] pb-[0.06em] text-[clamp(2.75rem,5.6vw,4.7rem)] leading-[0.94] lg:mt-2 lg:max-w-[min(8.2ch,100%)] lg:text-[clamp(2.45rem,3.15vw,3.15rem)]",
+            )}
           >
             {contactIntro.title}
           </h2>
-          <p data-contact-copy className={cn(rise, "mt-5 max-w-sm text-base leading-relaxed text-muted-foreground md:text-lg lg:mt-2.5 lg:text-sm lg:leading-snug")}>
+          <p
+            data-contact-copy
+            className={cn(
+              rise,
+              "mt-5 max-w-sm text-base leading-relaxed text-muted-foreground md:text-lg lg:mt-2.5 lg:text-sm lg:leading-snug",
+            )}
+          >
             {contactIntro.description} {contactIntro.response}
           </p>
 
@@ -287,24 +340,43 @@ export function Contact() {
             {contactSteps.map((step) => {
               const Icon = stepIcons[step.icon];
               return (
-                <div key={step.title} data-contact-medal className={cn(medalRise, "min-w-0 text-center")}>
+                <div
+                  key={step.title}
+                  data-contact-medal
+                  className={cn(medalRise, "min-w-0 text-center")}
+                >
                   <span className="mx-auto grid size-12 place-items-center rounded-full bg-blush text-primary sm:size-14 lg:size-10">
                     <Icon aria-hidden className="size-5 lg:size-4" strokeWidth={1.6} />
                   </span>
-                  <p className="mt-3 text-sm font-semibold lg:mt-1.5 lg:text-[0.8125rem]">{step.title}</p>
-                  <p className="mt-1 text-xs leading-snug text-muted-foreground lg:mt-0.5 lg:text-[0.68rem] lg:leading-tight">{step.description}</p>
+                  <p className="mt-3 text-sm font-semibold lg:mt-1.5 lg:text-[0.8125rem]">
+                    {step.title}
+                  </p>
+                  <p className="mt-1 text-xs leading-snug text-muted-foreground lg:mt-0.5 lg:text-[0.68rem] lg:leading-tight">
+                    {step.description}
+                  </p>
                 </div>
               );
             })}
           </div>
 
           {contact.isPlaceholder ? (
-            <p data-contact-meta className={cn(rise, "mt-8 max-w-sm text-xs leading-relaxed text-muted-foreground lg:mt-3 lg:leading-snug")}>
+            <p
+              data-contact-meta
+              className={cn(
+                rise,
+                "mt-8 max-w-sm text-xs leading-relaxed text-muted-foreground lg:mt-3 lg:leading-snug",
+              )}
+            >
               {contactPlaceholderNotice}
             </p>
           ) : null}
 
-          <dl className={cn("grid max-w-sm gap-4 lg:gap-2", contact.isPlaceholder ? "mt-4 lg:mt-2" : "mt-10 lg:mt-4")}>
+          <dl
+            className={cn(
+              "grid max-w-sm gap-4 lg:gap-2",
+              contact.isPlaceholder ? "mt-4 lg:mt-2" : "mt-10 lg:mt-4",
+            )}
+          >
             <ChannelRow
               icon={channelIcons.email}
               label={contactChannels.email}
@@ -318,20 +390,34 @@ export function Contact() {
               icon={channelIcons.phone}
               label={contactChannels.phone}
               value={
-                <a className="font-medium hover:text-primary" href={`tel:${contact.phone.replace(/\s/g, "")}`}>
+                <a
+                  className="font-medium hover:text-primary"
+                  href={`tel:${contact.phone.replace(/\s/g, "")}`}
+                >
                   {contact.phone}
                 </a>
               }
             />
-            <ChannelRow icon={channelIcons.location} label={contactChannels.location} value={<span className="font-medium">{contact.location}</span>} />
+            <ChannelRow
+              icon={channelIcons.location}
+              label={contactChannels.location}
+              value={<span className="font-medium">{contact.location}</span>}
+            />
           </dl>
 
-          <div data-contact-meta className={cn(rise, "mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-5 lg:mt-3 lg:gap-2 lg:pt-2.5")}>
+          <div
+            data-contact-meta
+            className={cn(
+              rise,
+              "mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-5 lg:mt-3 lg:gap-2 lg:pt-2.5",
+            )}
+          >
             <p className="eyebrow text-muted-foreground">{contactChannels.follow}</p>
             <ul className="flex flex-wrap gap-2">
               {social.map((item) => {
                 const Icon = socialIcon(item.label);
-                const className = "inline-flex size-8 items-center justify-center rounded-full border border-border bg-blush text-primary";
+                const className =
+                  "inline-flex size-8 items-center justify-center rounded-full border border-border bg-blush text-primary";
                 const glyph = Icon ? (
                   <Icon aria-hidden className="size-3.5" strokeWidth={1.75} />
                 ) : (
@@ -342,11 +428,22 @@ export function Contact() {
                 return (
                   <li key={item.label}>
                     {item.isPlaceholder || item.href === "#" ? (
-                      <span aria-disabled="true" aria-label={`${item.label}, placeholder`} className={className}>
+                      <span
+                        aria-disabled="true"
+                        aria-label={`${item.label}, placeholder`}
+                        className={className}
+                      >
                         {glyph}
                       </span>
                     ) : (
-                      <a href={item.href} aria-label={item.label} className={cn(className, "transition-transform duration-200 hover:-translate-y-0.5")}>
+                      <a
+                        href={item.href}
+                        aria-label={item.label}
+                        className={cn(
+                          className,
+                          "transition-transform duration-200 hover:-translate-y-0.5",
+                        )}
+                      >
                         {glyph}
                       </a>
                     )}
@@ -357,12 +454,25 @@ export function Contact() {
           </div>
         </div>
 
-        <div data-contact-card className={cn(rise, "min-w-0 rounded-[1.75rem] border border-border bg-card shadow-float")}>
+        <div
+          data-contact-card
+          className={cn(
+            rise,
+            "min-w-0 rounded-[1.75rem] border border-border bg-card shadow-float",
+          )}
+        >
           {sent ? (
-            <div role="status" className="flex min-h-[28rem] flex-col justify-center px-6 py-14 sm:px-10">
+            <div
+              role="status"
+              className="flex min-h-[28rem] flex-col justify-center px-6 py-14 sm:px-10"
+            >
               <p className="eyebrow text-primary">{contactSuccess.eyebrow}</p>
-              <h3 className="mt-4 max-w-md text-3xl font-semibold tracking-tight">{contactSuccess.title}</h3>
-              <p className="mt-4 max-w-md leading-relaxed text-muted-foreground">{contactSuccess.body}</p>
+              <h3 className="mt-4 max-w-md text-3xl font-semibold tracking-tight">
+                {contactSuccess.title}
+              </h3>
+              <p className="mt-4 max-w-md leading-relaxed text-muted-foreground">
+                {contactSuccess.body}
+              </p>
               <button
                 type="button"
                 suppressHydrationWarning
@@ -381,8 +491,12 @@ export function Contact() {
               className="flex flex-col p-4 sm:p-6 lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.88fr)] lg:grid-rows-[auto_auto] lg:gap-x-0 lg:gap-y-2.5 lg:p-4 xl:p-5"
             >
               <div className="order-1 min-w-0 lg:order-none lg:col-start-1 lg:row-start-1 lg:pr-4 xl:pr-5">
-                <h3 className="text-lg font-semibold tracking-tight sm:text-xl lg:text-base xl:text-lg">{contactFormCopy.title}</h3>
-                <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground lg:mt-1 lg:text-xs lg:leading-snug">{contactFormCopy.intro}</p>
+                <h3 className="text-lg font-semibold tracking-tight sm:text-xl lg:text-base xl:text-lg">
+                  {contactFormCopy.title}
+                </h3>
+                <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground lg:mt-1 lg:text-xs lg:leading-snug">
+                  {contactFormCopy.intro}
+                </p>
                 <div className="mt-6 grid gap-4 lg:mt-2.5 lg:gap-2">
                   <TextField
                     name="name"
@@ -435,10 +549,16 @@ export function Contact() {
                   <label className="group block min-w-0">
                     <span className="mb-1.5 block text-sm font-medium text-foreground transition-colors duration-200 group-focus-within:text-primary lg:mb-1 lg:text-xs">
                       {contactFormCopy.message.label}
-                      <span aria-hidden="true" className="text-primary"> *</span>
+                      <span aria-hidden="true" className="text-primary">
+                        {" "}
+                        *
+                      </span>
                     </span>
                     <span className={cn("relative block", shell(Boolean(errors.message)))}>
-                      <MessageSquare aria-hidden className="pointer-events-none absolute left-3.5 top-3.5 size-4 text-muted-foreground transition-colors duration-200 group-focus-within:text-primary" />
+                      <MessageSquare
+                        aria-hidden
+                        className="pointer-events-none absolute left-3.5 top-3.5 size-4 text-muted-foreground transition-colors duration-200 group-focus-within:text-primary"
+                      />
                       <textarea
                         name="message"
                         aria-required="true"
@@ -452,16 +572,26 @@ export function Contact() {
                         suppressHydrationWarning
                         className="min-h-32 w-full resize-y bg-transparent pb-7 pl-10 pr-3 pt-3 text-base text-foreground placeholder:text-muted-foreground lg:min-h-[4.25rem] lg:resize-none lg:pb-6 lg:pt-2"
                       />
-                      <span aria-hidden className="pointer-events-none absolute bottom-2.5 right-3 text-xs tabular-nums text-muted-foreground">
+                      <span
+                        aria-hidden
+                        className="pointer-events-none absolute bottom-2.5 right-3 text-xs tabular-nums text-muted-foreground"
+                      >
                         {values.message.length}/{contactFormCopy.message.max}
                       </span>
                     </span>
-                    {errors.message ? <FieldError id="error-message" message={errors.message} /> : null}
+                    {errors.message ? (
+                      <FieldError id="error-message" message={errors.message} />
+                    ) : null}
                   </label>
                 </div>
               </div>
 
-              <CallColumn date={callDate} time={callTime} onDate={setCallDate} onTime={setCallTime} />
+              <CallColumn
+                date={callDate}
+                time={callTime}
+                onDate={setCallDate}
+                onTime={setCallTime}
+              />
 
               <div className="order-3 mt-8 min-w-0 lg:order-none lg:col-start-1 lg:row-start-2 lg:mt-0 lg:self-start lg:pr-4 xl:pr-5">
                 <label className="flex items-start gap-2.5">
@@ -484,14 +614,22 @@ export function Contact() {
                         errors.consent ? "border-destructive" : "border-primary/45",
                       )}
                     />
-                    <Check aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 text-primary-foreground opacity-0 transition-opacity duration-200 peer-checked:opacity-100" strokeWidth={3} />
+                    <Check
+                      aria-hidden
+                      className="pointer-events-none absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 text-primary-foreground opacity-0 transition-opacity duration-200 peer-checked:opacity-100"
+                      strokeWidth={3}
+                    />
                   </span>
-                  <span className="text-sm leading-snug text-foreground">{contactFormCopy.consent}</span>
+                  <span className="text-sm leading-snug text-foreground">
+                    {contactFormCopy.consent}
+                  </span>
                 </label>
                 {errors.consent ? <FieldError id="error-consent" message={errors.consent} /> : null}
                 <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center lg:mt-2">
                   <SubmitButton />
-                  <p className="max-w-[14rem] text-xs leading-relaxed text-muted-foreground">{contactIntro.response}</p>
+                  <p className="max-w-[14rem] text-xs leading-relaxed text-muted-foreground">
+                    {contactIntro.response}
+                  </p>
                 </div>
               </div>
             </form>
@@ -502,13 +640,23 @@ export function Contact() {
   );
 }
 
-function ChannelRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: ReactNode }) {
+function ChannelRow({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: ReactNode;
+}) {
   return (
     <div data-contact-meta className={cn(rise, "flex gap-3")}>
       <Icon aria-hidden className="mt-0.5 size-4 shrink-0 text-primary" strokeWidth={1.75} />
       <div className="min-w-0">
         <dt className="eyebrow text-muted-foreground">{label}</dt>
-        <dd className="mt-1 text-sm text-foreground lg:mt-0.5 lg:text-[0.8125rem] lg:leading-tight">{value}</dd>
+        <dd className="mt-1 text-sm text-foreground lg:mt-0.5 lg:text-[0.8125rem] lg:leading-tight">
+          {value}
+        </dd>
       </div>
     </div>
   );
@@ -541,7 +689,10 @@ function TextField({
     <label className="group block min-w-0">
       <span className="mb-1.5 block text-sm font-medium text-foreground transition-colors duration-200 group-focus-within:text-primary lg:mb-1 lg:text-xs">
         {label}
-        <span aria-hidden="true" className="text-primary"> *</span>
+        <span aria-hidden="true" className="text-primary">
+          {" "}
+          *
+        </span>
       </span>
       <span className={cn("relative block", shell(Boolean(error)))}>
         <Icon aria-hidden className={iconClass()} strokeWidth={1.75} />
@@ -589,7 +740,10 @@ function SelectField({
     <label className="group block min-w-0">
       <span className="mb-1.5 block text-sm font-medium text-foreground transition-colors duration-200 group-focus-within:text-primary lg:mb-1 lg:text-xs">
         {label}
-        <span aria-hidden="true" className="text-primary"> *</span>
+        <span aria-hidden="true" className="text-primary">
+          {" "}
+          *
+        </span>
       </span>
       <span className={cn("relative block", shell(Boolean(error)))}>
         <Icon aria-hidden className={iconClass()} strokeWidth={1.75} />
@@ -613,7 +767,10 @@ function SelectField({
             </option>
           ))}
         </select>
-        <ChevronDown aria-hidden className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        <ChevronDown
+          aria-hidden
+          className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+        />
       </span>
       {error ? <FieldError id={errorId} message={error} /> : null}
     </label>
@@ -655,12 +812,18 @@ function CallColumn({
   });
   const today = new Date();
   const cells = buildMonth(cursor);
-  const monthLabel = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(cursor);
+  const monthLabel = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(
+    cursor,
+  );
 
   return (
     <div className="order-2 mt-8 min-w-0 border-t border-border pt-8 lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0 xl:pl-5">
-      <h3 className="text-lg font-semibold tracking-tight sm:text-xl lg:text-base xl:text-lg">{contactCall.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground lg:mt-1 lg:text-xs lg:leading-snug">{contactCall.intro}</p>
+      <h3 className="text-lg font-semibold tracking-tight sm:text-xl lg:text-base xl:text-lg">
+        {contactCall.title}
+      </h3>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground lg:mt-1 lg:text-xs lg:leading-snug">
+        {contactCall.intro}
+      </p>
 
       <div className="mt-5 lg:mt-2.5">
         <div className="flex items-center justify-between gap-3">
@@ -689,9 +852,16 @@ function CallColumn({
           </div>
         </div>
 
-        <div role="group" aria-labelledby="call-month-label" className="mt-3 grid grid-cols-7 gap-y-1 lg:mt-1.5 lg:gap-y-0">
+        <div
+          role="group"
+          aria-labelledby="call-month-label"
+          className="mt-3 grid grid-cols-7 gap-y-1 lg:mt-1.5 lg:gap-y-0"
+        >
           {contactCall.weekdays.map((day) => (
-            <div key={day} className="py-1 text-center text-[0.68rem] font-medium tracking-wide text-muted-foreground lg:py-0.5 lg:text-[0.62rem]">
+            <div
+              key={day}
+              className="py-1 text-center text-[0.68rem] font-medium tracking-wide text-muted-foreground lg:py-0.5 lg:text-[0.62rem]"
+            >
               {day}
             </div>
           ))}
@@ -722,10 +892,17 @@ function CallColumn({
         </div>
       </div>
 
-      <p id="call-time-label" className="mb-2.5 mt-5 text-sm font-semibold lg:mb-1.5 lg:mt-2.5 lg:text-xs">
+      <p
+        id="call-time-label"
+        className="mb-2.5 mt-5 text-sm font-semibold lg:mb-1.5 lg:mt-2.5 lg:text-xs"
+      >
         {contactCall.timeLabel}
       </p>
-      <div role="group" aria-labelledby="call-time-label" className="grid grid-cols-3 gap-2 lg:gap-1.5">
+      <div
+        role="group"
+        aria-labelledby="call-time-label"
+        className="grid grid-cols-3 gap-2 lg:gap-1.5"
+      >
         {contactCall.slots.map((slot) => {
           const selected = time === slot;
           return (
@@ -754,7 +931,9 @@ function CallColumn({
         </span>
         <div className="min-w-0">
           <p className="text-sm font-semibold lg:text-xs">{contactCall.noteTitle}</p>
-          <p className="mt-1 text-sm leading-relaxed text-muted-foreground lg:mt-0.5 lg:text-[0.68rem] lg:leading-snug">{contactCall.noteBody}</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground lg:mt-0.5 lg:text-[0.68rem] lg:leading-snug">
+            {contactCall.noteBody}
+          </p>
         </div>
       </div>
     </div>

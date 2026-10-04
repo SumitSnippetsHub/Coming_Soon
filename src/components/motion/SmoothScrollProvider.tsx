@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useRef, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -8,13 +16,37 @@ import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
 
 export { prefersReducedMotion } from "@/lib/motion";
 
-type Ctx = { scrollTo: (target: string | number | HTMLElement) => void };
-const SmoothScrollContext = createContext<Ctx>({ scrollTo: () => {} });
+type Ctx = {
+  scrollTo: (target: string | number | HTMLElement) => void;
+  setScrollLocked: (locked: boolean) => void;
+};
+const SmoothScrollContext = createContext<Ctx>({ scrollTo: () => {}, setScrollLocked: () => {} });
 export const useSmoothScroll = () => useContext(SmoothScrollContext);
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const instance = useRef<any>(null);
+  const [scrollLocked, setScrollLocked] = useState(false);
+  const scrollLockedRef = useRef(false);
+
+  useEffect(() => {
+    scrollLockedRef.current = scrollLocked;
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRootOverflow = root.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+    if (scrollLocked) {
+      root.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      instance.current?.lenisInstance?.stop();
+    } else {
+      instance.current?.lenisInstance?.start();
+    }
+    return () => {
+      root.style.overflow = previousRootOverflow;
+      body.style.overflow = previousBodyOverflow;
+    };
+  }, [scrollLocked]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -45,6 +77,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
           scrollCallback: () => ScrollTrigger.update(),
         });
         instance.current = loco;
+        if (scrollLockedRef.current) loco.lenisInstance?.stop();
         tick = (time: number) => loco.lenisInstance?.raf(time * 1000);
         gsap.ticker.add(tick);
         gsap.ticker.lagSmoothing(0);
@@ -77,6 +110,8 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <SmoothScrollContext.Provider value={{ scrollTo }}>{children}</SmoothScrollContext.Provider>
+    <SmoothScrollContext.Provider value={{ scrollTo, setScrollLocked }}>
+      {children}
+    </SmoothScrollContext.Provider>
   );
 }

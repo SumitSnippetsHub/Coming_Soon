@@ -55,9 +55,9 @@
 :root {
   --radius: 1rem;
 
-  --cream: oklch(0.955 0.017 72);      /* #F8F0E6 */
-  --brown: oklch(0.44 0.09 45);        /* #7A4426 */
-  --espresso: oklch(0.22 0.03 48);     /* #2B1A10 */
+  --cream: oklch(0.955 0.017 72); /* #F8F0E6 */
+  --brown: oklch(0.44 0.09 45); /* #7A4426 */
+  --espresso: oklch(0.22 0.03 48); /* #2B1A10 */
   --clay: oklch(0.6 0.075 45);
   /* Clay for text on espresso; plain clay is below 4.5:1 there. */
   --clay-light: oklch(0.74 0.07 50);
@@ -98,7 +98,12 @@
     oklch(0.44 0.09 45 / 45%) 100%
   );
   --hero-fade: linear-gradient(to bottom, transparent 60%, var(--cream) 100%);
-  --about-shade: linear-gradient(90deg, oklch(0.13 0.01 50 / 88%) 0%, oklch(0.13 0.01 50 / 68%) 48%, oklch(0.13 0.01 50 / 44%) 100%);
+  --about-shade: linear-gradient(
+    90deg,
+    oklch(0.13 0.01 50 / 88%) 0%,
+    oklch(0.13 0.01 50 / 68%) 48%,
+    oklch(0.13 0.01 50 / 44%) 100%
+  );
   --about-highlight: oklch(0.86 0.05 55);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -110,12 +115,14 @@
   }
   html {
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-weight: 350;
+    overflow-x: clip;
   }
   ::selection {
     background: var(--brown);

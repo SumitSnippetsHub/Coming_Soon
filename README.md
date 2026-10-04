@@ -1,8 +1,8 @@
 # ZYNOVATE website
 
-Marketing site for ZYNOVATE — *Build. Launch. Evolve.*
+Marketing site for ZYNOVATE — _Build. Launch. Evolve._
 
-It is frontend only. There is no backend, database, auth, or Supabase. The contact form validates in the browser and opens the visitor's email app with a prepared `mailto:` message.
+It is frontend only. There is no backend, database, auth, or Supabase. The contact form validates in the browser and opens a prepared Gmail compose window.
 
 ## Stack
 
@@ -75,12 +75,12 @@ Case-study screenshots live in `public/projects/amrut/` and are listed in `src/d
 
 To add the optional screenshots, drop them in the same folder and add entries to `images.amrut`:
 
-| Key (suggested)     | File                                  |
-| ------------------- | ------------------------------------- |
-| `seoReport`         | `seo-analysis-report.png`             |
-| `companyProfile`    | `company-profile.png`                 |
-| `analyticsGsc`      | `analytics-gsc.png`                   |
-| `mobileDashboard`   | `mobile-dashboard.png`                |
+| Key (suggested)   | File                      |
+| ----------------- | ------------------------- |
+| `seoReport`       | `seo-analysis-report.png` |
+| `companyProfile`  | `company-profile.png`     |
+| `analyticsGsc`    | `analytics-gsc.png`       |
+| `mobileDashboard` | `mobile-dashboard.png`    |
 
 Then reference them from `src/data/projects.ts` (for example as the `screenshot` of a feature group).
 
@@ -106,18 +106,18 @@ Edit `src/data/testimonials.ts`. Replace each placeholder with a real quote and 
 
 ### Other copy
 
-| Section            | File                       |
-| ------------------ | -------------------------- |
-| Hero, nav, SEO     | `src/data/site.ts`         |
-| About              | `src/data/about.ts`        |
-| Services           | `src/data/services.ts`     |
-| Products           | `src/data/products.ts`     |
-| Technologies       | `src/data/technologies.ts` |
-| Why ZYNOVATE       | `src/data/whyUs.ts`        |
-| Process            | `src/data/process.ts`      |
-| Industries         | `src/data/industries.ts`   |
-| FAQ                | `src/data/faqs.ts`         |
-| CTA banner         | `src/data/cta.ts`          |
+| Section        | File                       |
+| -------------- | -------------------------- |
+| Hero, nav, SEO | `src/data/site.ts`         |
+| About          | `src/data/about.ts`        |
+| Services       | `src/data/services.ts`     |
+| Products       | `src/data/products.ts`     |
+| Technologies   | `src/data/technologies.ts` |
+| Why ZYNOVATE   | `src/data/whyUs.ts`        |
+| Process        | `src/data/process.ts`      |
+| Industries     | `src/data/industries.ts`   |
+| FAQ            | `src/data/faqs.ts`         |
+| CTA banner     | `src/data/cta.ts`          |
 
 ### Colors
 

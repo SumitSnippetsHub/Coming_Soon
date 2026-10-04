@@ -4,12 +4,14 @@ import { site } from "@/data/site";
 import { contact } from "@/data/contact";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { cn } from "@/lib/utils";
+import { ProjectInquiryModal } from "@/components/layout/ProjectInquiryModal";
 
 export function Navbar() {
   const { scrollTo } = useSmoothScroll();
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [indicator, setIndicator] = useState<{ left: number; right: number } | null>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const listRef = useRef<HTMLUListElement>(null);
@@ -154,14 +156,14 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
-            <a
-              href={site.primaryCta.href}
-              onClick={go(site.primaryCta.href)}
+            <button
+              type="button"
+              onClick={() => setProjectModalOpen(true)}
               className="hidden items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5 sm:inline-flex"
             >
               {site.primaryCta.label}
               <ArrowUpRight className="size-4" />
-            </a>
+            </button>
             <button
               ref={toggleRef}
               type="button"
@@ -240,16 +242,20 @@ export function Navbar() {
           >
             {contact.email}
           </a>
-          <a
-            href={site.primaryCta.href}
-            onClick={go(site.primaryCta.href)}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              setProjectModalOpen(true);
+            }}
             tabIndex={open ? 0 : -1}
             className="rounded-full bg-primary px-5 py-3 font-medium text-primary-foreground"
           >
             {site.primaryCta.label}
-          </a>
+          </button>
         </div>
       </div>
+      <ProjectInquiryModal open={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
     </>
   );
 }

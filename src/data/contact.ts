@@ -67,8 +67,7 @@ export const contactFormCopy = {
   budget: { label: "Budget range", placeholder: "Select budget range" },
   message: {
     label: "Message",
-    placeholder:
-      "Tell us about your project, goals, timeline, or any specific requirements...",
+    placeholder: "Tell us about your project, goals, timeline, or any specific requirements...",
     max: 1000,
   },
   consent: "I agree to be contacted about my project and receive relevant updates.",
@@ -109,8 +108,8 @@ export const contactErrors = {
 };
 
 export const contactSuccess = {
-  eyebrow: "Ready to send",
-  title: "Your email app should open next.",
-  body: "The message is prepared in your mail app. Send it from there to reach us. Nothing was stored on a server.",
+  eyebrow: "Draft ready",
+  title: "Your Gmail draft is ready.",
+  body: "Gmail opened with your message prepared. Review it, then click Send to reach us.",
   again: "Write another",
 };
