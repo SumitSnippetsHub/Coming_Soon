@@ -12,6 +12,7 @@ import { Zynovate } from "@/components/ui/Zynovate";
 import { contact } from "@/data/contact";
 import { site } from "@/data/site";
 import { social } from "@/data/social";
+import { SocialIcon } from "@/components/layout/SocialIcon";
 
 const FOOTER_DOT_COLORS = ["#F8F0E6", "#E4D5C5", "#C4896A", "#A6785A"];
 
@@ -108,9 +109,16 @@ export function Footer() {
               {social.map((item) => (
                 <li key={item.label}>
                   {item.isPlaceholder || item.href === "#" ? (
-                    <span className="text-sm text-white">{item.label}</span>
+                    <span className="inline-flex items-center gap-2 text-sm text-white">
+                      <SocialIcon label={item.label} className="size-4" />
+                      {item.label}
+                    </span>
                   ) : (
-                    <a href={item.href} className="text-sm text-white hover:text-white/70">
+                    <a
+                      href={item.href}
+                      className="inline-flex items-center gap-2 text-sm text-white hover:text-white/70"
+                    >
+                      <SocialIcon label={item.label} className="size-4" />
                       {item.label}
                     </a>
                   )}

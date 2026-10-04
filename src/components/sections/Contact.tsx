@@ -45,6 +45,7 @@ import {
   contactSuccess,
 } from "@/data/contact";
 import { social } from "@/data/social";
+import { SocialIcon } from "@/components/layout/SocialIcon";
 import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
