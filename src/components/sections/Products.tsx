@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { products, productsIntro } from "@/data/products";
 import { images } from "@/data/images";

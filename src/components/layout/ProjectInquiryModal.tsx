@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check, X } from "lucide-react";
-import { contact } from "@/data/contact";
+import { contact, countryCodes } from "@/data/contact";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 
 type Props = {
   open: boolean;
@@ -13,8 +14,12 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
   const [project, setProject] = useState("");
   const [message, setMessage] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -39,8 +44,11 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
     if (
       name.trim().length < 2 ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ||
+      !/^\d[\d\s-]{7,}$/.test(phone.trim()) ||
       !project ||
-      message.trim().length < 12
+      message.trim().length < 12 ||
+      !date ||
+      !time
     ) {
       setError("Please complete all fields with a valid email and a little project detail.");
       return;
@@ -56,7 +64,10 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
       [
         `Name: ${name.trim()}`,
         `Email: ${email.trim()}`,
+        `Mobile: ${countryCode} ${phone.trim()}`,
         `Project type: ${project}`,
+        `Preferred date: ${date}`,
+        `Preferred time: ${time}`,
         "",
         message.trim(),
       ].join("\n"),
@@ -75,39 +86,39 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-modal-title"
-        className="relative max-h-[calc(100svh-2rem)] w-full max-w-2xl overflow-y-auto rounded-[1.75rem] border border-white/15 bg-background p-5 shadow-2xl sm:p-8"
+        className="relative w-full max-w-3xl rounded-[1.75rem] border border-white/15 bg-background p-3 shadow-2xl sm:p-6"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close project inquiry"
-          className="absolute right-4 top-4 grid size-10 place-items-center rounded-full bg-secondary text-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
+          className="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-secondary text-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
         >
           <X className="size-5" />
         </button>
         <p className="eyebrow text-primary">Start a project</p>
         <h2
           id="project-modal-title"
-          className="display mt-3 max-w-lg text-4xl leading-none sm:text-5xl"
+          className="display mt-2 max-w-lg text-2xl leading-none sm:text-4xl"
         >
           Tell us what you want to build.
         </h2>
-        <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
           Share the essentials and Gmail will open with a message ready to send to our team.
         </p>
-        <form onSubmit={submit} className="mt-7 grid gap-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="grid gap-1.5 text-sm font-medium">
+        <form onSubmit={submit} className="mt-3 grid gap-2 sm:mt-4 sm:gap-2.5">
+          <div className="grid gap-2.5 sm:grid-cols-2">
+            <label className="grid gap-1 text-xs font-medium">
               Name
               <input
                 required
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 placeholder="Your name"
-                className="rounded-xl border border-border bg-background px-4 py-3 font-normal outline-none transition-colors focus:border-primary"
+                className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none transition-colors focus:border-primary sm:px-3 sm:py-2 sm:text-sm"
               />
             </label>
-            <label className="grid gap-1.5 text-sm font-medium">
+            <label className="grid gap-1 text-xs font-medium">
               Email
               <input
                 required
@@ -115,27 +126,70 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
-                className="rounded-xl border border-border bg-background px-4 py-3 font-normal outline-none transition-colors focus:border-primary"
+                className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none transition-colors focus:border-primary sm:px-3 sm:py-2 sm:text-sm"
               />
             </label>
           </div>
-          <label className="grid gap-1.5 text-sm font-medium">
-            Project type
-            <select
-              required
-              value={project}
-              onChange={(event) => setProject(event.target.value)}
-              className="rounded-xl border border-border bg-background px-4 py-3 font-normal outline-none transition-colors focus:border-primary"
-            >
-              <option value="">Select project type</option>
-              {contact.projectTypes.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="grid gap-1.5 text-sm font-medium">
+          <div className="grid grid-cols-[minmax(5.5rem,0.7fr)_minmax(0,1.3fr)] gap-2.5">
+            <label className="grid gap-1 text-xs font-medium">
+              Country code
+              <CustomSelect
+                value={countryCode}
+                onChange={setCountryCode}
+                options={countryCodes.map((item) => ({
+                  value: item.code,
+                  label: `${item.code} · ${item.label}`,
+                }))}
+                placeholder="Code"
+                className="h-auto rounded-lg border border-border px-2.5 py-1.5 text-xs font-normal sm:px-3 sm:py-2 sm:text-sm"
+              />
+            </label>
+            <label className="grid gap-1 text-xs font-medium">
+              Mobile number
+              <input
+                required
+                type="tel"
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+                placeholder="98765 43210"
+                className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none transition-colors focus:border-primary sm:px-3 sm:py-2 sm:text-sm"
+              />
+            </label>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+            <label className="grid gap-1 text-xs font-medium">
+              Project type
+              <CustomSelect
+                required
+                value={project}
+                onChange={setProject}
+                options={contact.projectTypes}
+                placeholder="Select project type"
+                className="h-auto rounded-lg border border-border px-2.5 py-1.5 text-xs font-normal sm:px-3 sm:py-2 sm:text-sm"
+              />
+            </label>
+            <label className="grid gap-1 text-xs font-medium">
+              Preferred date
+              <input
+                required
+                type="date"
+                value={date}
+                onChange={(event) => setDate(event.target.value)}
+                className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none focus:border-primary sm:px-3 sm:py-2 sm:text-sm"
+              />
+            </label>
+            <label className="grid gap-1 text-xs font-medium">
+              Preferred time
+              <input
+                required
+                type="time"
+                value={time}
+                onChange={(event) => setTime(event.target.value)}
+                className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none focus:border-primary sm:px-3 sm:py-2 sm:text-sm"
+              />
+            </label>
+          </div>
+          <label className="grid gap-1 text-xs font-medium">
             Project details
             <textarea
               required
@@ -143,8 +197,8 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               placeholder="What are you hoping to build?"
-              rows={4}
-              className="resize-y rounded-xl border border-border bg-background px-4 py-3 font-normal outline-none transition-colors focus:border-primary"
+              rows={2}
+              className="resize-none rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none transition-colors focus:border-primary sm:px-3 sm:py-2 sm:text-sm"
             />
           </label>
           {error ? (
@@ -153,12 +207,12 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
             </p>
           ) : null}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Check className="size-4 text-primary" /> No server storage. Gmail opens your draft.
+            <p className="flex items-center gap-2 text-[0.68rem] text-muted-foreground">
+              <Check className="size-3.5 text-primary" /> Gmail opens your draft.
             </p>
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-medium text-primary-foreground transition-transform hover:-translate-y-0.5 sm:px-6 sm:py-3 sm:text-sm"
             >
               Open Gmail draft <ArrowRight className="size-4" />
             </button>

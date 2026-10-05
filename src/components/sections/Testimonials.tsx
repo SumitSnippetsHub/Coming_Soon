@@ -1,8 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import { ChevronLeft, ChevronRight, UserRound } from "lucide-react";
 import { testimonials, testimonialsIntro } from "@/data/testimonials";
 
 export function Testimonials() {
+  const [activeIndex, setActiveIndex] = useState(0);
   const flagged = testimonials.length === 0 || testimonials.every((item) => item.isPlaceholder);
+  const visible = testimonials.slice(activeIndex, activeIndex + 3);
+  const maxIndex = Math.max(0, testimonials.length - 3);
 
   return (
     <section
@@ -31,17 +37,21 @@ export function Testimonials() {
             <button
               type="button"
               aria-label="Previous testimonial"
-              className="absolute left-0 top-1/2 z-10 hidden size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-transform hover:scale-105 lg:grid"
+              onClick={() => setActiveIndex((index) => Math.max(0, index - 1))}
+              disabled={activeIndex === 0}
+              className="absolute left-0 top-1/2 z-10 hidden size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-40 lg:grid"
             >
               <ChevronLeft className="size-5" strokeWidth={1.7} />
             </button>
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {testimonials.map((item, index) => (
+              {visible.map((item, index) => (
                 <figure
                   key={item.role}
                   className={[
                     "group relative flex min-h-[19rem] flex-col overflow-hidden rounded-[1.35rem] border p-7 shadow-[0_8px_30px_-22px_rgba(76,43,25,0.45)] transition-transform duration-300 hover:-translate-y-1 sm:p-8",
-                    index === 1 ? "border-border bg-card" : "border-primary/15 bg-[#fff8f0]",
+                    (index + activeIndex) % 2 === 1
+                      ? "border-border bg-card"
+                      : "border-primary/15 bg-[#fff8f0]",
                   ].join(" ")}
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -94,7 +104,9 @@ export function Testimonials() {
             <button
               type="button"
               aria-label="Next testimonial"
-              className="absolute right-0 top-1/2 z-10 hidden size-12 translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-transform hover:scale-105 lg:grid"
+              onClick={() => setActiveIndex((index) => Math.min(maxIndex, index + 1))}
+              disabled={activeIndex === maxIndex}
+              className="absolute right-0 top-1/2 z-10 hidden size-12 translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-40 lg:grid"
             >
               <ChevronRight className="size-5" strokeWidth={1.7} />
             </button>
@@ -102,14 +114,15 @@ export function Testimonials() {
         ) : null}
 
         <div className="mt-7 flex items-center justify-center gap-3" aria-label="Testimonial pages">
-          {testimonials.map((item, index) => (
+          {Array.from({ length: maxIndex + 1 }, (_, index) => (
             <button
               type="button"
-              key={item.role}
+              key={index}
+              onClick={() => setActiveIndex(index)}
               aria-label={`Show testimonial ${index + 1}`}
               className={[
                 "h-2 rounded-full transition-all",
-                index === 0 ? "w-7 bg-primary" : "w-6 bg-primary/20",
+                index === activeIndex ? "w-7 bg-primary" : "w-6 bg-primary/20",
               ].join(" ")}
             />
           ))}

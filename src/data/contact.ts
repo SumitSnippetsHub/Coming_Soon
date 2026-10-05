@@ -2,7 +2,9 @@
 export const contact = {
   email: "info@zynovate.in",
   phone: "+00 000 000 0000",
-  location: "Remote-first",
+  location: "Noida, Uttar Pradesh, India",
+  mapUrl:
+    "https://www.google.com/maps/place/28%C2%B035'07.2%22N+77%C2%B018'48.1%22E/@28.5853354,77.3107819,17z/data=!3m1!4b1!4m4!3m3!8m2!3d28.5853354!4d77.3133568?hl=en&entry=ttu&g_ep=EgoyMDI2MDkzMC4wIKXMDSoASAFQAw%3D%3D",
   isPlaceholder: false,
   projectTypes: [
     "Custom website",
@@ -21,6 +23,15 @@ export const contact = {
     "Over 40,000 USD",
   ],
 };
+
+export const countryCodes = [
+  { label: "India", code: "+91" },
+  { label: "United States", code: "+1" },
+  { label: "United Kingdom", code: "+44" },
+  { label: "United Arab Emirates", code: "+971" },
+  { label: "Australia", code: "+61" },
+  { label: "Singapore", code: "+65" },
+] as const;
 
 export const contactIntro = {
   eyebrow: "10 / Contact",
@@ -63,6 +74,7 @@ export const contactFormCopy = {
     "Share a few details about your project. Your budget range is a starting point, not a quote.",
   name: { label: "Name", placeholder: "Your name" },
   email: { label: "Email", placeholder: "you@example.com" },
+  phone: { label: "Mobile number", placeholder: "+91 98765 43210" },
   projectType: { label: "Project type", placeholder: "Select project type" },
   budget: { label: "Budget range", placeholder: "Select budget range" },
   message: {

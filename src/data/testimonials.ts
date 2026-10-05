@@ -23,4 +23,19 @@ export const testimonials: Testimonial[] = [
     quote: "A real note from an operations lead will replace this placeholder.",
     isPlaceholder: true,
   },
+  {
+    role: "Growth lead (placeholder)",
+    quote: "A real note from a growth lead will replace this placeholder.",
+    isPlaceholder: true,
+  },
+  {
+    role: "Creative director (placeholder)",
+    quote: "A real note from a creative director will replace this placeholder.",
+    isPlaceholder: true,
+  },
+  {
+    role: "Technology partner (placeholder)",
+    quote: "A real note from a technology partner will replace this placeholder.",
+    isPlaceholder: true,
+  },
 ];

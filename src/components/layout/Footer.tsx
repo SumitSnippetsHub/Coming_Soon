@@ -7,11 +7,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DotField } from "@/components/motion/DotField";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { Zynovate } from "@/components/ui/Zynovate";
 import { contact } from "@/data/contact";
 import { site } from "@/data/site";
 import { social } from "@/data/social";
+import { services } from "@/data/services";
+import { products } from "@/data/products";
 import { SocialIcon } from "@/components/layout/SocialIcon";
 
 const FOOTER_DOT_COLORS = ["#F8F0E6", "#E4D5C5", "#C4896A", "#A6785A"];
@@ -45,6 +47,7 @@ export function Footer() {
   }, []);
 
   const go = (href: string) => (event: MouseEvent) => {
+    if (!href.startsWith("#")) return;
     event.preventDefault();
     scrollTo(document.querySelector(href) ? href : 0);
   };
@@ -61,8 +64,8 @@ export function Footer() {
         />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 sm:px-6 md:px-10 md:py-16 lg:grid-cols-[1.2fr_1fr_1fr] lg:gap-12">
-          <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
+        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:grid-cols-2 sm:px-6 md:px-10 md:py-16 lg:grid-cols-[1.25fr_repeat(4,minmax(0,1fr))] lg:gap-7">
+          <div className="flex flex-col gap-4">
             <a href="#top" onClick={go("#top")} aria-label="ZYNOVATE home" className="w-fit">
               <img
                 src={site.logo.src}
@@ -74,14 +77,21 @@ export function Footer() {
                 className="h-14 w-auto"
               />
             </a>
-            <div className="mt-2">
+            <div className="mt-2 space-y-2">
               <p className="eyebrow text-white/80">Get in touch</p>
               <a
                 href={`mailto:${contact.email}`}
-                className="mt-2 inline-flex items-center gap-2 text-sm text-white/90 transition-colors hover:text-white"
+                className="inline-flex items-center gap-2 text-sm text-white/90 transition-colors hover:text-white"
               >
                 <Mail className="size-4 text-white/70" />
                 <span>{contact.email}</span>
+              </a>
+              <a
+                href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
+                className="inline-flex items-center gap-2 text-sm text-white/90 transition-colors hover:text-white"
+              >
+                <Phone className="size-4 text-white/70" />
+                <span>{contact.phone}</span>
               </a>
             </div>
           </div>
@@ -96,6 +106,30 @@ export function Footer() {
                     className="text-sm text-white hover:text-white/70"
                   >
                     {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label="Services">
+            <p className="eyebrow text-white/80">Services</p>
+            <ul className="mt-4 space-y-2">
+              {services.map((service) => (
+                <li key={service.title}>
+                  <a href="/services" className="text-sm text-white hover:text-white/70">
+                    {service.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label="Products">
+            <p className="eyebrow text-white/80">Products</p>
+            <ul className="mt-4 space-y-2">
+              {products.map((product) => (
+                <li key={product.title}>
+                  <a href="/products" className="text-sm text-white hover:text-white/70">
+                    {product.title}
                   </a>
                 </li>
               ))}
@@ -141,12 +175,13 @@ export function Footer() {
           </p>
           <div className="flex flex-wrap items-center gap-6 text-white/90">
             <a
-              href={`mailto:${contact.email}`}
+              href={contact.mapUrl}
+              target="_blank"
+              rel="noreferrer"
               className="transition-colors hover:text-white hover:underline"
             >
-              {contact.email}
+              {contact.location}
             </a>
-            <span>{contact.location}</span>
           </div>
         </div>
         <div

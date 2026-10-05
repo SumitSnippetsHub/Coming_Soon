@@ -1,12 +1,50 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  ArrowUpRight,
+  Blocks,
+  Braces,
+  ChevronDown,
+  Cloud,
+  Globe2,
+  Layers3,
+  Menu,
+  PenTool,
+  Smartphone,
+  Sparkles,
+  Workflow,
+  Wrench,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { site } from "@/data/site";
 import { contact } from "@/data/contact";
+import { services } from "@/data/services";
+import { products } from "@/data/products";
+import type { Product, Service } from "@/lib/types";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { cn } from "@/lib/utils";
 import { ProjectInquiryModal } from "@/components/layout/ProjectInquiryModal";
 
+const serviceIcons: Record<string, LucideIcon> = {
+  Globe2,
+  Smartphone,
+  Blocks,
+  Cloud,
+  PenTool,
+  Braces,
+  Workflow,
+  Wrench,
+};
+
+const productIcons: LucideIcon[] = [Layers3, Blocks, Sparkles, Workflow, Globe2, PenTool];
+
+function hasServiceIcon(item: Service | Product): item is Service {
+  return "icon" in item;
+}
+
 export function Navbar() {
+  const pathname = usePathname() ?? "/";
   const { scrollTo } = useSmoothScroll();
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -33,6 +71,10 @@ export function Navbar() {
 
   // Active section tracking
   useEffect(() => {
+    if (pathname !== "/") {
+      setActive(pathname.slice(1) || null);
+      return;
+    }
     const ids = site.nav.map((l) => l.href.slice(1));
     const obs = new IntersectionObserver(
       (entries) => {
@@ -50,7 +92,7 @@ export function Navbar() {
       obs.disconnect();
       window.removeEventListener("scroll", onTop);
     };
-  }, []);
+  }, [pathname]);
 
   useLayoutEffect(() => {
     const el = active ? linkRefs.current[active] : null;
@@ -94,6 +136,10 @@ export function Navbar() {
   }, [open]);
 
   const go = (href: string) => (e: React.MouseEvent) => {
+    if (!href.startsWith("#")) {
+      setOpen(false);
+      return;
+    }
     e.preventDefault();
     setOpen(false);
     setTimeout(() => scrollTo(document.querySelector(href) ? href : 0), open ? 300 : 0);
@@ -112,7 +158,12 @@ export function Navbar() {
           aria-label="Primary"
           className="glass flex w-full max-w-6xl items-center justify-between rounded-full py-2 pl-5 pr-2"
         >
-          <a href="#top" onClick={go("#top")} aria-label="ZYNOVATE home" className="shrink-0">
+          <a
+            href="/"
+            onClick={pathname === "/" ? go("#top") : undefined}
+            aria-label="ZYNOVATE home"
+            className="shrink-0"
+          >
             <img
               src={site.logo.src}
               alt={site.logo.alt}
@@ -136,20 +187,59 @@ export function Navbar() {
               }
             />
             {site.nav.map((l) => {
-              const id = l.href.slice(1);
+              const id = l.href.startsWith("/") ? l.href.slice(1) : l.href.slice(1);
+              const isServices = l.href === "/services";
+              const isProducts = l.href === "/products";
+              const dropdownItems = isServices ? services : isProducts ? products : null;
               return (
-                <li key={l.href}>
+                <li key={l.href} className={cn("group relative", dropdownItems && "pb-2 -mb-2")}>
                   <a
                     ref={(el) => {
                       linkRefs.current[id] = el;
                     }}
                     href={l.href}
                     onClick={go(l.href)}
-                    aria-current={active === id ? "location" : undefined}
-                    className="relative z-10 block rounded-full px-4 py-2 text-sm text-foreground/75 transition-colors hover:text-foreground aria-[current]:text-foreground"
+                    aria-current={active === id ? "page" : undefined}
+                    aria-haspopup={dropdownItems ? "true" : undefined}
+                    className="relative z-10 flex items-center gap-1 rounded-full px-4 py-2 text-sm text-foreground/75 transition-colors hover:text-foreground aria-[current]:text-foreground"
                   >
                     {l.label}
+                    {dropdownItems ? (
+                      <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
+                    ) : null}
                   </a>
+                  {dropdownItems ? (
+                    <div className="invisible absolute left-1/2 top-full z-50 w-[24rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 translate-y-2 rounded-2xl border border-border/80 bg-background/95 p-1.5 opacity-0 shadow-[0_18px_45px_-20px_rgba(43,26,16,0.35)] backdrop-blur-xl transition-[opacity,transform,visibility] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                      <div className="grid grid-cols-2 gap-1">
+                        {dropdownItems.map((item, index) => {
+                          const Icon = hasServiceIcon(item)
+                            ? (serviceIcons[item.icon] ?? Sparkles)
+                            : (productIcons[index % productIcons.length] ?? Sparkles);
+                          return (
+                            <a
+                              key={item.title}
+                              href={isServices ? "/services" : "/products"}
+                              className="group/item min-w-0 rounded-xl p-1.5 transition-colors hover:bg-secondary focus-visible:bg-secondary"
+                            >
+                              <span className="grid size-6 place-items-center rounded-lg bg-primary/10 text-primary transition-colors group-hover/item:bg-primary group-hover/item:text-primary-foreground">
+                                <Icon className="size-3.5" />
+                              </span>
+                              <span className="mt-1 block text-[0.64rem] font-semibold leading-tight text-foreground">
+                                {item.title}
+                              </span>
+                            </a>
+                          );
+                        })}
+                      </div>
+                      <a
+                        href={l.href}
+                        className="mt-1 flex items-center justify-between rounded-xl border-t border-border px-3 py-3 text-xs font-semibold text-primary hover:bg-secondary"
+                      >
+                        Explore all {l.label.toLowerCase()}
+                        <ArrowUpRight className="size-3.5" />
+                      </a>
+                    </div>
+                  ) : null}
                 </li>
               );
             })}

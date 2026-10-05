@@ -7,7 +7,7 @@ export type ImageAsset = {
   isPlaceholder?: boolean;
 };
 
-export type NavLink = { label: string; href: `#${string}` };
+export type NavLink = { label: string; href: string };
 
 export type Placeholderable = { isPlaceholder?: boolean };
 

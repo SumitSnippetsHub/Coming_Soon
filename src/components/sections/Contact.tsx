@@ -14,7 +14,6 @@ import {
   ArrowRight,
   CalendarClock,
   Check,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Mail,
@@ -35,6 +34,7 @@ import {
 
 import {
   contact,
+  countryCodes,
   contactCall,
   contactChannels,
   contactErrors,
@@ -46,6 +46,7 @@ import {
 } from "@/data/contact";
 import { social } from "@/data/social";
 import { SocialIcon } from "@/components/layout/SocialIcon";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 import { isTouchDevice, prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -83,13 +84,29 @@ const stepIcons = { MessageCircle, Network, Rocket } as const;
 const rise = "motion-safe:translate-y-6 motion-safe:opacity-0";
 const medalRise = "motion-safe:translate-y-4 motion-safe:opacity-0";
 
-type Field = "name" | "email" | "projectType" | "budget" | "message";
+type Field = "name" | "email" | "countryCode" | "phone" | "projectType" | "budget" | "message";
 type ErrorField = Field | "consent";
 type Values = Record<Field, string>;
 type Errors = Partial<Record<ErrorField, string>>;
 
-const empty: Values = { name: "", email: "", projectType: "", budget: "", message: "" };
-const fieldOrder: ErrorField[] = ["name", "email", "projectType", "budget", "message", "consent"];
+const empty: Values = {
+  name: "",
+  email: "",
+  countryCode: "+91",
+  phone: "",
+  projectType: "",
+  budget: "",
+  message: "",
+};
+const fieldOrder: ErrorField[] = [
+  "name",
+  "email",
+  "phone",
+  "projectType",
+  "budget",
+  "message",
+  "consent",
+];
 
 const channelIcons = { email: Mail, phone: Phone, location: MapPin } as const;
 
@@ -105,6 +122,7 @@ function validate(values: Values, agreed: boolean): Errors {
   const errors: Errors = {};
   if (values.name.trim().length < 2) errors.name = contactErrors.name;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) errors.email = contactErrors.email;
+  if (!/^\d[\d\s-]{7,}$/.test(values.phone.trim())) errors.phone = "Enter a valid mobile number.";
   if (!values.projectType) errors.projectType = contactErrors.projectType;
   if (!values.budget) errors.budget = contactErrors.budget;
   if (values.message.trim().length < 12) errors.message = contactErrors.message;
@@ -282,6 +300,7 @@ export function Contact() {
     const lines = [
       `Name: ${values.name.trim()}`,
       `Email: ${values.email.trim()}`,
+      `Mobile: ${values.countryCode} ${values.phone.trim()}`,
       `Project type: ${values.projectType}`,
       `Budget range: ${values.budget}`,
     ];
@@ -402,7 +421,16 @@ export function Contact() {
             <ChannelRow
               icon={channelIcons.location}
               label={contactChannels.location}
-              value={<span className="font-medium">{contact.location}</span>}
+              value={
+                <a
+                  className="font-medium hover:text-primary"
+                  href={contact.mapUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {contact.location}
+                </a>
+              }
             />
           </dl>
 
@@ -523,6 +551,34 @@ export function Contact() {
                     icon={Mail}
                     onChange={(value) => update("email", value)}
                   />
+                  <div className="grid grid-cols-[minmax(7rem,0.7fr)_minmax(0,1.3fr)] gap-2">
+                    <SelectField
+                      name="countryCode"
+                      label="Code"
+                      placeholder="Code"
+                      value={values.countryCode}
+                      options={countryCodes.map((item) => ({
+                        value: item.code,
+                        label: `${item.code} · ${item.label}`,
+                      }))}
+                      error={undefined}
+                      errorId="error-country-code"
+                      icon={Phone}
+                      onChange={(value) => update("countryCode", value)}
+                    />
+                    <TextField
+                      name="phone"
+                      type="tel"
+                      label="Mobile number"
+                      placeholder="98765 43210"
+                      value={values.phone}
+                      autoComplete="tel-national"
+                      error={errors.phone}
+                      errorId="error-phone"
+                      icon={Phone}
+                      onChange={(value) => update("phone", value)}
+                    />
+                  </div>
                   <div className="grid gap-4 sm:grid-cols-2 lg:gap-2">
                     <SelectField
                       name="projectType"
@@ -676,7 +732,7 @@ function TextField({
   onChange,
 }: {
   name: Field;
-  type: "text" | "email";
+  type: "text" | "email" | "tel";
   label: string;
   placeholder: string;
   value: string;
@@ -731,7 +787,7 @@ function SelectField({
   label: string;
   placeholder: string;
   value: string;
-  options: readonly string[];
+  options: readonly (string | { value: string; label: string })[];
   error: string | undefined;
   errorId: string;
   icon: LucideIcon;
@@ -748,29 +804,18 @@ function SelectField({
       </span>
       <span className={cn("relative block", shell(Boolean(error)))}>
         <Icon aria-hidden className={iconClass()} strokeWidth={1.75} />
-        <select
+        <CustomSelect
           name={name}
-          aria-required="true"
           value={value}
-          onChange={(event) => onChange(event.target.value)}
-          aria-invalid={error ? true : undefined}
+          onChange={onChange}
+          options={options}
+          placeholder={placeholder}
+          aria-invalid={Boolean(error)}
           aria-describedby={error ? errorId : undefined}
-          suppressHydrationWarning
           className={cn(
-            "h-12 w-full min-w-0 appearance-none bg-transparent pl-10 pr-9 text-base lg:h-9",
+            "h-12 min-w-0 pl-10 pr-9 text-base lg:h-9",
             value ? "text-foreground" : "text-muted-foreground",
           )}
-        >
-          <option value="">{placeholder}</option>
-          {options.map((option) => (
-            <option key={option} value={option} className="text-foreground">
-              {option}
-            </option>
-          ))}
-        </select>
-        <ChevronDown
-          aria-hidden
-          className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
         />
       </span>
       {error ? <FieldError id={errorId} message={error} /> : null}
