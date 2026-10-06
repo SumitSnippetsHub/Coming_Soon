@@ -58,6 +58,7 @@ export const site = {
   },
 
   nav: [
+    { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Services", href: "/services" },
     { label: "Products", href: "/products" },

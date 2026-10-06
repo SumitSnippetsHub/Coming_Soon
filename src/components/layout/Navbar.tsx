@@ -75,7 +75,8 @@ export function Navbar() {
       setActive(pathname.slice(1) || null);
       return;
     }
-    const ids = site.nav.map((l) => l.href.slice(1));
+    setActive("home");
+    const ids = site.nav.filter((l) => l.href !== "/").map((l) => l.href.slice(1));
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => e.isIntersecting && setActive(e.target.id));
@@ -86,7 +87,7 @@ export function Navbar() {
       const el = document.getElementById(id);
       if (el) obs.observe(el);
     });
-    const onTop = () => window.scrollY < 200 && setActive(null);
+    const onTop = () => window.scrollY < 200 && setActive("home");
     window.addEventListener("scroll", onTop, { passive: true });
     return () => {
       obs.disconnect();
@@ -187,7 +188,7 @@ export function Navbar() {
               }
             />
             {site.nav.map((l) => {
-              const id = l.href.startsWith("/") ? l.href.slice(1) : l.href.slice(1);
+              const id = l.href === "/" ? "home" : l.href.slice(1);
               const isServices = l.href === "/services";
               const isProducts = l.href === "/products";
               const dropdownItems = isServices ? services : isProducts ? products : null;
@@ -198,7 +199,7 @@ export function Navbar() {
                       linkRefs.current[id] = el;
                     }}
                     href={l.href}
-                    onClick={go(l.href)}
+                    onClick={l.href === "/" && pathname === "/" ? go("#top") : go(l.href)}
                     aria-current={active === id ? "page" : undefined}
                     aria-haspopup={dropdownItems ? "true" : undefined}
                     className="relative z-10 flex items-center gap-1 rounded-full px-4 py-2 text-sm text-foreground/75 transition-colors hover:text-foreground aria-[current]:text-foreground"
@@ -315,7 +316,10 @@ export function Navbar() {
             >
               <a
                 href={l.href}
-                onClick={go(l.href)}
+                onClick={l.href === "/" && pathname === "/" ? go("#top") : go(l.href)}
+                aria-current={
+                  active === (l.href === "/" ? "home" : l.href.slice(1)) ? "page" : undefined
+                }
                 tabIndex={open ? 0 : -1}
                 className="display block py-1 text-[clamp(2.5rem,11vw,4rem)]"
               >
