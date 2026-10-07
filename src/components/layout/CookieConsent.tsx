@@ -10,21 +10,22 @@ type Choice = "accepted" | "rejected" | "custom";
 
 export function CookieConsent() {
   const [choice, setChoice] = useState<Choice | null>(null);
+  const [initialized, setInitialized] = useState(false);
   const [preferences, setPreferences] = useState(false);
   const [analytics, setAnalytics] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
   const { setScrollLocked } = useSmoothScroll();
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "accepted" || stored === "rejected" || stored === "custom") setChoice(stored);
+    setInitialized(true);
   }, []);
 
   useEffect(() => {
-    const visible = !choice && !dismissed;
+    const visible = initialized && !choice;
     setScrollLocked(visible);
     return () => setScrollLocked(false);
-  }, [choice, dismissed, setScrollLocked]);
+  }, [choice, initialized, setScrollLocked]);
 
   const save = (next: Choice) => {
     window.localStorage.setItem(STORAGE_KEY, next);
@@ -32,7 +33,7 @@ export function CookieConsent() {
     setPreferences(false);
   };
 
-  if (choice || dismissed) return null;
+  if (!initialized || choice) return null;
 
   return (
     <div
@@ -64,7 +65,7 @@ export function CookieConsent() {
             </div>
             <button
               type="button"
-              onClick={() => setDismissed(true)}
+              onClick={() => save("rejected")}
               aria-label="Reject non-essential cookies"
               className="grid size-10 shrink-0 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
             >
@@ -90,7 +91,7 @@ export function CookieConsent() {
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/55">
               <a
-                href="#privacy-policy"
+                href="/privacy-policy"
                 className="underline-offset-4 hover:text-white hover:underline"
               >
                 Privacy Policy

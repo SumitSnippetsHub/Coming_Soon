@@ -6,8 +6,7 @@ const envUrl = typeof process !== "undefined" ? process.env?.NEXT_PUBLIC_SITE_UR
 
 export const site = {
   name: "ZYNOVATE",
-  /** TODO: set the real domain before launch. */
-  url: (envUrl || "https://www.example.com").replace(/\/$/, ""),
+  url: (envUrl || "https://zynovate.in").replace(/\/$/, ""),
   title: "ZYNOVATE — Build. Launch. Evolve.",
   metaDescription:
     "ZYNOVATE builds custom software, web and mobile apps, SaaS platforms and digital products around your ideas.",

@@ -175,6 +175,12 @@ export function Footer() {
           </p>
           <div className="flex flex-wrap items-center gap-6 text-white/90">
             <a
+              href="/privacy-policy"
+              className="transition-colors hover:text-white hover:underline"
+            >
+              Privacy Policy
+            </a>
+            <a
               href={contact.mapUrl}
               target="_blank"
               rel="noreferrer"
