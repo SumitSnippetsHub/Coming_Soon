@@ -857,6 +857,10 @@ function CallColumn({
     return new Date(now.getFullYear(), now.getMonth(), 1);
   });
   const today = new Date();
+  const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const isPastMonth =
+    cursor.getFullYear() < today.getFullYear() ||
+    (cursor.getFullYear() === today.getFullYear() && cursor.getMonth() <= today.getMonth());
   const cells = buildMonth(cursor);
   const monthLabel = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(
     cursor,
@@ -880,9 +884,18 @@ function CallColumn({
             <button
               type="button"
               suppressHydrationWarning
+              disabled={isPastMonth}
+              aria-disabled={isPastMonth}
               aria-label={contactCall.previousMonth}
-              onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}
-              className="grid size-8 place-items-center rounded-full text-foreground transition-colors duration-200 hover:bg-secondary"
+              onClick={() => {
+                if (!isPastMonth) {
+                  setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1));
+                }
+              }}
+              className={cn(
+                "grid size-8 place-items-center rounded-full text-foreground transition-colors duration-200",
+                isPastMonth ? "cursor-not-allowed opacity-25" : "hover:bg-secondary",
+              )}
             >
               <ChevronLeft aria-hidden className="size-4" />
             </button>
@@ -912,6 +925,7 @@ function CallColumn({
             </div>
           ))}
           {cells.map((cell) => {
+            const isPast = cell.date < startOfToday;
             const selected = date ? sameDay(date, cell.date) : false;
             const isToday = sameDay(cell.date, today);
             return (
@@ -919,16 +933,19 @@ function CallColumn({
                 key={cell.key}
                 type="button"
                 suppressHydrationWarning
+                disabled={isPast}
+                aria-disabled={isPast}
                 aria-pressed={selected}
                 aria-current={isToday ? "date" : undefined}
                 aria-label={formatCallDate(cell.date)}
-                onClick={() => onDate(selected ? null : cell.date)}
+                onClick={() => !isPast && onDate(selected ? null : cell.date)}
                 className={cn(
                   "mx-auto flex aspect-square w-full min-w-0 max-w-8 items-center justify-center rounded-full text-sm transition duration-200 ease-[var(--ease-out-expo)] lg:max-w-7 lg:text-xs",
-                  selected && "scale-105 bg-primary text-primary-foreground",
-                  !selected && cell.inMonth && "text-foreground hover:bg-secondary",
-                  !selected && !cell.inMonth && "text-muted-foreground opacity-55",
-                  isToday && !selected && "ring-1 ring-inset ring-primary/45",
+                  isPast && "cursor-not-allowed text-muted-foreground/30 opacity-30 line-through",
+                  !isPast && selected && "scale-105 bg-primary text-primary-foreground",
+                  !isPast && !selected && cell.inMonth && "text-foreground hover:bg-secondary",
+                  !isPast && !selected && !cell.inMonth && "text-muted-foreground opacity-55",
+                  isToday && !selected && "ring-1 ring-inset ring-primary/45 font-semibold text-primary",
                 )}
               >
                 {cell.date.getDate()}

@@ -219,7 +219,7 @@ export function Navbar() {
                           return (
                             <a
                               key={item.title}
-                              href={isServices ? "/services" : "/products"}
+                              href={item.slug ? (isServices ? `/services/${item.slug}` : `/products/${item.slug}`) : l.href}
                               className="group/item min-w-0 rounded-xl p-1.5 transition-colors hover:bg-secondary focus-visible:bg-secondary"
                             >
                               <span className="grid size-6 place-items-center rounded-lg bg-primary/10 text-primary transition-colors group-hover/item:bg-primary group-hover/item:text-primary-foreground">

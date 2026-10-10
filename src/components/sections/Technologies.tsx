@@ -10,24 +10,31 @@ import { cn } from "@/lib/utils";
 type Point = { x: number; y: number };
 type WaveVariant = "desktop" | "compact";
 
+const MARQUEE_TEXT_COLORS = ["#7A4426", "#4C6A8A", "#76558A", "#3E7661", "#9A4B4B", "#2B1A10"];
+
 function MarqueeRow({
   names,
   rowRef,
+  colorOffset = 0,
 }: {
   names: string[];
   rowRef: RefObject<HTMLDivElement | null>;
+  colorOffset?: number;
 }) {
   const loop = [...names, ...names];
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden py-1">
       <div ref={rowRef} className="flex w-max will-change-transform">
         {loop.map((name, index) => (
           <span
             key={`${name}-${index}`}
-            className="display flex items-center px-5 text-[clamp(2rem,6vw,3.75rem)] md:px-8"
+            className="display flex items-center px-5 py-1 text-[clamp(2rem,6vw,3.75rem)] leading-snug md:px-8 md:py-2"
+            style={{
+              color: MARQUEE_TEXT_COLORS[(index + colorOffset) % MARQUEE_TEXT_COLORS.length],
+            }}
           >
             {name}
-            <span aria-hidden className="ml-10 size-2 rounded-full bg-primary md:ml-14" />
+            <span aria-hidden className="ml-10 size-2 rounded-full bg-current md:ml-14" />
           </span>
         ))}
       </div>
@@ -291,9 +298,9 @@ export function Technologies() {
         </div>
       </div>
 
-      <div className="mt-12 space-y-4 text-foreground/80 md:mt-14 md:space-y-6" aria-hidden>
+      <div className="mt-12 space-y-1 md:mt-14 md:space-y-2" aria-hidden>
         <MarqueeRow names={names} rowRef={rowA} />
-        <MarqueeRow names={reversed} rowRef={rowB} />
+        <MarqueeRow names={reversed} rowRef={rowB} colorOffset={3} />
       </div>
 
       <TechWave items={technologies} />

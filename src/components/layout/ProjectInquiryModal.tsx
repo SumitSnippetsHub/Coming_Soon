@@ -151,7 +151,7 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
                 type="tel"
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
-                placeholder="98765 43210"
+                placeholder="88009 04734"
                 className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none transition-colors focus:border-primary sm:px-3 sm:py-2 sm:text-sm"
               />
             </label>
@@ -173,6 +173,7 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
               <input
                 required
                 type="date"
+                min={new Date().toISOString().split("T")[0]}
                 value={date}
                 onChange={(event) => setDate(event.target.value)}
                 className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-normal outline-none focus:border-primary sm:px-3 sm:py-2 sm:text-sm"

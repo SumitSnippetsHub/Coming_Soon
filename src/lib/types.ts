@@ -11,8 +11,8 @@ export type NavLink = { label: string; href: string };
 
 export type Placeholderable = { isPlaceholder?: boolean };
 
-export type Service = Placeholderable & { title: string; description: string; icon: string };
-export type Product = Placeholderable & { title: string; description: string };
+export type Service = Placeholderable & { title: string; description: string; icon: string; slug?: string };
+export type Product = Placeholderable & { title: string; description: string; slug?: string };
 export type Project = Placeholderable & {
   id: string;
   title: string;

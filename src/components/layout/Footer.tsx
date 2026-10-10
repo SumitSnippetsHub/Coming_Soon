@@ -116,7 +116,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2">
               {services.map((service) => (
                 <li key={service.title}>
-                  <a href="/services" className="text-sm text-white hover:text-white/70">
+                  <a href={service.slug ? `/services/${service.slug}` : "/services"} className="text-sm text-white hover:text-white/70">
                     {service.title}
                   </a>
                 </li>
@@ -128,7 +128,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2">
               {products.map((product) => (
                 <li key={product.title}>
-                  <a href="/products" className="text-sm text-white hover:text-white/70">
+                  <a href={product.slug ? `/products/${product.slug}` : "/products"} className="text-sm text-white hover:text-white/70">
                     {product.title}
                   </a>
                 </li>

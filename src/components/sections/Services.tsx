@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -224,17 +225,13 @@ export function Services() {
 
                 {/* Bottom Row: Learn More Button */}
                 <div className="relative z-10 mt-6 flex items-center">
-                  <a
-                    href="#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollTo("#contact");
-                    }}
+                  <Link
+                    href={`/services/${service.slug}`}
                     className="inline-block"
                   >
                     {isActive ? (
                       <div className="inline-flex items-center gap-2.5 rounded-full bg-primary py-1.5 pl-4 pr-1.5 text-xs font-medium text-white shadow-sm transition-all duration-300 hover:bg-primary/90">
-                        <span>Learn More</span>
+                        <span>Explore Service</span>
                         <span className="flex size-6 items-center justify-center rounded-full bg-white text-primary shadow-xs">
                           <ArrowRight className="size-3 stroke-[2.5]" />
                         </span>
@@ -247,7 +244,7 @@ export function Services() {
                         </span>
                       </div>
                     )}
-                  </a>
+                  </Link>
                 </div>
 
                 {/* 3D Claymorphic Vector Illustration at bottom-right corner */}

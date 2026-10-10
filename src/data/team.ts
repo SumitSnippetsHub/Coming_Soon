@@ -10,7 +10,7 @@ export const leadershipIntro = {
 export const team: TeamMember[] = [
   {
     name: "Rockey Raj",
-    role: "Founder",
+    role: "Founder and CEO",
     email: "rockey@zynovate.in",
     image: {
       src: "/team/rockey-raj.jpg",

@@ -32,7 +32,7 @@ export function FeaturedWork() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         browser.current,
-        { scale: 0.82, y: 90, rotate: -3 },
+        { scale: 0.92, y: 28, rotate: -1.5 },
         {
           scale: 1,
           y: 0,
@@ -93,16 +93,16 @@ export function FeaturedWork() {
                 image={step === 1 ? currentFeature.screenshot : project.screenshots.cover}
                 url="amrut.ai"
               />
+              <div className="mt-4 flex items-center justify-between gap-3 px-1 text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">
+                  <HighlightZynovate text={workIntro.productNote} className="font-bold text-primary" />
+                </span>
+                <span className="font-mono text-xs font-semibold text-muted-foreground">
+                  {project.id} / {String(projects.length).padStart(2, "0")}
+                </span>
+              </div>
             </div>
-            <div className="mt-5 flex items-center justify-between gap-3 text-xs text-muted-foreground">
-              <span>
-                <HighlightZynovate text={workIntro.productNote} />
-              </span>
-              <span>
-                {project.id} / {String(projects.length).padStart(2, "0")}
-              </span>
-            </div>
-            <div className="mt-7 hidden max-w-md lg:block">
+            <div className="mt-8 hidden max-w-md lg:block">
               <LaptopMockup image={project.screenshots.dashboard} className="w-[48%]" />
               <div className="absolute bottom-8 right-0 w-[15%]">
                 <PhoneMockup image={project.screenshots.mobile} />

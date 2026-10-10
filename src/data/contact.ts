@@ -1,8 +1,8 @@
 // TODO: replace with client content
 export const contact = {
   email: "info@zynovate.in",
-  phone: "+91 80105 42473",
-  location: "Noida, Uttar Pradesh, India",
+  phone: "+91 88009 04734",
+  location: "Noida Sector 2 B-10",
   mapUrl:
     "https://www.google.com/maps/place/28%C2%B035'07.2%22N+77%C2%B018'48.1%22E/@28.5853354,77.3107819,17z/data=!3m1!4b1!4m4!3m3!8m2!3d28.5853354!4d77.3133568?hl=en&entry=ttu&g_ep=EgoyMDI2MDkzMC4wIKXMDSoASAFQAw%3D%3D",
   isPlaceholder: false,
@@ -74,7 +74,7 @@ export const contactFormCopy = {
     "Share a few details about your project. Your budget range is a starting point, not a quote.",
   name: { label: "Name", placeholder: "Your name" },
   email: { label: "Email", placeholder: "you@example.com" },
-  phone: { label: "Mobile number", placeholder: "+91 98765 43210" },
+  phone: { label: "Mobile number", placeholder: "+91 88009 04734" },
   projectType: { label: "Project type", placeholder: "Select project type" },
   budget: { label: "Budget range", placeholder: "Select budget range" },
   message: {

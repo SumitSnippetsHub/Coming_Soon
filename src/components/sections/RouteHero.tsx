@@ -108,7 +108,7 @@ function ContactVisual() {
       <div className="absolute inset-0 bg-gradient-to-tr from-espresso/75 via-espresso/25 to-transparent" />
       <div className="absolute bottom-5 left-5 max-w-[15rem] text-white">
         <p className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-white/65">
-          Noida · Remote-first
+          Noida Sector 2 B-10 · Remote-first
         </p>
         <p className="mt-2 text-xl font-semibold leading-tight">
           Good work starts with a clear conversation.
