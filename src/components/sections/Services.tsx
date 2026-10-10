@@ -43,6 +43,10 @@ const icons = {
 };
 
 const graphics: Record<string, React.ComponentType<{ className?: string }>> = {
+  Websites: WebDev3D,
+  Shops: CustomSoftware3D,
+  Apps: MobileDev3D,
+  Automations: Automation3D,
   "Web Development": WebDev3D,
   "Mobile App Development": MobileDev3D,
   "Custom Software": CustomSoftware3D,
@@ -196,8 +200,8 @@ export function Services() {
                 className={cn(
                   "group relative flex flex-col justify-between overflow-hidden rounded-[2rem] bg-white p-7 sm:p-8 transition-all duration-300",
                   isActive
-                    ? "border-2 border-primary shadow-[0_16px_40px_rgba(122,68,38,0.12)]"
-                    : "border border-[#EDE4DB] shadow-[0_4px_20px_rgba(122,68,38,0.04)] hover:border-primary/50 hover:shadow-[0_12px_32px_rgba(122,68,38,0.08)]",
+                    ? "border-2 border-primary shadow-[0_16px_40px_rgba(0,0,0,0.08)]"
+                    : "border border-foreground/10 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:border-primary/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)]",
                   pinned
                     ? "h-[410px] w-[340px] shrink-0"
                     : "h-[400px] w-[310px] shrink-0 sm:w-[330px]",
@@ -205,7 +209,7 @@ export function Services() {
               >
                 {/* Top Row: Icon Badge & Number */}
                 <div className="relative z-10 flex items-start justify-between">
-                  <div className="flex size-12 items-center justify-center rounded-full bg-[#F5EDE4] text-primary transition-transform duration-300 group-hover:scale-105">
+                  <div className="flex size-12 items-center justify-center rounded-full bg-foreground/5 text-primary transition-transform duration-300 group-hover:scale-105">
                     <Icon className="size-5 text-primary stroke-[1.8]" />
                   </div>
                   <span className="font-mono text-xs font-medium text-muted-foreground/80 tracking-wider">
@@ -239,7 +243,7 @@ export function Services() {
                     ) : (
                       <div className="inline-flex items-center gap-2 text-xs font-semibold text-foreground/80 transition-colors group-hover:text-primary">
                         <span>Learn More</span>
-                        <span className="flex size-7 items-center justify-center rounded-full bg-[#F5EDE4] text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                        <span className="flex size-7 items-center justify-center rounded-full bg-foreground/5 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                           <ArrowRight className="size-3 stroke-[2]" />
                         </span>
                       </div>

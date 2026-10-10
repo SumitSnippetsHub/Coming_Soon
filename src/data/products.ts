@@ -5,11 +5,11 @@ export { getProduct };
 export type { DetailPage, Highlight, Step, Faq };
 
 export const productsIntro = {
-  eyebrow: "02 / Solutions",
-  title: "What we build.",
+  eyebrow: "Investment",
+  title: "Great results from €5,900.",
   description:
-    "Alongside custom client projects, we build product-style solutions and scalable digital tools. These are the kinds of ideas we can bring to life — not a list of products for sale.",
-  exampleLabel: "A SaaS dashboard example",
+    "Custom software, tailored to your goals and processes. 30 minutes, free of charge. You receive the fixed price afterwards.",
+  exampleLabel: "Included with the project",
 };
 
 export type FullProduct = Product & DetailPage;

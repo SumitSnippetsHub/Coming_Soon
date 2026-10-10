@@ -5,8 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * ZYNOVATE design system. Warm brown tonal scale taken from the logo.
- * NO gold / amber / yellow anywhere. Change the palette here only.
+ * grow2gether. White page, black type. Change the palette here only.
  */
 
 @theme inline {
@@ -55,56 +54,43 @@
 :root {
   --radius: 1rem;
 
-  --cream: oklch(0.955 0.017 72); /* #F8F0E6 */
-  --brown: oklch(0.44 0.09 45); /* #7A4426 */
-  --espresso: oklch(0.22 0.03 48); /* #2B1A10 */
-  --clay: oklch(0.6 0.075 45);
-  /* Clay for text on espresso; plain clay is below 4.5:1 there. */
-  --clay-light: oklch(0.74 0.07 50);
-  --sand: oklch(0.86 0.03 60);
-  --blush: oklch(0.91 0.025 50);
-  /* 0.45 lightness keeps muted copy at 4.5:1 or better on cream and blush. */
-  --taupe: oklch(0.45 0.03 50);
+  --cream: #ffffff;
+  --brown: #000000;
+  --espresso: #000000;
+  --clay: #000000;
+  --clay-light: #000000;
+  --sand: #000000;
+  --blush: #ffffff;
+  --taupe: #111111;
 
-  --background: var(--cream);
-  --foreground: var(--espresso);
-  --card: oklch(0.97 0.012 70);
-  --card-foreground: var(--espresso);
-  --popover: var(--card);
-  --popover-foreground: var(--espresso);
-  --primary: var(--brown);
-  --primary-foreground: var(--cream);
-  --secondary: var(--blush);
-  --secondary-foreground: var(--espresso);
-  --muted: var(--blush);
-  --muted-foreground: var(--taupe);
-  --accent: var(--sand);
-  --accent-foreground: var(--espresso);
-  --destructive: oklch(0.55 0.18 27);
-  --destructive-foreground: var(--cream);
-  --border: oklch(0.44 0.09 45 / 14%);
-  --input: oklch(0.44 0.09 45 / 20%);
-  --ring: var(--brown);
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #000000;
+  --primary-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #000000;
+  --muted: #ffffff;
+  --muted-foreground: #111111;
+  --accent: #ffffff;
+  --accent-foreground: #000000;
+  --destructive: #000000;
+  --destructive-foreground: #ffffff;
+  --border: oklch(0 0 0 / 14%);
+  --input: oklch(0 0 0 / 18%);
+  --ring: #000000;
 
-  --glass: oklch(0.97 0.014 70 / 62%);
-  --glass-border: oklch(1 0 0 / 55%);
-  --shadow-soft: 0 10px 40px -12px oklch(0.44 0.09 45 / 22%);
-  --shadow-float: 0 40px 80px -30px oklch(0.3 0.06 45 / 45%);
-  --hero-overlay: linear-gradient(
-    100deg,
-    oklch(0.955 0.017 72 / 96%) 0%,
-    oklch(0.955 0.017 72 / 86%) 38%,
-    oklch(0.955 0.017 72 / 35%) 62%,
-    oklch(0.44 0.09 45 / 45%) 100%
-  );
-  --hero-fade: linear-gradient(to bottom, transparent 60%, var(--cream) 100%);
-  --about-shade: linear-gradient(
-    90deg,
-    oklch(0.13 0.01 50 / 88%) 0%,
-    oklch(0.13 0.01 50 / 68%) 48%,
-    oklch(0.13 0.01 50 / 44%) 100%
-  );
-  --about-highlight: oklch(0.86 0.05 55);
+  --glass: oklch(1 0 0 / 86%);
+  --glass-border: oklch(0 0 0 / 12%);
+  --shadow-soft: 0 10px 40px -12px oklch(0 0 0 / 14%);
+  --shadow-float: 0 40px 80px -30px oklch(0 0 0 / 18%);
+  --hero-overlay: #ffffff;
+  --hero-fade: linear-gradient(to bottom, transparent 70%, #ffffff 100%);
+  --about-shade: linear-gradient(90deg, oklch(1 0 0 / 96%) 0%, oklch(1 0 0 / 92%) 100%);
+  --about-highlight: #000000;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -125,14 +111,13 @@
     overflow-x: clip;
   }
   ::selection {
-    background: var(--brown);
-    color: var(--cream);
+    background: #000000;
+    color: #ffffff;
   }
-  /* Brown ring with a cream halo stays visible on both cream and espresso sections. */
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
-    box-shadow: 0 0 0 5px var(--cream);
+    box-shadow: 0 0 0 5px #ffffff;
   }
   html {
     scroll-padding-top: 6rem;
@@ -230,6 +215,69 @@
   animation: wordmark-shine 3.1s linear infinite;
 }
 
+/* Dark footer: sliding underline links and the faded giant wordmark. */
+.footer-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0% 1px;
+  transition:
+    background-size 0.6s var(--ease-out-expo),
+    color 0.4s ease;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  background-position: 0% 100%;
+  background-size: 100% 1px;
+}
+
+.footer-email {
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(oklch(1 0 0 / 22%), oklch(1 0 0 / 22%));
+  background-repeat: no-repeat;
+  background-position:
+    100% 100%,
+    0 100%;
+  background-size:
+    0% 2px,
+    100% 2px;
+  transition: background-size 0.8s var(--ease-out-expo);
+}
+
+.footer-email:hover,
+.footer-email:focus-visible {
+  background-position:
+    0% 100%,
+    0 100%;
+  background-size:
+    100% 2px,
+    100% 2px;
+}
+
+.footer-wordmark {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(180deg, #d6d6de 0%, rgba(200, 200, 214, 0.55) 45%, rgba(255, 255, 255, 0.04) 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes footer-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(110, 140, 255, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(110, 140, 255, 0);
+  }
+}
+
+.footer-pulse {
+  animation: footer-pulse 2.4s ease-in-out infinite;
+}
+
 @utility grain {
   &::after {
     content: "";
@@ -258,15 +306,15 @@
 
 @utility bg-tech-grid-dark {
   background-image:
-    linear-gradient(to right, oklch(0.955 0.017 72 / 6%) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0.955 0.017 72 / 6%) 1px, transparent 1px);
+    linear-gradient(to right, oklch(0 0 0 / 6%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0 0 0 / 6%) 1px, transparent 1px);
   background-size: 56px 56px;
 }
 
 @utility bg-tech-grid-light {
   background-image:
-    linear-gradient(to right, oklch(0.44 0.09 45 / 7%) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0.44 0.09 45 / 7%) 1px, transparent 1px);
+    linear-gradient(to right, oklch(0 0 0 / 6%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0 0 0 / 6%) 1px, transparent 1px);
   background-size: 56px 56px;
 }
 
@@ -341,5 +389,26 @@
   .tech-wave-badge {
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* Intro photo name tag: a gentle idle float. */
+@keyframes name-tag-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+.name-tag-float {
+  animation: name-tag-float 4.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name-tag-float {
+    animation: none;
   }
 }

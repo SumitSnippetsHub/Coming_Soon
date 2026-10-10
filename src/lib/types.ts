@@ -19,6 +19,10 @@ export type Project = Placeholderable & {
   category: string;
   tagline?: string;
   summary?: string;
+  /** Short copy for the homepage work list. */
+  description?: string;
+  /** Image shown in the homepage work list hover preview. */
+  preview?: ImageAsset;
   does?: string[];
   features?: { title: string; items: string[]; screenshot: ImageAsset }[];
   role?: string[];
@@ -28,16 +32,8 @@ export type Project = Placeholderable & {
 };
 export type Technology = { name: string; group: string; brand: string; logo: string };
 export type WhyUsItem = { title: string; description: string; signal: string };
-export type ProcessStep = {
-  number: string;
-  title: string;
-  description: string;
-  command: string;
-  output: string;
-};
 export type Industry = Placeholderable & { title: string; focus?: string; image?: ImageAsset };
 export type Testimonial = Placeholderable & { quote: string; role: string };
 export type Faq = { question: string; answer: string };
-export type Stat = { value: string; label: string };
 export type TeamMember = { name: string; role: string; image?: ImageAsset; email?: string };
 export type SocialLink = Placeholderable & { label: string; href: string };

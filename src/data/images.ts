@@ -18,7 +18,7 @@ export const images = {
     src: unsplash("photo-1497366216548-37526070297c", 1200, 630),
     width: 1200,
     height: 630,
-    alt: "ZYNOVATE — Build. Launch. Evolve.",
+    alt: "grow2gether — websites, shops and apps.",
     credit: "Unsplash",
     isPlaceholder: true,
   },
@@ -38,23 +38,6 @@ export const images = {
     alt: "",
     credit: "Unsplash",
     isPlaceholder: true,
-  },
-  /** Decorative scroll-zoom pair. Both alts stay empty. */
-  ctaZoom: {
-    hero: {
-      src: "/cta-zoom/meeting.jpg",
-      width: 1024,
-      height: 682,
-      alt: "",
-      isPlaceholder: false,
-    },
-    foreground: {
-      src: "/cta-zoom/foreground.webp",
-      width: 3016,
-      height: 1697,
-      alt: "",
-      isPlaceholder: true,
-    },
   },
   amrut: {
     homeHero: {

@@ -1,46 +1,42 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import {
-  ArrowUpRight,
-  Blocks,
-  Braces,
-  ChevronDown,
-  Cloud,
-  Globe2,
-  Layers3,
-  Menu,
-  PenTool,
-  Smartphone,
-  Sparkles,
-  Workflow,
-  Wrench,
-  X,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { site } from "@/data/site";
 import { contact } from "@/data/contact";
-import { services } from "@/data/services";
-import { products } from "@/data/products";
-import type { Product, Service } from "@/lib/types";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { cn } from "@/lib/utils";
 import { ProjectInquiryModal } from "@/components/layout/ProjectInquiryModal";
 
-const serviceIcons: Record<string, LucideIcon> = {
-  Globe2,
-  Smartphone,
-  Blocks,
-  Cloud,
-  PenTool,
-  Braces,
-  Workflow,
-  Wrench,
-};
+function sectionId(href: string) {
+  if (href === "/") return "home";
+  const hash = href.split("#")[1];
+  return hash || href.replace(/^\//, "");
+}
 
-const productIcons: LucideIcon[] = [Layers3, Blocks, Sparkles, Workflow, Globe2, PenTool];
-
-function hasServiceIcon(item: Service | Product): item is Service {
-  return "icon" in item;
+function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} aria-hidden>
+      <path
+        d="M7 23c3.2-8.4 6.2-13.2 8.4-13.2 1.6 0 2.2 2.4 1.8 5.6"
+        fill="none"
+        stroke="#3B6CFF"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12.5 18.5c2.4 3.6 6.6 5.2 10.2 3.2"
+        fill="none"
+        stroke="#22A06B"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+      />
+      <circle cx="23.2" cy="10.2" r="3.3" fill="#F5A524" />
+      <circle cx="10.2" cy="11.4" r="2.15" fill="#7C5CFF" />
+      <path d="M18 8.2c1.4 1.2 2 2.6 1.6 4.2" fill="none" stroke="#FF5C8A" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  );
 }
 
 export function Navbar() {
@@ -50,14 +46,11 @@ export function Navbar() {
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [projectModalOpen, setProjectModalOpen] = useState(false);
-  const [indicator, setIndicator] = useState<{ left: number; right: number } | null>(null);
-  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const listRef = useRef<HTMLUListElement>(null);
+  const [lang, setLang] = useState<"DE" | "EN">("EN");
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
 
-  // Hide on scroll down, show on scroll up
   useEffect(() => {
     let last = window.scrollY;
     const onScroll = () => {
@@ -69,14 +62,13 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [open]);
 
-  // Active section tracking
   useEffect(() => {
     if (pathname !== "/") {
       setActive(pathname.slice(1) || null);
       return;
     }
     setActive("home");
-    const ids = site.nav.filter((l) => l.href !== "/").map((l) => l.href.slice(1));
+    const ids = site.nav.filter((l) => l.href !== "/").map((l) => sectionId(l.href));
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => e.isIntersecting && setActive(e.target.id));
@@ -95,15 +87,6 @@ export function Navbar() {
     };
   }, [pathname]);
 
-  useLayoutEffect(() => {
-    const el = active ? linkRefs.current[active] : null;
-    if (!el || !listRef.current) return setIndicator(null);
-    const parent = listRef.current.getBoundingClientRect();
-    const r = el.getBoundingClientRect();
-    setIndicator({ left: r.left - parent.left, right: parent.right - r.right });
-  }, [active]);
-
-  // Mobile menu: Esc + focus trap + lock, focus returns to the toggle on close
   useEffect(() => {
     if (!open) {
       if (wasOpen.current) toggleRef.current?.focus({ preventScroll: true });
@@ -137,123 +120,85 @@ export function Navbar() {
   }, [open]);
 
   const go = (href: string) => (e: React.MouseEvent) => {
-    if (!href.startsWith("#")) {
+    const hash = href.startsWith("#") ? href : href.startsWith("/#") ? `#${href.split("#")[1]}` : null;
+    if (!hash || pathname !== "/") {
       setOpen(false);
       return;
     }
     e.preventDefault();
     setOpen(false);
-    setTimeout(() => scrollTo(document.querySelector(href) ? href : 0), open ? 300 : 0);
+    setTimeout(() => scrollTo(document.querySelector(hash) ? hash : 0), open ? 300 : 0);
   };
 
   return (
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-4 z-50 flex justify-center px-4 transition-transform duration-500 ease-[var(--ease-out-expo)]",
+          "fixed inset-x-0 top-3 z-50 px-3 transition-transform duration-500 ease-[var(--ease-out-expo)] sm:top-[1.1rem]",
           hidden && "-translate-y-[140%]",
         )}
+        style={{ fontFamily: "var(--font-jost), ui-sans-serif, system-ui, sans-serif" }}
         onFocus={() => setHidden(false)}
       >
+        <div className="mx-auto w-full max-w-[1240px] rounded-[18px] bg-[linear-gradient(90deg,#cdd6ff_0%,#e9e6f5_22%,#ededed_50%,#f3e6ee_78%,#ffd9c4_100%)] p-px shadow-[0_14px_40px_-26px_rgba(80,70,140,0.45)] sm:w-[84.5vw]">
         <nav
           aria-label="Primary"
-          className="glass flex w-full max-w-6xl items-center justify-between rounded-full py-2 pl-5 pr-2"
+          className="flex w-full items-center justify-between gap-3 rounded-[17px] bg-white/[0.97] py-[0.45rem] pl-4 pr-[0.45rem] backdrop-blur-md sm:pl-6"
         >
           <a
             href="/"
             onClick={pathname === "/" ? go("#top") : undefined}
-            aria-label="ZYNOVATE home"
-            className="shrink-0"
+            aria-label={`${site.name} home`}
+            className="flex shrink-0 items-center gap-1 text-black"
           >
-            <img
-              src={site.logo.src}
-              alt={site.logo.alt}
-              width={site.logo.width}
-              height={site.logo.height}
-              className="h-10 w-auto"
-            />
+            <LogoMark className="size-6 sm:size-7" />
+            <span className="text-[1.15rem] font-semibold tracking-[-0.045em] sm:text-[1.3rem]">{site.name}</span>
           </a>
 
-          <ul ref={listRef} className="relative hidden items-center gap-1 lg:flex">
-            <span
-              aria-hidden
-              className={cn(
-                "absolute inset-0 bg-secondary transition-[clip-path,opacity] duration-500 ease-[var(--ease-out-expo)]",
-                !indicator && "opacity-0",
-              )}
-              style={
-                indicator
-                  ? { clipPath: `inset(0 ${indicator.right}px 0 ${indicator.left}px round 999px)` }
-                  : undefined
-              }
-            />
+          <ul className="hidden min-w-0 items-center justify-center gap-x-5 xl:flex 2xl:gap-x-7">
             {site.nav.map((l) => {
-              const id = l.href === "/" ? "home" : l.href.slice(1);
-              const isServices = l.href === "/services";
-              const isProducts = l.href === "/products";
-              const dropdownItems = isServices ? services : isProducts ? products : null;
+              const id = sectionId(l.href);
               return (
-                <li key={l.href} className={cn("group relative", dropdownItems && "pb-2 -mb-2")}>
+                <li key={l.href}>
                   <a
-                    ref={(el) => {
-                      linkRefs.current[id] = el;
-                    }}
                     href={l.href}
                     onClick={l.href === "/" && pathname === "/" ? go("#top") : go(l.href)}
                     aria-current={active === id ? "page" : undefined}
-                    aria-haspopup={dropdownItems ? "true" : undefined}
-                    className="relative z-10 flex items-center gap-1 rounded-full px-4 py-2 text-sm text-foreground/75 transition-colors hover:text-foreground aria-[current]:text-foreground"
+                    className="whitespace-nowrap text-[13.5px] font-medium tracking-[-0.01em] text-black transition-colors hover:text-black/55"
                   >
                     {l.label}
-                    {dropdownItems ? (
-                      <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
-                    ) : null}
                   </a>
-                  {dropdownItems ? (
-                    <div className="invisible absolute left-1/2 top-full z-50 w-[24rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 translate-y-2 rounded-2xl border border-border/80 bg-background/95 p-1.5 opacity-0 shadow-[0_18px_45px_-20px_rgba(43,26,16,0.35)] backdrop-blur-xl transition-[opacity,transform,visibility] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-                      <div className="grid grid-cols-2 gap-1">
-                        {dropdownItems.map((item, index) => {
-                          const Icon = hasServiceIcon(item)
-                            ? (serviceIcons[item.icon] ?? Sparkles)
-                            : (productIcons[index % productIcons.length] ?? Sparkles);
-                          return (
-                            <a
-                              key={item.title}
-                              href={item.slug ? (isServices ? `/services/${item.slug}` : `/products/${item.slug}`) : l.href}
-                              className="group/item min-w-0 rounded-xl p-1.5 transition-colors hover:bg-secondary focus-visible:bg-secondary"
-                            >
-                              <span className="grid size-6 place-items-center rounded-lg bg-primary/10 text-primary transition-colors group-hover/item:bg-primary group-hover/item:text-primary-foreground">
-                                <Icon className="size-3.5" />
-                              </span>
-                              <span className="mt-1 block text-[0.64rem] font-semibold leading-tight text-foreground">
-                                {item.title}
-                              </span>
-                            </a>
-                          );
-                        })}
-                      </div>
-                      <a
-                        href={l.href}
-                        className="mt-1 flex items-center justify-between rounded-xl border-t border-border px-3 py-3 text-xs font-semibold text-primary hover:bg-secondary"
-                      >
-                        Explore all {l.label.toLowerCase()}
-                        <ArrowUpRight className="size-3.5" />
-                      </a>
-                    </div>
-                  ) : null}
                 </li>
               );
             })}
           </ul>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-3 sm:gap-6">
+            <div className="hidden items-center gap-2.5 text-[13px] font-medium sm:flex" aria-label="Language">
+              {(["DE", "EN"] as const).map((code, index) => (
+                <span key={code} className="flex items-center gap-2.5">
+                  {index > 0 ? <span aria-hidden className="h-3.5 w-px bg-black/25" /> : null}
+                  <button
+                    type="button"
+                    onClick={() => setLang(code)}
+                    aria-pressed={lang === code}
+                    className={cn(
+                      "underline-offset-[5px] transition-colors",
+                      lang === code ? "font-semibold text-black underline decoration-[1.5px]" : "text-black/70 hover:text-black",
+                    )}
+                  >
+                    {code}
+                  </button>
+                </span>
+              ))}
+            </div>
             <button
               type="button"
               onClick={() => setProjectModalOpen(true)}
-              className="hidden items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5 sm:inline-flex"
+              className="hidden items-center gap-9 rounded-[10px] bg-[#111] py-[0.7rem] pl-4 pr-3.5 text-[13px] font-medium text-white transition-colors duration-300 hover:bg-black sm:inline-flex"
             >
               {site.primaryCta.label}
-              <ArrowUpRight className="size-4" />
+              <ArrowUpRight className="size-3.5" strokeWidth={2} />
             </button>
             <button
               ref={toggleRef}
@@ -263,12 +208,13 @@ export function Navbar() {
               aria-label="Open menu"
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className="grid size-11 place-items-center rounded-full bg-secondary text-foreground lg:hidden"
+              className="grid size-10 place-items-center rounded-full border border-black/10 bg-white text-black xl:hidden"
             >
               <Menu className="size-5" />
             </button>
           </div>
         </nav>
+        </div>
       </header>
 
       <div
@@ -280,26 +226,22 @@ export function Navbar() {
         aria-hidden={!open}
         inert={!open}
         className={cn(
-          "fixed inset-0 z-[70] flex flex-col bg-background px-6 pb-10 pt-6 transition-[clip-path] duration-700 ease-[var(--ease-out-expo)] lg:hidden",
+          "fixed inset-0 z-[70] flex flex-col bg-white px-6 pb-10 pt-6 transition-[clip-path] duration-700 ease-[var(--ease-out-expo)] xl:hidden",
           open ? "[clip-path:inset(0_0_0_0)]" : "pointer-events-none [clip-path:inset(0_0_100%_0)]",
         )}
       >
         <div className="flex items-center justify-between">
-          <img
-            src={site.logo.src}
-            alt=""
-            width={site.logo.width}
-            height={site.logo.height}
-            loading="lazy"
-            className="h-10 w-auto"
-          />
+          <span className="flex items-center gap-2 text-lg font-bold tracking-tight">
+            <LogoMark className="size-7" />
+            {site.name}
+          </span>
           <button
             type="button"
             suppressHydrationWarning
             onClick={() => setOpen(false)}
             aria-label="Close menu"
             tabIndex={open ? 0 : -1}
-            className="grid size-11 place-items-center rounded-full bg-secondary"
+            className="grid size-11 place-items-center rounded-full border border-black/10"
           >
             <X className="size-5" />
           </button>
@@ -317,9 +259,7 @@ export function Navbar() {
               <a
                 href={l.href}
                 onClick={l.href === "/" && pathname === "/" ? go("#top") : go(l.href)}
-                aria-current={
-                  active === (l.href === "/" ? "home" : l.href.slice(1)) ? "page" : undefined
-                }
+                aria-current={active === sectionId(l.href) ? "page" : undefined}
                 tabIndex={open ? 0 : -1}
                 className="display block py-1 text-[clamp(2.5rem,11vw,4rem)]"
               >
@@ -328,14 +268,16 @@ export function Navbar() {
             </li>
           ))}
         </ul>
-        <div className="flex items-end justify-between text-sm text-muted-foreground">
-          <a
-            href={`mailto:${contact.email}`}
-            tabIndex={open ? 0 : -1}
-            className="transition-colors hover:text-primary"
-          >
-            {contact.email}
-          </a>
+        <div className="flex items-end justify-between gap-4 text-sm text-black/70">
+          <div className="flex items-center gap-2 font-semibold">
+            <button type="button" tabIndex={open ? 0 : -1} onClick={() => setLang("DE")} aria-pressed={lang === "DE"} className={lang === "DE" ? "text-black" : "text-black/35"}>
+              DE
+            </button>
+            <span aria-hidden className="h-4 w-px bg-black/15" />
+            <button type="button" tabIndex={open ? 0 : -1} onClick={() => setLang("EN")} aria-pressed={lang === "EN"} className={lang === "EN" ? "text-black" : "text-black/35"}>
+              EN
+            </button>
+          </div>
           <button
             type="button"
             onClick={() => {
@@ -343,11 +285,18 @@ export function Navbar() {
               setProjectModalOpen(true);
             }}
             tabIndex={open ? 0 : -1}
-            className="rounded-full bg-primary px-5 py-3 font-medium text-primary-foreground"
+            className="rounded-full bg-black px-5 py-3 font-medium text-white"
           >
             {site.primaryCta.label}
           </button>
         </div>
+        <a
+          href={`mailto:${contact.email}`}
+          tabIndex={open ? 0 : -1}
+          className="mt-4 text-sm text-black/60 transition-colors hover:text-black"
+        >
+          {contact.email}
+        </a>
       </div>
       <ProjectInquiryModal open={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
     </>

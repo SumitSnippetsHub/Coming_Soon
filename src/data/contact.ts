@@ -1,43 +1,42 @@
-// TODO: replace with client content
 export const contact = {
-  email: "info@zynovate.in",
-  phone: "+91 88009 04734",
-  location: "Noida Sector 2 B-10",
+  email: "hello@grow2gether.com",
+  phone: "+49 151 15820939",
+  location: "Sögestraße 74 | 28195 Bremen",
   mapUrl:
-    "https://www.google.com/maps/place/28%C2%B035'07.2%22N+77%C2%B018'48.1%22E/@28.5853354,77.3107819,17z/data=!3m1!4b1!4m4!3m3!8m2!3d28.5853354!4d77.3133568?hl=en&entry=ttu&g_ep=EgoyMDI2MDkzMC4wIKXMDSoASAFQAw%3D%3D",
+    "https://www.google.com/maps/search/?api=1&query=S%C3%B6gestra%C3%9Fe%2074%2028195%20Bremen",
   isPlaceholder: false,
   projectTypes: [
-    "Custom website",
-    "Web application",
-    "Mobile app",
-    "SaaS product",
-    "Custom software",
-    "Existing app maintenance",
+    "Website",
+    "Online shop",
+    "App",
+    "Automation",
+    "Website and shop",
     "Not sure yet",
   ],
   budgetRanges: [
     "Not sure yet",
-    "Under 5,000 USD",
-    "5,000–15,000 USD",
-    "15,000–40,000 USD",
-    "Over 40,000 USD",
+    "From €5,900",
+    "€5,900–€15,000",
+    "€15,000–€40,000",
+    "Over €40,000",
   ],
 };
 
 export const countryCodes = [
+  { label: "Germany", code: "+49" },
   { label: "India", code: "+91" },
   { label: "United States", code: "+1" },
   { label: "United Kingdom", code: "+44" },
   { label: "United Arab Emirates", code: "+971" },
-  { label: "Australia", code: "+61" },
-  { label: "Singapore", code: "+65" },
+  { label: "Netherlands", code: "+31" },
 ] as const;
 
 export const contactIntro = {
-  eyebrow: "10 / Contact",
-  title: "Start a project.",
-  description: "Tell us what you want to build, improve, or automate.",
-  response: "We'll get back to you within 24 hours.",
+  eyebrow: "Discuss your project",
+  title: "Let us implement your idea.",
+  description:
+    "Tell us about it. We look forward to making something really good out of it together. 30 minutes, free. The fixed price comes afterwards.",
+  response: "World-class team · 100+ successful projects",
 };
 
 export const contactPlaceholderNotice =
@@ -46,54 +45,53 @@ export const contactPlaceholderNotice =
 export const contactChannels = {
   email: "Email",
   phone: "Phone",
-  location: "Location",
+  location: "Studio",
   follow: "Follow us",
 };
 
 export const contactSteps = [
   {
     title: "Discuss",
-    description: "Share your ideas and requirements.",
+    description: "30 minutes, free of charge.",
     icon: "MessageCircle",
   },
   {
-    title: "Plan",
-    description: "Get expert recommendations.",
+    title: "Fixed price",
+    description: "A clear offer before we start.",
     icon: "Network",
   },
   {
     title: "Build",
-    description: "Turn your idea into reality.",
+    description: "Design, development and handover.",
     icon: "Rocket",
   },
 ] as const;
 
 export const contactFormCopy = {
-  title: "Send us a message",
-  intro:
-    "Share a few details about your project. Your budget range is a starting point, not a quote.",
+  title: "Discuss your project",
+  intro: "30 minutes · Free initial consultation. Share a few details and we will reply with the next step.",
   name: { label: "Name", placeholder: "Your name" },
-  email: { label: "Email", placeholder: "you@example.com" },
-  phone: { label: "Mobile number", placeholder: "+91 88009 04734" },
+  email: { label: "Email", placeholder: "you@company.com" },
+  phone: { label: "Mobile number", placeholder: "+49 151 15820939" },
   projectType: { label: "Project type", placeholder: "Select project type" },
   budget: { label: "Budget range", placeholder: "Select budget range" },
   message: {
     label: "Message",
-    placeholder: "Tell us about your project, goals, timeline, or any specific requirements...",
+    placeholder: "Tell us about the website, shop, app or automation you have in mind...",
     max: 1000,
   },
   consent: "I agree to be contacted about my project and receive relevant updates.",
-  submit: "Start a Project",
+  submit: "Discuss your project",
   formLabel: "Project inquiry",
 };
 
 export const contactCall = {
   title: "Prefer a call?",
-  intro: "Pick a suitable date and time for a quick call. (Optional)",
+  intro: "Pick a suitable date and time for a short call. Optional.",
   weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
   previousMonth: "Previous month",
   nextMonth: "Next month",
-  timeLabel: "Select time (IST)",
+  timeLabel: "Select time",
   slots: [
     "09:00 AM",
     "10:00 AM",
@@ -106,7 +104,7 @@ export const contactCall = {
     "06:00 PM",
   ],
   noteTitle: "Can't find a suitable time?",
-  noteBody: "No problem, just send the form and we'll coordinate directly over email.",
+  noteBody: "Send the form and we will coordinate directly over email.",
 };
 
 export const contactErrors = {

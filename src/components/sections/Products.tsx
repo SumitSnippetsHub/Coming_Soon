@@ -62,7 +62,7 @@ export function Products() {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono font-semibold text-primary">0{i + 1}</span>
-                  <span className="flex size-6 items-center justify-center rounded-full bg-[#EDE4DB] text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                  <span className="flex size-6 items-center justify-center rounded-full bg-foreground/5 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                     <ArrowRight className="size-3 stroke-[2]" />
                   </span>
                 </div>

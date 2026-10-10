@@ -296,7 +296,7 @@ export function Contact() {
       return;
     }
 
-    const subject = `ZYNOVATE project inquiry from ${values.name.trim()}`;
+    const subject = `grow2gether project inquiry from ${values.name.trim()}`;
     const lines = [
       `Name: ${values.name.trim()}`,
       `Email: ${values.email.trim()}`,

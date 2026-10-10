@@ -15,9 +15,9 @@ export const privacyPolicy = {
   eyebrow: "Legal · Privacy",
   title: "Privacy Policy",
   intro:
-    "At Zynovate, we value your privacy and are committed to protecting the personal information you share with us. This Privacy Policy explains how Zynovate collects, uses, stores, and protects information when you visit our website, use our services, or interact with us.",
+    "At grow2gether, we value your privacy and are committed to protecting the personal information you share with us. This Privacy Policy explains how grow2gether collects, uses, stores, and protects information when you visit our website, use our services, or interact with us.",
   context:
-    "Zynovate provides technology, artificial intelligence, automation, digital marketing, and related business solutions. This Privacy Policy applies to information collected directly from individuals as well as information provided by businesses, organizations, or their authorized representatives.",
+    "grow2gether provides technology, artificial intelligence, automation, digital marketing, and related business solutions. This Privacy Policy applies to information collected directly from individuals as well as information provided by businesses, organizations, or their authorized representatives.",
   agreement:
     "By accessing or using our website and services, you acknowledge that you have read and understood this Privacy Policy and agree to the collection and use of information as described below.",
   sections: [
@@ -25,7 +25,7 @@ export const privacyPolicy = {
       number: "01",
       title: "Information We Collect",
       intro:
-        "Depending on how you interact with Zynovate, we may collect certain information, including:",
+        "Depending on how you interact with grow2gether, we may collect certain information, including:",
       subsections: [
         {
           title: "Personal Information",
@@ -68,7 +68,7 @@ export const privacyPolicy = {
       number: "02",
       title: "Cookies and Tracking Technologies",
       paragraphs: [
-        "Zynovate may use cookies and similar technologies to improve website functionality, understand visitor behavior, analyze website traffic, and provide a better user experience.",
+        "grow2gether may use cookies and similar technologies to improve website functionality, understand visitor behavior, analyze website traffic, and provide a better user experience.",
         "Cookies are small data files stored on your device when you visit a website. You may configure your browser to block or delete cookies. However, disabling certain cookies may affect the functionality or availability of some features of our website.",
         "We may also use analytics and advertising technologies provided by third-party platforms where applicable.",
       ],
@@ -76,7 +76,7 @@ export const privacyPolicy = {
     {
       number: "03",
       title: "How We Use Your Information",
-      intro: "The information collected by Zynovate may be used for purposes including:",
+      intro: "The information collected by grow2gether may be used for purposes including:",
       items: [
         "Providing and delivering our services",
         "Responding to inquiries and requests",
@@ -98,16 +98,16 @@ export const privacyPolicy = {
       number: "04",
       title: "Sharing of Information",
       paragraphs: [
-        "Zynovate does not sell or rent your personal information to third parties.",
+        "grow2gether does not sell or rent your personal information to third parties.",
         "We may share information with trusted service providers, technology partners, hosting providers, analytics providers, or other third parties when reasonably necessary to operate our business, provide our services, maintain our website, or fulfill legitimate business requirements.",
-        "We may also disclose information when required by applicable law, legal proceedings, governmental authorities, or when necessary to protect the rights, safety, property, or security of Zynovate, our users, or others.",
+        "We may also disclose information when required by applicable law, legal proceedings, governmental authorities, or when necessary to protect the rights, safety, property, or security of grow2gether, our users, or others.",
       ],
     },
     {
       number: "05",
       title: "Data Security",
       paragraphs: [
-        "Zynovate takes reasonable technical and organizational measures to protect personal information against unauthorized access, alteration, disclosure, loss, misuse, or destruction.",
+        "grow2gether takes reasonable technical and organizational measures to protect personal information against unauthorized access, alteration, disclosure, loss, misuse, or destruction.",
         "We regularly review our security practices and internal procedures to help maintain the confidentiality and integrity of the information entrusted to us.",
         "However, no method of transmitting or storing information electronically can be guaranteed to be completely secure. Therefore, while we take reasonable steps to protect your information, we cannot guarantee absolute security.",
       ],
@@ -141,7 +141,7 @@ export const privacyPolicy = {
       title: "Third-Party Websites and Services",
       paragraphs: [
         "Our website or communications may contain links to third-party websites, platforms, or services.",
-        "Zynovate is not responsible for the privacy practices, security, or content of third-party websites. We encourage you to review the privacy policies of those websites before providing them with your personal information.",
+        "grow2gether is not responsible for the privacy practices, security, or content of third-party websites. We encourage you to review the privacy policies of those websites before providing them with your personal information.",
       ],
     },
     {
@@ -156,7 +156,7 @@ export const privacyPolicy = {
       number: "10",
       title: "Changes to This Privacy Policy",
       paragraphs: [
-        "Zynovate may update this Privacy Policy from time to time to reflect changes in our services, business practices, technology, or applicable legal requirements.",
+        "grow2gether may update this Privacy Policy from time to time to reflect changes in our services, business practices, technology, or applicable legal requirements.",
         "When changes are made, the updated version will be published on this page along with the revised effective date. We encourage you to review this Privacy Policy periodically.",
       ],
     },
@@ -164,11 +164,11 @@ export const privacyPolicy = {
       number: "11",
       title: "Contact Us",
       intro:
-        "If you have questions about this Privacy Policy, want to understand how your personal information is handled, or wish to exercise an applicable privacy right, please contact Zynovate using the information below:",
+        "If you have questions about this Privacy Policy, want to understand how your personal information is handled, or wish to exercise an applicable privacy right, please contact grow2gether using the information below:",
       contact: [
-        { label: "Company", value: "Zynovate" },
-        { label: "Website", value: "zynovate.in", href: "https://zynovate.in" },
-        { label: "Email", value: "info@zynovate.in", href: "mailto:info@zynovate.in" },
+        { label: "Company", value: "grow2gether" },
+        { label: "Website", value: "grow2gether.com", href: "https://grow2gether.com" },
+        { label: "Email", value: "hello@grow2gether.com", href: "mailto:hello@grow2gether.com" },
       ],
       footer:
         "We will make reasonable efforts to respond to privacy-related requests within the time period required under applicable law.",

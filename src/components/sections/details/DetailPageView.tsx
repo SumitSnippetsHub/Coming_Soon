@@ -262,25 +262,18 @@ export function DetailPageView({ item, type, allItems }: DetailPageViewProps) {
            ============================================================ */}
         <section
           data-detail-reveal
-          className="border-y border-[#EADCCC]/70 bg-[#FAF6F1] py-12 md:py-16"
+          className="border-y border-foreground/10 bg-white py-12 md:py-16"
         >
           <div className="mx-auto max-w-7xl px-5 sm:px-8 md:px-12">
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
-              <div className="relative min-h-[19rem] overflow-hidden rounded-[2rem] border border-primary/15 bg-[#241710] p-6 text-white shadow-[0_24px_60px_-30px_rgba(43,26,16,0.65)] sm:p-8">
-                <img
-                  src={images.hero.src}
-                  alt=""
-                  className="absolute inset-0 size-full object-cover opacity-60"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#241710]/95 via-[#3c2410]/65 to-[#3c2410]/20" />
+              <div className="relative min-h-[19rem] overflow-hidden rounded-[2rem] border border-foreground/10 bg-white p-6 text-foreground sm:p-8">
                 <div className="relative flex h-full flex-col justify-between">
                   <div>
-                    <p className="eyebrow text-[#E9C7AF]">Designed around outcomes</p>
+                    <p className="eyebrow text-foreground">Designed around outcomes</p>
                     <h2 className="display mt-3 max-w-md text-3xl leading-tight sm:text-4xl">
                       A clearer view of what we build.
                     </h2>
-                    <p className="mt-3 max-w-md text-sm leading-relaxed text-white/80">
+                    <p className="mt-3 max-w-md text-sm leading-relaxed text-foreground/80">
                       Every screen, integration and workflow is connected to a measurable purpose,
                       so the finished product feels useful from day one.
                     </p>
@@ -293,17 +286,17 @@ export function DetailPageView({ item, type, allItems }: DetailPageViewProps) {
                     ].map(([number, label]) => (
                       <div
                         key={number}
-                        className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-sm"
+                        className="rounded-xl border border-foreground/15 bg-white p-3"
                       >
-                        <span className="font-mono text-[10px] text-[#E9C7AF]">{number}</span>
-                        <p className="mt-1 text-xs font-semibold text-white/90">{label}</p>
+                        <span className="font-mono text-[10px] text-foreground">{number}</span>
+                        <p className="mt-1 text-xs font-semibold text-foreground">{label}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-[#E8DDD1] bg-white p-6 shadow-2xs sm:p-8">
+              <div className="rounded-[2rem] border border-foreground/10 bg-white p-6 shadow-2xs sm:p-8">
                 <div className="flex flex-wrap items-end justify-between gap-4">
                   <div>
                     <p className="eyebrow text-primary">Product signals</p>
@@ -567,7 +560,7 @@ export function DetailPageView({ item, type, allItems }: DetailPageViewProps) {
               </p>
             </div>
 
-            <div className="mt-12 rounded-2xl border border-[#EDE4DB] bg-white p-6 sm:p-8 shadow-xs">
+            <div className="mt-12 rounded-2xl border border-foreground/10 bg-white p-6 sm:p-8 shadow-xs">
               <Accordion type="single" collapsible className="w-full divide-y divide-border/60">
                 {item.faqs.map((faq, i) => (
                   <AccordionItem key={i} value={`faq-${i}`} className="border-none py-2">
@@ -589,18 +582,15 @@ export function DetailPageView({ item, type, allItems }: DetailPageViewProps) {
            ============================================================ */}
         <section data-detail-reveal className="pb-16 md:pb-20">
           <div className="mx-auto max-w-7xl px-5 sm:px-8 md:px-12">
-            <div className="relative overflow-hidden rounded-[2.5rem] bg-[#1E140F] p-8 text-white shadow-xl sm:p-12 md:p-16">
-              <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-primary/30 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-20 -left-20 size-80 rounded-full bg-[#E17A47]/20 blur-3xl" />
-
+            <div className="relative overflow-hidden rounded-[2.5rem] border border-foreground/10 bg-white p-8 text-foreground sm:p-12 md:p-16">
               <div className="relative z-10 max-w-2xl">
-                <p className="font-mono text-xs uppercase tracking-widest text-primary-foreground/70">
+                <p className="font-mono text-xs uppercase tracking-widest text-foreground/70">
                   Ready to start?
                 </p>
-                <h2 className="display mt-4 text-[clamp(2.2rem,5vw,3.8rem)] leading-tight text-white">
+                <h2 className="display mt-4 text-[clamp(2.2rem,5vw,3.8rem)] leading-tight text-foreground">
                   {item.cta.heading}
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-white/75 sm:text-lg">
+                <p className="mt-4 text-base leading-relaxed text-foreground/75 sm:text-lg">
                   {item.cta.text}
                 </p>
 
@@ -615,7 +605,7 @@ export function DetailPageView({ item, type, allItems }: DetailPageViewProps) {
                   </button>
                   <Link
                     href={parentRoute}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                    className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-white px-5 py-3.5 text-sm font-semibold text-foreground transition-colors hover:bg-foreground/5"
                   >
                     <span>All {parentLabel}</span>
                     <ArrowRight className="size-4" />
@@ -629,7 +619,7 @@ export function DetailPageView({ item, type, allItems }: DetailPageViewProps) {
         {/* ============================================================
             9. BOTTOM NAVIGATOR (NEXT & PREVIOUS)
            ============================================================ */}
-        <section className="border-t border-[#EAE0D5] bg-[#FDFBF9] py-10">
+        <section className="border-t border-foreground/10 bg-white py-10">
           <div className="mx-auto max-w-7xl px-5 sm:px-8 md:px-12">
             <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
               <Link

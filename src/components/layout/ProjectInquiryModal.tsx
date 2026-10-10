@@ -58,7 +58,7 @@ export function ProjectInquiryModal({ open, onClose }: Props) {
     url.searchParams.set("view", "cm");
     url.searchParams.set("fs", "1");
     url.searchParams.set("to", contact.email);
-    url.searchParams.set("su", `ZYNOVATE project inquiry from ${name.trim()}`);
+    url.searchParams.set("su", `grow2gether project inquiry from ${name.trim()}`);
     url.searchParams.set(
       "body",
       [

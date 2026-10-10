@@ -1,45 +1,50 @@
 import type { Faq } from "@/lib/types";
 
 export const faqIntro = {
-  eyebrow: "09 / FAQ",
-  title: "Questions, answered.",
-  description: "Short answers to what we take on and how a project begins.",
+  eyebrow: "FAQ",
+  title: "Good questions, clear answers.",
+  description: "The important answers before our first conversation.",
 };
 
 export const faqs: Faq[] = [
   {
-    question: "What projects do you handle?",
+    question: "Which digital services does grow2gether offer?",
     answer:
-      "Websites, web and mobile apps, SaaS platforms, custom software, and improvements to products that already exist.",
+      "We build websites, online shops, web apps and automations. That brings design, development and the right interfaces together. When the goal is more inquiries or sales, we think about marketing and the funnel from the start.",
   },
   {
-    question: "Do you build custom websites and apps?",
-    answer: "Yes. We design and build them around your requirements rather than a generic template.",
-  },
-  {
-    question: "Can you take an idea through to a product?",
-    answer: "Yes. We can start from a rough idea and carry it through planning, design, build, testing, and launch.",
-  },
-  {
-    question: "Do you work on frontend and backend?",
-    answer: "Yes. The interface, the application logic, and the services behind them can be part of the same engagement.",
-  },
-  {
-    question: "Do you work with startups?",
-    answer: "Yes. A startup engagement is usually a clear first version, with room to grow once the idea is in use.",
-  },
-  {
-    question: "Can you maintain an existing app?",
+    question: "How do you develop the right strategy for my company?",
     answer:
-      "Yes. We can take on fixes, updates, and new features after we understand how the app is built.",
+      "Together we turn the idea into a concrete plan: what the software should do, who uses it, and which processes it should simplify. That plan is the basis for the build.",
   },
   {
-    question: "How does the process work?",
-    answer: "We understand the need, plan the work, design, build, test, and launch. Each step is visible in the process section.",
-  },
-  {
-    question: "How do we start?",
+    question: "What sets grow2gether apart from other agencies?",
     answer:
-      "Send a note through the contact form or email. Tell us what you want to build, improve, or automate, and we will reply with the next step.",
+      "The work is individual instead of a template. You talk to the founders directly. The price is fixed before we start, and the project is finished when you are satisfied with the agreed result.",
+  },
+  {
+    question: "Do you also support SEO and online marketing?",
+    answer:
+      "When the goal is more inquiries or sales, we think about marketing and the funnel from the beginning, alongside the design and the build.",
+  },
+  {
+    question: "Can grow2gether help me win more customers?",
+    answer:
+      "Yes. The work is set up to bring in more qualified inquiries, more sales, and less manual work inside the company.",
+  },
+  {
+    question: "Do you support my company long-term?",
+    answer:
+      "Yes. After launch we can stay with you for maintenance and further development, if you want that.",
+  },
+  {
+    question: "What does working with grow2gether cost?",
+    answer:
+      "Individual solutions start from €5,900. A first conversation is 30 minutes and free. You receive the fixed price afterwards.",
+  },
+  {
+    question: "How quickly can we get started together?",
+    answer:
+      "The first step is the free 30-minute conversation. If the project fits, we define the scope and send the fixed-price offer.",
   },
 ];

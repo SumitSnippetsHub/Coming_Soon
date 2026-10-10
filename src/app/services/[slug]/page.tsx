@@ -11,7 +11,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = getService(slug);
-  if (!item) return { title: "Service Not Found | ZYNOVATE" };
+  if (!item) return { title: "Service Not Found | grow2gether" };
 
   return {
     title: item.seo.title,

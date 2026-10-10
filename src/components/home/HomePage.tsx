@@ -1,40 +1,32 @@
 "use client";
 
 import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Services } from "@/components/sections/Services";
-import { Products } from "@/components/sections/Products";
-import { FeaturedWork } from "@/components/sections/FeaturedWork";
+import { Intro } from "@/components/sections/Intro";
+import { Solutions } from "@/components/sections/Solutions";
+import { Work } from "@/components/sections/Work";
 import { Technologies } from "@/components/sections/Technologies";
-import { WhyUs } from "@/components/sections/WhyUs";
+import { MatterOfCourse } from "@/components/sections/MatterOfCourse";
 import { Industries } from "@/components/sections/Industries";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
-import { Process } from "@/components/sections/Process";
-import { CtaBanner } from "@/components/sections/CtaBanner";
-import { Contact } from "@/components/sections/Contact";
-import { ParallaxCloser } from "@/components/sections/ParallaxCloser";
-import { TeamGallery } from "@/components/sections/TeamGallery";
+import { Investment } from "@/components/sections/Investment";
+import { Sequence } from "@/components/sections/Sequence";
 import { SiteShell } from "@/components/layout/SiteShell";
 
 export function HomePage() {
   return (
     <SiteShell>
       <Hero />
-      <About />
-      <Services />
-      <Products />
-      <FeaturedWork />
+      <Intro />
+      <Solutions />
+      <Work />
       <Technologies />
-      <WhyUs />
-      <Process />
+      <MatterOfCourse />
+      <Investment />
+      <Sequence />
       <Industries />
       <Testimonials />
       <Faq />
-      <CtaBanner />
-      <Contact />
-      <ParallaxCloser />
-      <TeamGallery />
     </SiteShell>
   );
 }

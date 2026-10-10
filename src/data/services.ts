@@ -5,10 +5,10 @@ export { getService };
 export type { DetailPage, Highlight, Step, Faq };
 
 export const servicesIntro = {
-  eyebrow: "01 / Expertise",
-  title: "What we do.",
+  eyebrow: "Solutions",
+  title: "High-quality software.",
   description:
-    "From the first screen to the systems behind it, we build digital experiences that work for your business and the people using them.",
+    "From websites to digital products. Years of experience, applied to the thing your company actually needs.",
 };
 
 export type FullService = Service & DetailPage;

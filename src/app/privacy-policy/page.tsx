@@ -5,7 +5,7 @@ import { privacyPolicy } from "@/data/privacy";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Learn how Zynovate collects, uses, stores, and protects personal information.",
+  description: "Learn how grow2gether collects, uses, stores, and protects personal information.",
   alternates: { canonical: "/privacy-policy" },
 };
 

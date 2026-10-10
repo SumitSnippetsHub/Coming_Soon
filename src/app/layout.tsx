@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Mona_Sans } from "next/font/google";
+import { Instrument_Serif, JetBrains_Mono, Jost, Mona_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { images } from "@/data/images";
@@ -13,6 +13,20 @@ const monaSans = Mona_Sans({
   axes: ["wdth"],
   display: "swap",
   variable: "--font-mona",
+});
+const jost = Jost({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-jost",
+});
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-instrument",
 });
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -58,7 +72,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F8F0E6",
+  themeColor: "#ffffff",
   colorScheme: "light",
 };
 
@@ -66,7 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${monaSans.variable} ${jetbrainsMono.variable}`}
+      className={`${monaSans.variable} ${jost.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>{children}</body>

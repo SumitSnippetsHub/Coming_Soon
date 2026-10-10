@@ -1,60 +1,48 @@
 import type { WhyUsItem } from "@/lib/types";
 
 export const whyIntro = {
-  eyebrow: "05 / Why ZYNOVATE",
-  title: "Why choose ZYNOVATE.",
+  eyebrow: "Why we",
+  title: "A matter of course for us.",
   description:
-    "Practical reasons to work with us, from the first requirement through support after launch.",
+    "What is considered an extra elsewhere is standard here. Sumit, the founder, stays close to the work.",
+  titleTop: "What is considered an extra elsewhere,",
+  titleBottom: "is a matter of course for us",
+  founder: {
+    name: "Sumit",
+    role: "The founder of grow2gether",
+    photo: { src: "/images/team/sumit.jpg", alt: "Sumit, founder of grow2gether" },
+  },
 };
 
 export const whyUs: WhyUsItem[] = [
   {
-    title: "Requirement-focused",
-    signal: "scope.from(requirements)",
-    description:
-      "We start from the problem you need solved and the people who will use the product.",
+    title: "Individual instead of a template",
+    signal: "start.from(scratch)",
+    description: "We're starting from scratch. That's why your page won't look like a hundred others.",
   },
   {
-    title: "Custom solutions",
-    signal: "build.custom({ template: false })",
-    description: "The work follows your workflow and constraints, rather than a generic package.",
+    title: "Direct contact with the founder",
+    signal: "contact.founder()",
+    description: "You write to Sumit directly. No project manager in between.",
   },
   {
-    title: "Modern technology",
-    signal: "stack.select({ fit: true })",
-    description: "We choose current, well-supported tools because they fit the product.",
+    title: "Satisfaction guarantee",
+    signal: 'done.when("you are satisfied")',
+    description: "A project is only finished when you are completely satisfied.",
   },
   {
-    title: "Scalable architecture",
-    signal: 'architecture.prepare("next feature")',
-    description: "We structure the build so later features have a sensible place to land.",
+    title: "Transparent fixed price",
+    signal: "price.before(start)",
+    description: "We talk openly about money before we start, not only when the bill arrives.",
   },
   {
-    title: "Transparent communication",
-    signal: "status.share({ often: true })",
-    description: "You hear where the work stands, what is next, and what a change will affect.",
+    title: "SEO and performance included",
+    signal: "ship.fast().findable()",
+    description: "Fast loading times and a clean technical SEO setup come standard, not as an add-on.",
   },
   {
-    title: "Flexible engagement",
-    signal: 'engagement.scope("agreed first")',
-    description:
-      "We can take a focused first release or a longer build. Scope is agreed before we start.",
-  },
-  {
-    title: "Product mindset",
-    signal: 'product.think("beyond v1")',
-    description:
-      "We look at how the product will be used and looked after, not only at the first feature list.",
-  },
-  {
-    title: "End-to-end development",
-    signal: 'pipeline.run("idea → launch")',
-    description:
-      "Discovery, design, engineering, and launch can stay with one team so the product stays coherent.",
-  },
-  {
-    title: "Post-launch support",
-    signal: 'support.after("release")',
-    description: "After release we can stay on for fixes, adjustments, and the next slice of work.",
+    title: "Support after launch",
+    signal: "support.after(launch)",
+    description: "After go-live, Sumit stays your contact for updates, questions and new ideas.",
   },
 ];

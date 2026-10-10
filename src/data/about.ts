@@ -1,29 +1,29 @@
 import studioImage from "@/assets/about-studio.jpg";
 
 export const about = {
-  eyebrow: "The company / ZYNOVATE",
-  title: "Ideas deserve to be built well.",
+  eyebrow: "What drives us",
+  title: "Individual websites, shops and apps.",
   image: {
     src: studioImage.src,
-    alt: "Contemporary studio workspace with laptops and sketches",
+    alt: "The founders of grow2gether",
   },
   panels: [
     {
       label: "Who we are",
-      heading: "A technology company built for the making.",
-      body: "ZYNOVATE is a technology and software company. We build websites, apps, software and digital products for businesses and people with an idea worth bringing to life.",
+      heading: "A team that builds with you, not past you.",
+      body: "We develop individual websites, shops and apps. We set the work on quality and personal cooperation, so the result looks excellent and your business moves forward.",
     },
     {
       label: "How we work",
-      heading: "From your brief to a working product.",
-      body: "Some projects start with a client's specific challenge. Others begin as our own product-style solutions. In either case, we focus on making technology useful, thoughtful and ready to evolve.",
+      heading: "Direct, from the first conversation.",
+      body: "You write to the founders directly. No project manager in between. A project is only finished when you are satisfied with the agreed result.",
     },
     {
-      label: "Our perspective",
-      heading: "Built for what comes next.",
-      body: "We bring design and engineering together so every decision serves the people using the product and the business behind it.",
+      label: "How we price",
+      heading: "A fixed price before we start.",
+      body: "We talk openly about money before we start, not only when the bill arrives. Individual solutions start from €5,900. After a free 30-minute conversation, you receive the fixed price.",
     },
   ],
   scrub:
-    "Good digital products are not just built to launch. They are built to be useful, to be understood, and to keep getting better.",
+    "What is considered an extra elsewhere is a matter of course for us. Individual work, direct contact, and a result you can stand behind.",
 };

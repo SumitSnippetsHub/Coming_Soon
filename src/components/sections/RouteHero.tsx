@@ -9,46 +9,45 @@ type Route = "about" | "services" | "products" | "works" | "contact";
 
 const content = {
   about: {
-    number: "01 / The studio",
-    title: "Technology with a point of view.",
+    number: "What drives us",
+    title: "Individual websites, shops and apps.",
     description:
-      "We are a product-minded digital studio for ambitious teams. We turn complex ideas into clear, useful experiences that feel unmistakably yours.",
-    detail: "Strategy · Design · Engineering",
+      "Quality and personal cooperation. You talk to the founders, and the price is fixed before the work starts.",
+    detail: "Direct · Fixed price · From €5,900",
   },
   services: {
-    number: "02 / Capabilities",
-    title: "Every layer of the digital build, considered.",
+    number: "Solutions",
+    title: "Websites, shops, apps and automations.",
     description:
-      "From the first sketch to the systems behind it, our services connect strategy, design and engineering into one focused delivery team.",
-    detail: "8 capabilities · 1 connected team",
+      "Custom work for companies that want more qualified inquiries, more sales and less manual labor.",
+    detail: "Websites · Shops · Apps · Automations",
   },
   products: {
-    number: "03 / Solutions",
-    title: "Digital products built to earn their place.",
+    number: "Investment",
+    title: "Great results from €5,900.",
     description:
-      "We shape product ideas into useful, scalable tools — from internal systems to customer-facing platforms people return to.",
-    detail: "Useful by design · Ready to evolve",
+      "30 minutes, free of charge. You receive the fixed price afterwards. Design, devices, privacy, checks and handover are part of the project.",
+    detail: "Fixed price · Agreed before we start",
   },
   works: {
-    number: "04 / Selected work",
-    title: "Proof that good work moves the needle.",
-    description:
-      "A look at the digital platforms, interfaces and systems we build with our partners to make ambitious ideas real.",
-    detail: "Selected projects · Real outcomes",
+    number: "Work",
+    title: "Ideas, made real.",
+    description: "A look at recent websites, shops and apps.",
+    detail: "Selected projects",
   },
   contact: {
-    number: "05 / Start a conversation",
-    title: "Bring us the challenge behind the brief.",
+    number: "Discuss your project",
+    title: "Let us implement your idea.",
     description:
-      "Tell us what you are trying to change, launch or make easier. We will bring the right questions, the right people and a clear next step.",
-    detail: "Typically replies within 24 hours",
+      "Tell us about it. 30 minutes, free. We look forward to making something really good out of it together.",
+    detail: "30 minutes · Free initial consultation",
   },
 } satisfies Record<Route, { number: string; title: string; description: string; detail: string }>;
 
 function AboutVisual() {
   return (
     <div className="relative mx-auto w-full max-w-lg -rotate-2 drop-shadow-2xl">
-      <BrowserMockup image={images.amrut.about} url="zynovate.studio/about" />
+      <BrowserMockup image={images.amrut.about} url="grow2gether.com" />
       <div className="absolute -bottom-5 -left-5 rounded-2xl border border-primary/15 bg-white/90 px-4 py-3 shadow-lg">
         <p className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted-foreground">
           Our principle

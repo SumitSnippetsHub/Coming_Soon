@@ -1,67 +1,63 @@
 import type { NavLink } from "@/lib/types";
 
-// Works in Next.js (NEXT_PUBLIC_SITE_URL). On Vite/Lovable, `process` is undefined, so the
-// fallback is used; to configure it there, swap in import.meta.env.VITE_SITE_URL.
 const envUrl = typeof process !== "undefined" ? process.env?.NEXT_PUBLIC_SITE_URL : undefined;
 
 export const site = {
-  name: "ZYNOVATE",
-  url: (envUrl || "https://zynovate.in").replace(/\/$/, ""),
-  title: "ZYNOVATE — Build. Launch. Evolve.",
+  name: "grow2gether",
+  url: (envUrl || "https://grow2gether.com").replace(/\/$/, ""),
+  title: "grow2gether — Websites, shops and apps",
   metaDescription:
-    "ZYNOVATE builds custom software, web and mobile apps, SaaS platforms and digital products around your ideas.",
-  tagline: "Build. Launch. Evolve.",
-  description: "Technology solutions built around your ideas, business, and digital goals.",
-  logo: { src: "/brand/zynovate-logo.png", alt: "ZYNOVATE", width: 600, height: 408 },
-  // Real routes, not "#contact" (Contact is its own page now).
-  primaryCta: { label: "Start a Project", href: "/contact" as const },
-  secondaryCta: { label: "Explore Our Work", href: "/works" as const },
-  trustLine: ["Custom software", "Web & mobile", "SaaS", "Product engineering"],
+    "grow2gether designs websites, shops and apps that bring in more qualified inquiries, more sales and less manual work.",
+  tagline: "Websites, shops and apps.",
+  description:
+    "Custom-designed websites, shops and apps that generate more qualified inquiries.",
+  logo: { src: "/brand/zynovate-logo.png", alt: "grow2gether", width: 600, height: 408 },
+  primaryCta: { label: "Discuss your project", href: "/#contact" as const },
+  secondaryCta: { label: "From €5,900", href: "/#products" as const },
+  trustLine: ["Websites", "Shops", "Apps", "Automations"],
 
-  /** Hero copy. TODO: replace with client wording when available. */
   hero: {
-    eyebrow: "Technology & software company",
-    // TODO: confirm availability wording with the client before launch.
-    status: "Open for new projects",
-    lead: "We design and engineer websites, web and mobile apps, SaaS platforms and custom software, taking ideas from a first sketch to a product that is live, reliable and ready to grow.",
-    support:
-      "Bring us a clear requirement, a rough idea, or an existing product that needs to evolve. We shape it, build it properly, and stay with you after launch.",
+    eyebrow: "grow2gether",
+    status: "5 out of 5 stars",
+    lines: ["Websites,", "Shops & Apps,", "worth it."],
+    lead: "Custom-designed to generate more qualified inquiries.",
+    support: "More sales and less manual labor in your company.",
     pillars: [
       {
         index: "01",
-        title: "Build",
-        text: "Websites, apps and custom software engineered around your requirements.",
+        title: "Websites",
+        text: "Professional presence, trust, and qualified inquiries.",
       },
       {
         index: "02",
-        title: "Launch",
-        text: "Tested, responsive and production-ready, deployed with care.",
+        title: "Shops",
+        text: "Easy purchasing and processes that save time.",
       },
       {
         index: "03",
-        title: "Evolve",
-        text: "Support, improvements and new features as your business grows.",
+        title: "Apps",
+        text: "Products that simply work and people enjoy using.",
       },
     ],
     tracks: [
-      { label: "Service-based", text: "Custom projects built around your brief" },
-      { label: "Product-based", text: "Scalable platforms, tools and SaaS" },
+      { label: "From €5,900", text: "Individual solutions, transparent fixed price" },
+      { label: "30 minutes", text: "Free conversation. The fixed price comes after." },
     ],
-    // Amrut.ai is the client's real, verified project.
     featured: {
-      label: "Featured build",
-      title: "Amrut.ai",
-      text: "AI visibility platform",
-      href: "/works",
+      label: "Awwwards",
+      title: "Nominated",
+      text: "Selected work",
+      href: "/#work",
     },
   },
 
   nav: [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Products", href: "/products" },
-    { label: "Works", href: "/works" },
-    { label: "Contact", href: "/contact" },
+    { label: "Solutions", href: "/#services" },
+    { label: "Work", href: "/#work" },
+    { label: "Why we", href: "/#why" },
+    { label: "investment", href: "/#products" },
+    { label: "Sequence", href: "/#process" },
+    { label: "Reviews", href: "/#testimonials" },
+    { label: "FAQ", href: "/#faq" },
   ] satisfies NavLink[],
 };

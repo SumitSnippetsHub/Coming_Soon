@@ -3,35 +3,123 @@ import type { Project } from "@/lib/types";
 import { images } from "@/data/images";
 
 export const workIntro = {
-  eyebrow: "03 / Selected work", title: "Featured work.", description: "A closer look at something we've built.",
-  stages: ["The product", "Feature groups", "Our role", "Capabilities"],
-  featureHeading: "Inside the platform", roleHeading: "From concept to launch", capabilitiesHeading: "What went into it",
-  productNote: "Product by Amrut.ai. Built by ZYNOVATE.",
-  projectButton: "View Project", contactTitle: "Have a product like this in mind? Let's build it.", contactButton: "Start a conversation",
-  upcomingTitle: "The next stories are taking shape.",
+  eyebrow: "Work",
+  title: "Ideas, made real.",
+  description: "A look at recent projects.",
+  stages: ["The product", "What it does", "Our role", "Capabilities"],
+  featureHeading: "Inside the project",
+  roleHeading: "How it was built",
+  capabilitiesHeading: "What went into it",
+  productNote: "Selected project · grow2gether",
+  projectButton: "Discuss a project like this",
+  contactTitle: "Have a project like this in mind?",
+  contactButton: "Discuss your project",
+  upcomingTitle: "More recent work.",
+  lead: "Take a look at our latest projects.",
+  headingTop: "Ideas will",
+  headingBottom: "reality",
 };
+
+const shot = images.amrut;
+
+// TODO: replace stand-ins with real project screenshots (check Unsplash license / credit)
+const standIn = (id: string, alt: string) => ({
+  src: `https://images.unsplash.com/${id}?auto=format&fit=crop&w=960&h=600&q=80`,
+  width: 960,
+  height: 600,
+  alt,
+  isPlaceholder: true,
+});
 
 export const projects: Project[] = [
   {
     id: "01",
-    title: "Amrut.ai",
-    category: "SaaS platform · AI Visibility & SEO",
-    tagline: "The AI Visibility Platform That Tells You Exactly What To Do Next.",
-    summary: "Amrut.ai helps brands see how AI assistants talk about them, then gives a clear plan to earn more mentions, citations and recommendations. It also bundles a suite of SEO and website-intelligence tools in one place.",
-    does: ["Tracks brand visibility across AI engines such as ChatGPT, Gemini, Perplexity and Google AI Mode", "Shows visibility score, share of voice, sentiment and competitor benchmarking", "Generates llms.txt files and AI-powered SEO analysis reports", "Offers keyword research, backlink checking, competitor ad analysis and website analytics", "Includes free utilities such as Robots.txt Generator, Sitemap Generator and Token Counter"],
-    features: [
-      { title: "AI Visibility", screenshot: images.amrut.dashboard, items: ["AI Visibility tracking", "AI Crawlability", "LLMS.txt Generator", "AI LLMs Traffic", "Ask AI"] },
-      { title: "SEO & Content", screenshot: images.amrut.llmsTxt, items: ["AI SEO Analysis Report", "AI Content Generator (beta)", "Keyword Research", "Ranked Keywords", "Keyword Suggestions", "Keyword Extractor"] },
-      { title: "Site & Competitors", screenshot: images.amrut.about, items: ["Company Profile", "Backlink Checker", "Competitor Ads", "Watchlist & Alerts", "Website Ranking"] },
-      { title: "Your Data & Utilities", screenshot: images.amrut.toolsGrid, items: ["Website Analytics", "GSC Dashboard", "YouTube Trends", "Robots.txt Generator", "Sitemap Generator", "Token Counter"] },
+    title: "treatment",
+    category: "Product website and app",
+    tagline: "A dedicated app for beauty studios.",
+    summary:
+      "Loyalty points, memberships, installment payments and automatic offers, directly on the customer's home screen.",
+    description:
+      "A dedicated app for beauty studios: loyalty points, memberships, installment payments and automatic offers, directly on the customers' home screen.",
+    preview: shot.homeHero,
+    does: [
+      "Loyalty points for returning clients",
+      "Memberships and installment payments",
+      "Automatic offers on the home screen",
+      "A product website alongside the app",
     ],
-    role: ["End-to-end build of the complete platform, from product concept to launch", "Product design and UI/UX", "Front-end and back-end development of the AI visibility and SEO tools", "Responsive experience across desktop and mobile"],
-    capabilities: ["SaaS platform", "Dashboard UI", "Full-stack development", "Responsive web design", "Product engineering"],
-    url: "https://amrut.ai/",
-    screenshots: { cover: images.amrut.homeHero, dashboard: images.amrut.dashboard, mobile: images.amrut.mobileHome, about: images.amrut.about, tools: images.amrut.toolsGrid },
+    features: [
+      {
+        title: "Loyalty",
+        screenshot: shot.dashboard,
+        items: ["Points", "Memberships", "Offers"],
+      },
+      {
+        title: "Payments",
+        screenshot: shot.toolsGrid,
+        items: ["Installments", "Checkout", "Offers"],
+      },
+      {
+        title: "Studio tools",
+        screenshot: shot.about,
+        items: ["Customer app", "Automatic offers", "Home screen"],
+      },
+      {
+        title: "Website",
+        screenshot: shot.homeHero,
+        items: ["Product site", "App story", "Inquiries"],
+      },
+    ],
+    role: [
+      "Product website and dedicated app",
+      "Loyalty, memberships and installment payments",
+      "Automatic offers on the customer's home screen",
+    ],
+    capabilities: ["Product website", "App", "Payments", "Automations"],
+    url: "/contact",
+    screenshots: {
+      cover: shot.homeHero,
+      dashboard: shot.dashboard,
+      mobile: shot.mobileHome,
+      about: shot.about,
+      tools: shot.toolsGrid,
+    },
   },
-  // TODO: replace with a real project
-  { id: "02", title: "Coming soon", category: "Next case study", isPlaceholder: true },
-  // TODO: replace with a real project
-  { id: "03", title: "Coming soon", category: "Next case study", isPlaceholder: true },
+  {
+    id: "02",
+    title: "Antique Vehrs",
+    category: "Online shop",
+    summary:
+      "Over 20,000 antiques from Northern Germany, sorted online by era, style and piece of furniture. Inventory management was digitized and automated.",
+    description:
+      "Over 20,000 antiques from Northern Germany, sorted online by era, style, and piece of furniture. We have also digitized and automated our inventory management system.",
+    preview: standIn("photo-1555041469-a586c61ea9bc", "Antique furniture in a warm living room"),
+  },
+  {
+    id: "03",
+    title: "Kalōhs",
+    category: "Interactive website",
+    summary: "An interactive landing page with automated processes in the backend.",
+    description: "Development of an interactive landing page with automated processes in the backend.",
+    preview: standIn("photo-1586023492125-27b2c045efd7", "Calm, bright interior with soft natural light"),
+  },
+  {
+    id: "04",
+    title: "HB Gold Bars",
+    category: "Online shop",
+    summary:
+      "Buy gold bars online, directly from a jeweler with ten years of experience. Includes gold buying and live precious metal prices.",
+    description:
+      "Buy gold bars online, directly from a Bremen jeweler with ten years of experience. Includes gold buying and live precious metal prices.",
+    preview: standIn("photo-1610375461246-83df859d849d", "Stacked gold bars"),
+  },
+  {
+    id: "05",
+    title: "North-Baltic Sea Logistics",
+    category: "Website + Web App",
+    summary:
+      "Digital bookings and automated processes, from the first inquiry through to internal handling.",
+    description: "Digital bookings and automated processes – from the initial inquiry to internal processing.",
+    preview: standIn("photo-1494412574643-ff11b0a5c1c3", "Container ship and cranes at a port"),
+  },
 ];

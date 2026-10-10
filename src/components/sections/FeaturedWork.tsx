@@ -23,7 +23,7 @@ export function FeaturedWork() {
   const [feature, setFeature] = useState(0);
   const { scrollTo } = useSmoothScroll();
   const project = projects.find((p) => !p.isPlaceholder);
-  const upcoming = projects.filter((p) => p.isPlaceholder);
+  const upcoming = projects.filter((item) => item.id !== project?.id);
   const pinned = useCanPin(1024);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export function FeaturedWork() {
             <div ref={browser} className="will-change-transform">
               <BrowserMockup
                 image={step === 1 ? currentFeature.screenshot : project.screenshots.cover}
-                url="amrut.ai"
+                url={project.title.toLowerCase()}
               />
               <div className="mt-4 flex items-center justify-between gap-3 px-1 text-xs text-muted-foreground">
                 <span className="font-medium text-foreground">
@@ -219,7 +219,7 @@ export function FeaturedWork() {
             )}
             <div className="mt-8">
               <Button asChild size="lg" className="h-12 rounded-none px-6">
-                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                <a href={project.url ?? "/contact"}>
                   {workIntro.projectButton}
                   <ArrowUpRight />
                 </a>
@@ -229,17 +229,21 @@ export function FeaturedWork() {
         </div>
       </div>
 
-      <div className="bg-foreground py-16 text-background md:py-28">
+      <div className="border-y border-foreground/10 bg-background py-16 text-foreground md:py-28">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 sm:px-6 md:flex-row md:items-end md:px-10">
           <h2 className="max-w-3xl text-[clamp(2rem,5.5vw,3.75rem)] font-semibold leading-tight">
             {workIntro.contactTitle}
           </h2>
-          <Button asChild variant="secondary" size="lg" className="h-12 rounded-none px-6">
+          <Button asChild size="lg" className="h-12 rounded-none px-6">
             <a
               href={site.primaryCta.href}
               onClick={(e) => {
+                const hash = site.primaryCta.href.includes("#")
+                  ? `#${site.primaryCta.href.split("#")[1]}`
+                  : null;
+                if (!hash || !document.querySelector(hash)) return;
                 e.preventDefault();
-                scrollTo(document.querySelector(site.primaryCta.href) ? site.primaryCta.href : 0);
+                scrollTo(hash);
               }}
             >
               {workIntro.contactButton}
@@ -249,7 +253,7 @@ export function FeaturedWork() {
         </div>
       </div>
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:px-10 md:py-20">
-        <p className="eyebrow text-primary">Next / 02—03</p>
+        <p className="eyebrow text-primary">Also in the work</p>
         <h2 className="mt-5 text-3xl font-semibold md:text-4xl">{workIntro.upcomingTitle}</h2>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {upcoming.map((item) => (
@@ -261,6 +265,9 @@ export function FeaturedWork() {
               <div>
                 <h3 className="text-3xl font-semibold">{item.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{item.category}</p>
+                {item.summary ? (
+                  <p className="mt-3 text-sm leading-relaxed text-foreground/80">{item.summary}</p>
+                ) : null}
               </div>
             </article>
           ))}

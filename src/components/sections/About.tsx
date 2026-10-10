@@ -88,7 +88,7 @@ export function About() {
       id="about"
       ref={root}
       aria-labelledby="about-title"
-      className="relative bg-foreground text-background"
+      className="relative bg-background text-foreground"
     >
       <div aria-hidden className="sticky top-0 h-[100svh] overflow-hidden">
         <img
@@ -112,7 +112,7 @@ export function About() {
             <div className="max-w-3xl">
               <p className="eyebrow mb-7 text-about-highlight">
                 <HighlightZynovate text={i === 0 ? about.eyebrow : panel.label} />{" "}
-                <span className="ml-3 text-background/70">
+                <span className="ml-3 text-foreground/70">
                   0{i + 1} / 0{about.panels.length}
                 </span>
               </p>
@@ -123,7 +123,7 @@ export function About() {
                 {i === 0 ? about.title : panel.heading}
               </h2>
               {i === 0 && <p className="mt-7 text-xl font-medium md:text-2xl">{panel.heading}</p>}
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-background/80">
+              <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/80">
                 <HighlightZynovate text={panel.body} />
               </p>
             </div>

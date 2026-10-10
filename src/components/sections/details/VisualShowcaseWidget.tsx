@@ -91,7 +91,7 @@ export function VisualShowcaseWidget({ slug, title, type }: VisualShowcaseWidget
               <span className="flex size-3 rounded-full bg-[#E17A47]" />
               <span className="flex size-3 rounded-full bg-[#E8B87C]" />
               <span className="flex size-3 rounded-full bg-[#82B29A]" />
-              <span className="ml-3 font-mono text-xs text-muted-foreground">zynovate.studio/app-preview</span>
+              <span className="ml-3 font-mono text-xs text-muted-foreground">grow2gether.com/app-preview</span>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -203,7 +203,7 @@ export function VisualShowcaseWidget({ slug, title, type }: VisualShowcaseWidget
                     <div className="grid size-6 place-items-center rounded-lg bg-primary text-white">
                       <Sparkles className="size-3" />
                     </div>
-                    <span className="text-[11px] font-bold text-foreground">ZYNOVATE App Sync</span>
+                    <span className="text-[11px] font-bold text-foreground">grow2gether App Sync</span>
                   </div>
                   <span className="font-mono text-[9px] text-muted-foreground">now</span>
                 </div>

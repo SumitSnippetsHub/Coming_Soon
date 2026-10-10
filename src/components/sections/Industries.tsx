@@ -25,7 +25,7 @@ function Photo({ image, decorative = false }: { image?: ImageAsset | undefined; 
   const [failed, setFailed] = useState(false);
   if (!image || failed) {
     return (
-      <div className="grid h-full w-full place-items-center bg-espresso font-mono text-xs text-background/70">
+      <div className="grid h-full w-full place-items-center bg-white font-mono text-xs text-foreground/70">
         image unavailable
       </div>
     );
@@ -92,7 +92,7 @@ export function Industries() {
     <section
       id="industries"
       aria-labelledby="industries-title"
-      className="bg-foreground bg-tech-grid-dark py-20 text-background md:py-28 lg:py-32"
+      className="bg-background bg-tech-grid-light py-20 text-foreground md:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
         <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
@@ -100,7 +100,7 @@ export function Industries() {
             <p className="eyebrow text-clay-light">{industriesIntro.eyebrow}</p>
             <h2 id="industries-title" className="display mt-4 max-w-3xl text-[clamp(2.5rem,7vw,4.5rem)]">{industriesIntro.title}</h2>
           </div>
-          <p className="max-w-md text-base leading-relaxed text-background/75 md:text-lg">
+          <p className="max-w-md text-base leading-relaxed text-foreground/75 md:text-lg">
             {industriesIntro.description}
           </p>
         </div>
@@ -110,14 +110,14 @@ export function Industries() {
             ref={list}
             onMouseEnter={() => (hovering.current = true)}
             onMouseLeave={() => (hovering.current = false)}
-            className="border-t border-background/15"
+            className="border-t border-foreground/15"
           >
             {industries.map((item, index) => (
               <li
                 key={item.title}
                 data-industry-row
                 data-index={index}
-                className="border-b border-background/15"
+                className="border-b border-foreground/15"
               >
                 <button
                   type="button"
@@ -129,25 +129,25 @@ export function Industries() {
                   className={cn(
                     "grid w-full grid-cols-[3rem_1fr_auto] items-center gap-4 py-5 text-left transition-colors duration-300",
                     active === index
-                      ? "text-background"
-                      : "text-background lg:text-background/60 lg:hover:text-background/80",
+                      ? "text-foreground"
+                      : "text-foreground lg:text-foreground/60 lg:hover:text-foreground/80",
                   )}
                 >
                   <span className="font-mono text-xs">[{pad(index + 1)}]</span>
                   <span>
                     <span className="block text-2xl font-semibold md:text-3xl">{item.title}</span>
                     {item.focus ? (
-                      <span className="mt-1 block text-sm text-background/70">{item.focus}</span>
+                      <span className="mt-1 block text-sm text-foreground/70">{item.focus}</span>
                     ) : null}
                   </span>
-                  <span className="hidden font-mono text-xs text-background/60 sm:inline">
+                  <span className="hidden font-mono text-xs text-foreground/60 sm:inline">
                     /{slug(item.title)}
                   </span>
                 </button>
                 <div className="industry-reveal relative mb-5 aspect-[16/9] overflow-hidden md:aspect-[21/9] lg:hidden">
                   <Photo image={item.image} />
                   {item.image?.isPlaceholder ? (
-                    <span className="absolute left-3 top-3 bg-espresso/80 px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-background/80">
+                    <span className="absolute left-3 top-3 bg-white/90 px-2 py-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-foreground/80">
                       placeholder image
                     </span>
                   ) : null}
@@ -158,7 +158,7 @@ export function Industries() {
 
           <div aria-hidden className="hidden lg:block">
             <div className="sticky top-28">
-              <div className="relative aspect-[4/5] overflow-hidden border border-background/15 bg-espresso">
+              <div className="relative aspect-[4/5] overflow-hidden border border-foreground/15 bg-white">
                 {industries.map((item, index) => (
                   <div
                     key={item.title}
@@ -171,20 +171,20 @@ export function Industries() {
                 <div aria-hidden className="pointer-events-none absolute inset-0 z-[2] bg-scanlines" />
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-24 bg-gradient-to-b from-espresso/80 to-transparent"
+                  className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-24 bg-gradient-to-b from-white/80 to-transparent"
                 />
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-1/2 bg-gradient-to-t from-espresso/90 to-transparent"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-1/2 bg-gradient-to-t from-white to-transparent"
                 />
                 {corners.map((position) => (
                   <span
                     key={position}
                     aria-hidden
-                    className={cn("absolute z-[3] size-5 border-background/70", position)}
+                    className={cn("absolute z-[3] size-5 border-foreground/70", position)}
                   />
                 ))}
-                <div className="absolute inset-x-0 top-0 z-[3] flex justify-between px-6 py-5 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-background/75">
+                <div className="absolute inset-x-0 top-0 z-[3] flex justify-between px-6 py-5 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-foreground">
                   <span>
                     use case {pad(active + 1)}/{pad(total)}
                   </span>
@@ -194,7 +194,7 @@ export function Industries() {
                   <p className="font-mono text-xs text-sand">/{slug(current.title)}</p>
                   <p className="display mt-2 text-4xl">{current.title}</p>
                   {current.focus ? (
-                    <p className="mt-2 text-sm text-background/70">{current.focus}</p>
+                    <p className="mt-2 text-sm text-foreground/70">{current.focus}</p>
                   ) : null}
                 </div>
               </div>

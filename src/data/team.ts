@@ -1,33 +1,19 @@
 import type { TeamMember } from "@/lib/types";
 
 export const leadershipIntro = {
-  eyebrow: "Leadership",
-  title: "The people behind ZYNOVATE.",
+  eyebrow: "Founders",
+  title: "Work directly with the founders.",
   description:
-    "Built on a shared belief that technology should be purposeful, our leadership brings together vision and execution to turn ideas into lasting digital products.",
+    "World-class team. 100+ successful projects. You talk to the people doing the work.",
 };
 
 export const team: TeamMember[] = [
   {
-    name: "Rockey Raj",
-    role: "Founder and CEO",
-    email: "rockey@zynovate.in",
-    image: {
-      src: "/team/rockey-raj.jpg",
-      alt: "Rockey Raj — Founder of ZYNOVATE",
-      width: 1024,
-      height: 1024,
-    },
+    name: "Salam",
+    role: "Founder, grow2gether",
   },
   {
-    name: "Ankita Singh",
-    role: "Director",
-    email: "ankita@zynovate.in",
-    image: {
-      src: "/team/ankita-singh.jpg",
-      alt: "Ankita Singh — Director of ZYNOVATE",
-      width: 774,
-      height: 1032,
-    },
+    name: "Marcel",
+    role: "Founder, grow2gether",
   },
 ];
