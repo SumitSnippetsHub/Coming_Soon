@@ -70,7 +70,7 @@ export function Faq() {
       id="faq"
       ref={root}
       aria-labelledby="faq-title"
-      className="bg-white py-[clamp(4.5rem,9vw,8rem)] text-[#111]"
+      className="contour-paper py-[clamp(4.5rem,9vw,8rem)] text-[#111]"
       style={{ fontFamily: jost }}
     >
       <div className="mx-auto w-[86vw] max-w-[1400px]">

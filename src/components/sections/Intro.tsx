@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { IntroBackdrop } from "@/components/motion/IntroBackdrop";
 import { intro } from "@/data/intro";
 import { prefersReducedMotion } from "@/lib/motion";
 
@@ -57,9 +58,10 @@ export function Intro() {
       id="about"
       ref={root}
       aria-label="About grow2gether"
-      className="relative bg-white text-[#111]"
+      className="relative isolate overflow-hidden bg-[#fbfdfe] text-[#111]"
       style={{ fontFamily: jost }}
     >
+      <IntroBackdrop />
       <div className="grid items-center gap-y-10 px-[3.4vw] py-[clamp(4rem,9vw,8.5rem)] max-md:px-5 md:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] md:gap-x-[7vw]">
         <div data-intro-reveal className="group relative">
           <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-[#1b1f2e] shadow-[0_30px_60px_-28px_rgba(20,20,40,0.45),0_10px_24px_-14px_rgba(20,20,40,0.25)]">

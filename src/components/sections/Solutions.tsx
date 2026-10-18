@@ -144,7 +144,7 @@ export function Solutions() {
       id="services"
       ref={root}
       aria-labelledby="solutions-title"
-      className="relative bg-white text-[#111]"
+      className="relative contour-paper text-[#111]"
       style={{ fontFamily: jost }}
     >
       <div className="mx-auto w-full px-5 pb-[clamp(4rem,9vw,8rem)] pt-[clamp(2rem,4vw,4rem)] sm:px-[3.4vw] lg:w-[84.5vw] lg:max-w-[1240px] lg:px-0">

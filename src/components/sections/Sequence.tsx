@@ -261,7 +261,7 @@ export function Sequence() {
       id="process"
       ref={root}
       aria-labelledby="sequence-title"
-      className="relative bg-white text-[#111]"
+      className="relative contour-paper text-[#111]"
       style={{ fontFamily: jost }}
     >
       <div className="mx-auto grid w-full max-w-[1600px] gap-x-[clamp(2rem,5vw,6rem)] gap-y-12 px-5 py-[clamp(4rem,9vw,7rem)] sm:px-[3.4vw] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:py-0">

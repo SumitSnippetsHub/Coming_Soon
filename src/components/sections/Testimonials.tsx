@@ -141,7 +141,7 @@ function ReviewsMarquee({ rowA, rowB }: { rowA: Testimonial[]; rowB: Testimonial
   const paused = useRef(false);
   const hovering = useRef(false);
   const drag = useRef<{ key: RowKey; x: number; origin: number; half: number } | null>(null);
-  const paintRef = useRef<() => void>(() => {});
+  const paintRef = useRef<() => void>(() => { });
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");

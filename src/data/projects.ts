@@ -6,6 +6,8 @@ export const workIntro = {
   eyebrow: "Work",
   title: "Ideas, made real.",
   description: "A look at recent projects.",
+  pageLeadBefore: "Selected websites, shops and apps, made in Bremen with",
+  pageLeadAfter: "close to every project.",
   stages: ["The product", "What it does", "Our role", "Capabilities"],
   featureHeading: "Inside the project",
   roleHeading: "How it was built",

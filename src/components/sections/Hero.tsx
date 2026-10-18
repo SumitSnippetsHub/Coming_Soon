@@ -2,6 +2,7 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { site } from "@/data/site";
+import { BulgeHeading } from "@/components/motion/BulgeHeading";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { cn } from "@/lib/utils";
 
@@ -125,6 +126,7 @@ function AppCard() {
         alt=""
         width={240}
         height={240}
+        crossOrigin="anonymous"
         className="absolute inset-y-0 right-0 h-full w-[52%] object-cover"
       />
       <span className="absolute inset-0 bg-[linear-gradient(90deg,#1d1914_0%,#1d1914_44%,rgba(29,25,20,0.55)_62%,transparent_100%)]" />
@@ -181,7 +183,7 @@ export function Hero() {
 
       <div className="relative flex h-full w-full flex-col px-[3.4vw] pb-[4.5vh] pt-[calc(4.5rem+3vh)] sm:pt-[calc(5rem+3.5vh)]">
         <div className="flex flex-1 items-center">
-          <h1
+          <BulgeHeading
             id="hero-title"
             className="w-full font-medium tracking-[-0.035em]"
             style={{ fontSize: "clamp(2.4rem, min(7.1vw, 14.5vh), 10.5rem)", lineHeight: 1.22 }}
@@ -217,7 +219,7 @@ export function Hero() {
                 worthwhile
               </span>
             </span>
-          </h1>
+          </BulgeHeading>
         </div>
 
         <div className="grid items-end gap-x-[2vw] gap-y-6 md:grid-cols-[auto_auto] md:justify-between xl:flex">

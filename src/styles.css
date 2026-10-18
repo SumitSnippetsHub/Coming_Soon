@@ -99,10 +99,12 @@
   * {
     border-color: var(--color-border);
   }
+
   html {
     -webkit-font-smoothing: antialiased;
     overflow-x: clip;
   }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -110,15 +112,18 @@
     font-weight: 350;
     overflow-x: clip;
   }
+
   ::selection {
     background: #000000;
     color: #ffffff;
   }
+
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
     box-shadow: 0 0 0 5px #ffffff;
   }
+
   html {
     scroll-padding-top: 6rem;
   }
@@ -181,11 +186,95 @@
   padding-bottom: 0.06em;
 }
 
+/* Intro only: grain over a near-white field, with softer blue accent lines than the reference. */
+.intro-grain {
+  --accent: 96, 195, 245;
+  --accent-strength: 0.55;
+  --grain-opacity: 0.9;
+  --line-width: 9;
+  --move: 14;
+  --mx: 0;
+  --my: 0;
+}
+
+.intro-grain-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: var(--accent-strength);
+}
+
+.intro-grain-lines path {
+  fill: none;
+  stroke: rgb(var(--accent));
+  stroke-linecap: round;
+}
+
+.intro-grain-lines .halo {
+  stroke-width: calc(var(--line-width) * 4);
+  opacity: 0.13;
+}
+
+.intro-grain-lines .core {
+  stroke-width: var(--line-width);
+  opacity: 0.34;
+}
+
+.intro-grain-lines .faint .halo {
+  opacity: 0.08;
+}
+
+.intro-grain-lines .faint .core {
+  opacity: 0.2;
+}
+
+.intro-line {
+  transform-box: fill-box;
+  transform-origin: center;
+  translate: calc(var(--mx) * var(--depth) * var(--move) * 1px) calc(var(--my) * var(--depth) * var(--move) * 1px);
+  transition: translate 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation: intro-grain-float var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.intro-line.l1 { --depth: 1; --dur: 18s; --dx: 24px; --dy: -14px; --dr: 1deg; }
+.intro-line.l2 { --depth: 0.7; --dur: 21s; --dx: -18px; --dy: 16px; --dr: -1deg; --delay: -5s; }
+.intro-line.l3 { --depth: 1.3; --dur: 23s; --dx: 22px; --dy: 12px; --dr: 1deg; --delay: -9s; }
+.intro-line.l4 { --depth: 0.8; --dur: 19s; --dx: -20px; --dy: 10px; --dr: -1.2deg; --delay: -3s; }
+.intro-line.l5 { --depth: 1.1; --dur: 25s; --dx: 18px; --dy: -16px; --dr: 1deg; --delay: -12s; }
+.intro-line.l6 { --depth: 0.6; --dur: 22s; --dx: 14px; --dy: 14px; --dr: -1deg; --delay: -7s; }
+
+@keyframes intro-grain-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--dr));
+  }
+}
+
+.intro-grain-noise {
+  position: absolute;
+  inset: 0;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .78  0 0 0 0 .92  0 0 0 1.9 -.62'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-line {
+    animation: none;
+    transition: none;
+  }
+}
+
 /* Blade clipped to the footer wordmark glyphs. Background-position is required so the streak stays inside the letters. */
 @keyframes wordmark-shine {
   from {
     background-position: 100% 0;
   }
+
   to {
     background-position: 0% 0;
   }
@@ -200,14 +289,12 @@
   pointer-events: none;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(
-    110deg,
-    transparent 42%,
-    transparent 48%,
-    #fff 50%,
-    transparent 52%,
-    transparent 58%
-  );
+  background-image: linear-gradient(110deg,
+      transparent 42%,
+      transparent 48%,
+      #fff 50%,
+      transparent 52%,
+      transparent 58%);
   background-size: 200% 100%;
   background-repeat: no-repeat;
   -webkit-background-clip: text;
@@ -265,10 +352,12 @@
 }
 
 @keyframes footer-pulse {
+
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(110, 140, 255, 0.55);
   }
+
   50% {
     box-shadow: 0 0 0 6px rgba(110, 140, 255, 0);
   }
@@ -291,6 +380,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -319,11 +409,9 @@
 }
 
 @utility bg-scanlines {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    oklch(0.13 0.01 50 / 22%) 0 1px,
-    transparent 1px 3px
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      oklch(0.13 0.01 50 / 22%) 0 1px,
+      transparent 1px 3px);
 }
 
 .industry-frame {
@@ -356,10 +444,12 @@
 
 /* Technology badges: a looping vertical bob. Transform only, staggered by inline delay. */
 @keyframes tech-wave-bob {
+
   0%,
   100% {
     transform: translate3d(0, -8px, 0);
   }
+
   50% {
     transform: translate3d(0, 8px, 0);
   }
@@ -393,11 +483,59 @@
 }
 
 /* Intro photo name tag: a gentle idle float. */
+@keyframes work-border-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.work-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 22px;
+}
+
+.work-card::before {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  z-index: -1;
+  background: conic-gradient(
+    from 0deg,
+    #cdd6ff,
+    #7d92ff,
+    #e6defb,
+    #ffd9c4,
+    #cdd6ff,
+    #7d92ff,
+    #cdd6ff
+  );
+  animation: work-border-spin 6s linear infinite;
+}
+
+.work-card > .work-card-inner {
+  position: relative;
+  z-index: 1;
+  margin: 1px;
+  overflow: hidden;
+  border-radius: 21px;
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card::before {
+    animation: none;
+  }
+}
+
 @keyframes name-tag-float {
+
   0%,
   100% {
     transform: translate3d(0, 0, 0);
   }
+
   50% {
     transform: translate3d(0, -6px, 0);
   }

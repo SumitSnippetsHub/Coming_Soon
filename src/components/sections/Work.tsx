@@ -185,7 +185,7 @@ export function Work() {
     <section
       id="work"
       aria-labelledby="work-title"
-      className="relative overflow-x-clip bg-white text-[#111]"
+      className="relative overflow-x-clip contour-paper text-[#111]"
       style={{ fontFamily: jost }}
     >
       <div className="px-5 pb-[clamp(4rem,8vw,7.5rem)] pt-[clamp(3rem,6vw,6rem)] md:px-[3.4vw]">
