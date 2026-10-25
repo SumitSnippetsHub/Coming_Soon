@@ -11,7 +11,7 @@ export const site = {
   tagline: "Websites, shops and apps.",
   description:
     "Custom-designed websites, shops and apps that generate more qualified inquiries.",
-  logo: { src: "/brand/zynovate-logo.png", alt: "grow2gether", width: 600, height: 408 },
+  logo: { src: "/brand/grow2gether-logo.png", alt: "grow2gether", width: 857, height: 212 },
   primaryCta: { label: "Discuss your project", href: "/#contact" as const },
   secondaryCta: { label: "From €5,900", href: "/#products" as const },
   trustLine: ["Websites", "Shops", "Apps", "Automations"],

@@ -228,6 +228,7 @@ export function Investment() {
   const root = useRef<HTMLElement>(null);
   const price = useRef<HTMLSpanElement>(null);
   const { scrollTo } = useSmoothScroll();
+  const priced = investmentIntro.price > 0;
 
   const go = (href: string) => (e: React.MouseEvent) => {
     const hash = href.startsWith("#") ? href : href.startsWith("/#") ? `#${href.split("#")[1]}` : null;
@@ -237,14 +238,15 @@ export function Investment() {
   };
 
   useEffect(() => {
-    const el = price.current;
-    if (!root.current || !el || prefersReducedMotion()) return;
+    if (!root.current || prefersReducedMotion()) return;
     gsap.registerPlugin(ScrollTrigger);
+    const el = price.current;
     const counter = { value: 0 };
     const paint = () => {
+      if (!el) return;
       el.textContent = formatPrice(Math.round(counter.value / 10) * 10);
     };
-    paint();
+    if (priced && el) paint();
     const ctx = gsap.context(() => {
       gsap.fromTo(
         "[data-inv-reveal]",
@@ -258,19 +260,21 @@ export function Investment() {
           scrollTrigger: { trigger: root.current, start: "top 80%", once: true },
         },
       );
-      gsap.to(counter, {
-        value: investmentIntro.price,
-        duration: 2.4,
-        ease: "power3.out",
-        onUpdate: paint,
-        scrollTrigger: { trigger: el, start: "top 85%", once: true },
-      });
+      if (priced && el) {
+        gsap.to(counter, {
+          value: investmentIntro.price,
+          duration: 2.4,
+          ease: "power3.out",
+          onUpdate: paint,
+          scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        });
+      }
     }, root);
     return () => {
       ctx.revert();
-      el.textContent = investmentIntro.priceLabel;
+      if (priced && el) el.textContent = investmentIntro.priceLabel;
     };
-  }, []);
+  }, [priced]);
 
   return (
     <section
@@ -295,35 +299,39 @@ export function Investment() {
           style={{ background: "radial-gradient(closest-side, rgba(255,214,196,0.28), transparent)" }}
         />
 
-        <div className="relative mx-auto grid w-full max-w-[1320px] gap-x-[clamp(2rem,5vw,6rem)] gap-y-12 px-5 py-[clamp(3rem,6.5vw,6.5rem)] sm:px-[clamp(1.5rem,4vw,4.5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-center">
-          <div className="flex flex-col items-start text-left lg:col-start-2 lg:row-start-1 lg:items-end lg:text-right">
+        <div className="relative mx-auto grid w-full max-w-[1320px] gap-x-[clamp(2rem,5vw,6rem)] gap-y-12 px-5 py-[clamp(3rem,6.5vw,6.5rem)] sm:px-[clamp(1.5rem,4vw,4.5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start">
+          <div className="flex min-w-0 flex-col items-start text-left lg:col-start-2 lg:row-start-1 lg:items-end lg:text-right">
             <h2
               id="investment-title"
               data-inv-reveal
-              className="font-semibold tracking-[-0.045em]"
-              style={{ fontSize: "clamp(3rem, 6.5vw, 6.5rem)", lineHeight: 1 }}
+              className="max-w-[18ch] font-semibold tracking-[-0.045em] lg:max-w-none"
+              style={{ fontSize: "clamp(2.4rem, 5.4vw, 5.4rem)", lineHeight: 1.02 }}
             >
-              <span className="block">{investmentIntro.titleTop}</span>
-              <span className="sr-only">
-                {investmentIntro.pricePrefix} {investmentIntro.priceLabel}
-              </span>
+              <span className="block text-balance">{investmentIntro.titleTop}</span>
               <span
-                aria-hidden
-                className="block whitespace-nowrap pr-[0.06em] font-normal italic tracking-[-0.03em]"
-                style={{ fontFamily: serif, lineHeight: 1.08 }}
+                className="mt-[0.12em] block font-normal italic tracking-[-0.03em]"
+                style={{ fontFamily: serif, lineHeight: 1.12 }}
               >
-                <span className="bg-[linear-gradient(90deg,#5b5bd6,#7563cb)] bg-clip-text pr-[0.06em] text-transparent">
-                  {investmentIntro.pricePrefix}{" "}
+                <span className="bg-[linear-gradient(90deg,#5b5bd6,#7563cb)] bg-clip-text text-transparent">
+                  {investmentIntro.pricePrefix}
                 </span>
-                <span className="relative inline-block">
-                  <span className="invisible">{investmentIntro.priceLabel}</span>
-                  <span
-                    ref={price}
-                    className="absolute inset-0 bg-[linear-gradient(90deg,#7563cb,#8e6bbf_38%,#c98a7a)] bg-clip-text pr-[0.06em] text-right text-transparent tabular-nums"
-                  >
-                    {investmentIntro.priceLabel}
-                  </span>
-                </span>
+                {priced ? (
+                  <>
+                    <span className="sr-only">
+                      {" "}
+                      {investmentIntro.priceLabel}
+                    </span>
+                    <span className="relative ml-[0.18em] inline-block align-baseline">
+                      <span className="invisible">{investmentIntro.priceLabel}</span>
+                      <span
+                        ref={price}
+                        className="absolute inset-0 bg-[linear-gradient(90deg,#7563cb,#8e6bbf_38%,#c98a7a)] bg-clip-text text-right text-transparent tabular-nums"
+                      >
+                        {investmentIntro.priceLabel}
+                      </span>
+                    </span>
+                  </>
+                ) : null}
               </span>
             </h2>
             <p
@@ -348,7 +356,7 @@ export function Investment() {
             </div>
           </div>
 
-          <div data-inv-reveal className="lg:col-start-1 lg:row-start-1 lg:self-start">
+          <div data-inv-reveal className="min-w-0 lg:col-start-1 lg:row-start-1 lg:self-start">
             <InclusionList />
           </div>
         </div>

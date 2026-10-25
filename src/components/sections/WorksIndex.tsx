@@ -155,11 +155,13 @@ export function WorksIndex() {
         {visible.map((project) => {
           const image = project.preview ?? project.screenshots?.cover;
           const href = project.url && project.url !== "#" ? project.url : "/#contact";
+          const external = href.startsWith("http");
+          const linkProps = external ? { target: "_blank" as const, rel: "noreferrer" } : {};
           return (
             <li key={project.id}>
               <article className="work-card group">
                 <div className="work-card-inner p-2.5">
-                  <a href={href} className="relative block overflow-hidden rounded-[16px] bg-[#f4f4f4]">
+                  <a href={href} {...linkProps} className="relative block overflow-hidden rounded-[16px] bg-[#f4f4f4]">
                     {image ? (
                       <img
                         src={image.src}
@@ -187,6 +189,7 @@ export function WorksIndex() {
                     </div>
                     <a
                       href={href}
+                      {...linkProps}
                       className="shrink-0 pb-0.5 text-[0.88rem] text-black/45 transition-colors hover:text-[#111]"
                     >
                       Visit site

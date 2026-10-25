@@ -15,27 +15,15 @@ function sectionId(href: string) {
   return hash || href.replace(/^\//, "");
 }
 
-function LogoMark({ className }: { className?: string }) {
+function Logo({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={className} aria-hidden>
-      <path
-        d="M7 23c3.2-8.4 6.2-13.2 8.4-13.2 1.6 0 2.2 2.4 1.8 5.6"
-        fill="none"
-        stroke="#3B6CFF"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M12.5 18.5c2.4 3.6 6.6 5.2 10.2 3.2"
-        fill="none"
-        stroke="#22A06B"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-      />
-      <circle cx="23.2" cy="10.2" r="3.3" fill="#F5A524" />
-      <circle cx="10.2" cy="11.4" r="2.15" fill="#7C5CFF" />
-      <path d="M18 8.2c1.4 1.2 2 2.6 1.6 4.2" fill="none" stroke="#FF5C8A" strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
+    <img
+      src={site.logo.src}
+      alt=""
+      width={site.logo.width}
+      height={site.logo.height}
+      className={cn("w-auto", className)}
+    />
   );
 }
 
@@ -151,8 +139,7 @@ export function Navbar() {
             aria-label={`${site.name} home`}
             className="flex shrink-0 items-center gap-1 text-black"
           >
-            <LogoMark className="size-6 sm:size-7" />
-            <span className="text-[1.15rem] font-semibold tracking-[-0.045em] sm:text-[1.3rem]">{site.name}</span>
+            <Logo className="h-8 sm:h-9" />
           </a>
 
           <ul className="hidden min-w-0 items-center justify-center gap-x-5 xl:flex 2xl:gap-x-7">
@@ -231,9 +218,8 @@ export function Navbar() {
         )}
       >
         <div className="flex items-center justify-between">
-          <span className="flex items-center gap-2 text-lg font-bold tracking-tight">
-            <LogoMark className="size-7" />
-            {site.name}
+          <span className="flex items-center">
+            <Logo className="h-8" />
           </span>
           <button
             type="button"

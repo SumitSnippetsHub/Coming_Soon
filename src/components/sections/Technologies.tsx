@@ -1,309 +1,230 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowUpRight } from "lucide-react";
 
-import { technologies, technologiesIntro } from "@/data/technologies";
+import { DotHoverCard } from "@/components/motion/DotHoverCard";
+import { CapabilityMark, StackMark } from "@/components/sections/technologies/marks";
+import {
+  technologyCapabilities,
+  technologiesIntro,
+  technologySpotlight,
+  technologyStack,
+} from "@/data/technologies";
 import { prefersReducedMotion } from "@/lib/motion";
-import type { Technology } from "@/lib/types";
-import { cn } from "@/lib/utils";
 
-type Point = { x: number; y: number };
-type WaveVariant = "desktop" | "compact";
+const jost = "var(--font-jost), ui-sans-serif, system-ui, sans-serif";
+const serif = "var(--font-instrument), Georgia, 'Times New Roman', serif";
 
-const MARQUEE_TEXT_COLORS = ["#7A4426", "#4C6A8A", "#76558A", "#3E7661", "#9A4B4B", "#2B1A10"];
+function NightPanel() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-function MarqueeRow({
-  names,
-  rowRef,
-  colorOffset = 0,
-}: {
-  names: string[];
-  rowRef: RefObject<HTMLDivElement | null>;
-  colorOffset?: number;
-}) {
-  const loop = [...names, ...names];
-  return (
-    <div className="overflow-hidden py-1">
-      <div ref={rowRef} className="flex w-max will-change-transform">
-        {loop.map((name, index) => (
-          <span
-            key={`${name}-${index}`}
-            className="display flex items-center px-5 py-1 text-[clamp(2rem,6vw,3.75rem)] leading-snug md:px-8 md:py-2"
-            style={{
-              color: MARQUEE_TEXT_COLORS[(index + colorOffset) % MARQUEE_TEXT_COLORS.length],
-            }}
-          >
-            {name}
-            <span aria-hidden className="ml-10 size-2 rounded-full bg-current md:ml-14" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const parent = canvas.parentElement;
+    if (!parent) return;
+    let ctx: CanvasRenderingContext2D | null = null;
+    try {
+      ctx = canvas.getContext("2d");
+    } catch {
+      return;
+    }
+    if (!ctx) return;
 
-/** Two-crest ribbon for a 15-item stack. Any other length uses a sine so order still follows the data. */
-const RIBBON = [
-  -0.15, 0.42, -1, 0.08, 0.92, -0.22, -0.48, 0.18, -0.02, 0.78, 0.2, 0.48, -0.95, 0.12, -0.28,
-];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    type Star = { x: number; y: number; r: number; a: number; p: number; s: number };
+    let stars: Star[] = [];
+    let w = 0;
+    let h = 0;
+    let raf = 0;
 
-function ribbonOffset(index: number, count: number) {
-  if (count === RIBBON.length) return RIBBON[index] ?? 0;
-  const t = count <= 1 ? 0 : index / (count - 1);
-  return Math.sin(t * Math.PI * 2.1 + 2.15);
-}
-
-function compactOffset(index: number) {
-  const side = index % 2 === 0 ? -0.9 : 0.9;
-  return side + Math.sin(index * 0.9) * 0.12;
-}
-
-function layoutPoints(count: number, width: number, height: number, variant: WaveVariant): Point[] {
-  const inset =
-    variant === "desktop"
-      ? Math.max(36, Math.min(58, width * 0.036))
-      : Math.max(22, Math.min(40, width * 0.065));
-  const amp = variant === "desktop" ? Math.min(32, height * 0.16) : Math.min(26, height * 0.13);
-  const mid = variant === "desktop" ? Math.max(amp + 40, height * 0.4) : height * 0.48;
-  const span = Math.max(0, width - inset * 2);
-
-  return Array.from({ length: count }, (_, index) => {
-    const x = count === 1 ? width / 2 : inset + (span * index) / (count - 1);
-    const offset = variant === "desktop" ? ribbonOffset(index, count) : compactOffset(index);
-    return { x, y: mid + offset * amp };
-  });
-}
-
-function curvePath(points: Point[]) {
-  const first = points[0];
-  if (!first) return "";
-  if (points.length === 1) return `M ${first.x.toFixed(2)} ${first.y.toFixed(2)}`;
-  let d = `M ${first.x.toFixed(2)} ${first.y.toFixed(2)}`;
-  for (let i = 0; i < points.length - 1; i++) {
-    const p1 = points[i];
-    const p2 = points[i + 1];
-    if (!p1 || !p2) continue;
-    const prev = points[i - 1];
-    const next = points[i + 2];
-    const p0 = prev ?? { x: p1.x * 2 - p2.x, y: p1.y * 2 - p2.y };
-    const p3 = next ?? { x: p2.x * 2 - p1.x, y: p2.y * 2 - p1.y };
-    const c1x = p1.x + (p2.x - p0.x) / 6;
-    const c1y = p1.y + (p2.y - p0.y) / 6;
-    const c2x = p2.x - (p3.x - p1.x) / 6;
-    const c2y = p2.y - (p3.y - p1.y) / 6;
-    d += ` C ${c1x.toFixed(2)} ${c1y.toFixed(2)}, ${c2x.toFixed(2)} ${c2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
-  }
-  return d;
-}
-
-function WaveRow({ items, variant }: { items: Technology[]; variant: WaveVariant }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState({ w: 0, h: 0 });
-
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const measure = () => {
-      const rect = el.getBoundingClientRect();
-      const next = { w: Math.round(rect.width), h: Math.round(rect.height) };
-      setSize((prev) => (prev.w === next.w && prev.h === next.h ? prev : next));
+    const draw = (t: number) => {
+      ctx.clearRect(0, 0, w, h);
+      for (const star of stars) {
+        const k = reduceMotion ? 1 : 0.65 + 0.35 * Math.sin(t * star.s + star.p);
+        ctx.fillStyle = `rgba(230,236,255,${star.a * k})`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
     };
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(el);
-    return () => observer.disconnect();
+
+    const build = () => {
+      const dpr = window.devicePixelRatio || 1;
+      w = parent.clientWidth;
+      h = parent.clientHeight;
+      canvas.width = Math.max(1, Math.floor(w * dpr));
+      canvas.height = Math.max(1, Math.floor(h * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = [];
+      const count = Math.round((w * h) / 1400);
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * w;
+        const y = Math.random() * h;
+        const band = Math.abs((x / w) * 0.7 + (y / h) * 0.9 - 0.95);
+        const dense = band < 0.22 && Math.random() < 0.55;
+        stars.push({
+          x,
+          y,
+          r: dense ? 0.7 + Math.random() * 1.1 : 0.35 + Math.random() * 0.7,
+          a: dense ? 0.35 + Math.random() * 0.5 : 0.12 + Math.random() * 0.4,
+          p: Math.random() * Math.PI * 2,
+          s: 0.4 + Math.random() * 1.2,
+        });
+      }
+      draw(0);
+    };
+
+    const loop = (ms: number) => {
+      draw(ms / 1000);
+      raf = requestAnimationFrame(loop);
+    };
+
+    build();
+    if (!reduceMotion) raf = requestAnimationFrame(loop);
+    const observer = typeof ResizeObserver !== "undefined" ? new ResizeObserver(build) : null;
+    observer?.observe(parent);
+    return () => {
+      cancelAnimationFrame(raf);
+      observer?.disconnect();
+    };
   }, []);
 
-  const points =
-    size.w > 0 && size.h > 0 ? layoutPoints(items.length, size.w, size.h, variant) : [];
-
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "relative w-full",
-        variant === "desktop" ? "h-[208px] xl:h-[220px]" : "h-[212px] sm:h-[226px]",
-      )}
-    >
-      <svg
+    <div className="relative isolate overflow-hidden rounded-[22px] bg-[#07080c] px-[clamp(1.35rem,2.2vw,1.9rem)] py-[clamp(1.4rem,2.2vw,1.85rem)] text-white">
+      <canvas ref={canvasRef} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" />
+      <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full text-taupe"
-        viewBox={`0 0 ${Math.max(size.w, 1)} ${Math.max(size.h, 1)}`}
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 55% at 78% 88%, rgba(150,170,220,0.22), transparent 58%), radial-gradient(ellipse 50% 40% at 18% 18%, rgba(90,110,170,0.16), transparent 50%)",
+        }}
+      />
+      <div className="relative z-[1]">
+        <h3
+          className="font-semibold tracking-[-0.045em]"
+          style={{ fontSize: "clamp(1.85rem, 3.2vw, 2.85rem)", lineHeight: 1.08 }}
+        >
+          <span className="block">{technologySpotlight.titleTop}</span>
+          <span className="block">{technologySpotlight.titleBottom}</span>
+        </h3>
+        <p className="mt-4 max-w-[28rem] text-[clamp(0.95rem,1.15vw,1.08rem)] leading-[1.55] text-white/72">
+          {technologySpotlight.description}
+        </p>
+      </div>
+      <Link
+        href={technologySpotlight.cta.href}
+        className="relative z-[1] mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-white/[0.12] px-4 py-2 text-[0.92rem] font-medium text-white transition-colors duration-300 hover:bg-white/[0.2]"
       >
-        <path
-          d={curvePath(points)}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeDasharray="4 7"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
-      <ul className="absolute inset-0 m-0 list-none p-0">
-        {items.map((item, index) => {
-          const point = points[index];
-          if (!point || size.w === 0 || size.h === 0) return null;
-          return (
-            <li
-              key={item.name}
-              className="absolute -translate-x-1/2 -translate-y-1/2 hover:z-10"
-              style={{
-                left: `${(point.x / size.w) * 100}%`,
-                top: `${(point.y / size.h) * 100}%`,
-              }}
-            >
-              <div
-                data-tech-wave
-                className="tech-wave-bob"
-                style={{ animationDelay: `${-(index * 0.18)}s` }}
-              >
-                <div data-tech-badge className="tech-wave-badge relative">
-                  <div
-                    aria-hidden
-                    className={cn(
-                      "grid place-items-center overflow-hidden rounded-full shadow-soft",
-                      variant === "desktop"
-                        ? "size-[clamp(4rem,5vw,4.75rem)]"
-                        : "size-10 sm:size-12 md:size-14",
-                    )}
-                    style={{ backgroundColor: item.brand }}
-                  >
-                    <img
-                      src={item.logo}
-                      alt=""
-                      width={32}
-                      height={32}
-                      draggable={false}
-                      className="size-8 max-h-[68%] max-w-[68%] object-contain"
-                    />
-                  </div>
-                  <span
-                    className={cn(
-                      "absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-center font-medium leading-tight text-espresso",
-                      variant === "compact" && index % 2 === 0
-                        ? "bottom-[calc(100%+0.3rem)] text-[10px] sm:text-[11px] md:text-xs"
-                        : variant === "desktop"
-                          ? "top-[calc(100%+0.4rem)] text-[11px] xl:text-xs"
-                          : "top-[calc(100%+0.3rem)] text-[10px] sm:text-[11px] md:text-xs",
-                    )}
-                  >
-                    {item.name}
-                  </span>
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
-function TechWave({ items }: { items: Technology[] }) {
-  const mid = Math.ceil(items.length / 2);
-  const rows = [items.slice(0, mid), items.slice(mid)].filter((row) => row.length > 0);
-
-  return (
-    <div className="mt-16 md:mt-20">
-      <div className="flex flex-col gap-1 px-2 sm:px-4 lg:hidden">
-        {rows.map((row) => (
-          <WaveRow key={row.map((item) => item.name).join("-")} items={row} variant="compact" />
-        ))}
-      </div>
-      <div className="hidden px-3 lg:block xl:px-6">
-        <WaveRow items={items} variant="desktop" />
-      </div>
+        {technologySpotlight.cta.label}
+        <ArrowUpRight className="size-3.5" strokeWidth={2} />
+      </Link>
     </div>
   );
 }
 
 export function Technologies() {
   const root = useRef<HTMLElement>(null);
-  const rowA = useRef<HTMLDivElement>(null);
-  const rowB = useRef<HTMLDivElement>(null);
-  const names = technologies.map((item) => item.name);
-  const reversed = [...names].reverse();
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const first = rowA.current;
-    const second = rowB.current;
-    if (!first || !second) return;
-
-    let frame = 0;
-    let offsetA = 0;
-    let offsetB = 0;
-    let ready = false;
-    let boost = 0;
-    let lastY = window.scrollY;
-
-    const tick = () => {
-      const halfA = first.scrollWidth / 2;
-      const halfB = second.scrollWidth / 2;
-      if (!ready && halfA > 0 && halfB > 0) {
-        offsetB = -halfB;
-        ready = true;
-      }
-      const dy = window.scrollY - lastY;
-      lastY = window.scrollY;
-      boost = Math.max(boost * 0.88, Math.min(14, Math.abs(dy) * 0.35));
-      const speed = 0.65 + boost;
-      if (halfA > 0) {
-        offsetA -= speed;
-        if (offsetA <= -halfA) offsetA += halfA;
-        first.style.transform = `translate3d(${offsetA}px, 0, 0)`;
-      }
-      if (halfB > 0) {
-        offsetB += speed;
-        if (offsetB >= 0) offsetB -= halfB;
-        second.style.transform = `translate3d(${offsetB}px, 0, 0)`;
-      }
-      frame = requestAnimationFrame(tick);
-    };
-
-    const visibility = new IntersectionObserver(([entry]) => {
-      cancelAnimationFrame(frame);
-      if (entry?.isIntersecting) {
-        lastY = window.scrollY;
-        frame = requestAnimationFrame(tick);
-      }
-    });
-    if (root.current) visibility.observe(root.current);
-    return () => {
-      visibility.disconnect();
-      cancelAnimationFrame(frame);
-    };
+    if (!root.current || prefersReducedMotion()) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>("[data-tech-reveal]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.95,
+            ease: "power3.out",
+            delay: Number(el.dataset["techDelay"] ?? 0),
+            scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          },
+        );
+      });
+    }, root);
+    return () => ctx.revert();
   }, []);
-
-  if (technologies.length === 0) return null;
 
   return (
     <section
       id="technologies"
       ref={root}
       aria-labelledby="technologies-title"
-      className="overflow-hidden bg-secondary py-20 md:py-28 lg:py-32"
+      className="relative bg-white text-[#111]"
+      style={{ fontFamily: jost }}
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
-        <p className="eyebrow text-primary">{technologiesIntro.eyebrow}</p>
-        <div className="mt-5 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
-          <h2 id="technologies-title" className="display max-w-3xl text-[clamp(2.5rem,7vw,4.5rem)]">
-            {technologiesIntro.title}
-          </h2>
-          <p className="max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
+      <div className="mx-auto w-full px-5 pb-[clamp(4rem,9vw,8rem)] pt-[clamp(3.5rem,8vw,7rem)] sm:px-[3.4vw] lg:w-[84.5vw] lg:max-w-[1240px] lg:px-0">
+        <div data-tech-reveal className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-10">
+          <div>
+            <p
+              className="mb-4 font-medium tracking-[-0.02em] text-[#111]"
+              style={{ fontSize: "clamp(1rem, 1.15vw, 1.2rem)" }}
+            >
+              {technologiesIntro.eyebrow}
+            </p>
+            <h2
+              id="technologies-title"
+              className="font-medium tracking-[-0.045em]"
+              style={{ fontSize: "clamp(2.8rem, 6vw, 6.5rem)", lineHeight: 0.98 }}
+            >
+              <span className="block">{technologiesIntro.titleTop}</span>
+              <span
+                className="block pr-[0.05em] font-normal italic tracking-[-0.035em]"
+                style={{ fontFamily: serif }}
+              >
+                {technologiesIntro.titleBottom}
+              </span>
+            </h2>
+          </div>
+          <p className="max-w-[24rem] pb-[0.4em] text-[clamp(1.05rem,1.3vw,1.25rem)] leading-[1.5] text-[#111]">
             {technologiesIntro.description}
           </p>
         </div>
-      </div>
 
-      <div className="mt-12 space-y-1 md:mt-14 md:space-y-2" aria-hidden>
-        <MarqueeRow names={names} rowRef={rowA} />
-        <MarqueeRow names={reversed} rowRef={rowB} colorOffset={3} />
-      </div>
+        <ul className="mt-[clamp(2.2rem,4.5vw,3.5rem)] grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-3.5">
+          {technologyCapabilities.map((item, i) => (
+            <li key={item.title} data-tech-reveal data-tech-delay={i * 0.05} className="min-w-0">
+              <DotHoverCard label={item.title} className="h-full min-h-[13.5rem] lg:min-h-[15rem]">
+                <CapabilityMark name={item.icon} className="dot-hover-card-icon size-7" />
+                <h3 className="dot-hover-card-title">{item.title}</h3>
+              </DotHoverCard>
+            </li>
+          ))}
+        </ul>
 
-      <TechWave items={technologies} />
+        <div className="mt-3.5 grid gap-3.5 lg:grid-cols-2 lg:items-center">
+          <div data-tech-reveal data-tech-delay="0.08">
+            <NightPanel />
+          </div>
+          <ul
+            data-tech-reveal
+            aria-label="Tools used in the work"
+            className="stack-grid grid grid-cols-2 gap-px overflow-hidden rounded-[22px] border border-[#e4e6ea] bg-[#e8eaee] sm:grid-cols-4"
+          >
+            {technologyStack.map((name) => (
+              <li key={name} className="min-h-[6.5rem] bg-white lg:min-h-[7.25rem]">
+                <DotHoverCard label={name} className="stack-cell h-full min-h-[6.5rem] lg:min-h-[7.25rem]">
+                  <StackMark
+                    name={name}
+                    className="stack-mark size-9 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:size-10"
+                  />
+                  <span className="stack-name pointer-events-none absolute inset-x-2 bottom-[0.85rem] text-center text-[0.72rem] font-medium tracking-[-0.01em] text-[#111]">
+                    {name}
+                  </span>
+                </DotHoverCard>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 }

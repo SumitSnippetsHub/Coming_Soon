@@ -1,12 +1,12 @@
 export const intro = {
   image: {
     src: "/images/team/sumit.jpg",
-    alt: "Sumit, founder of grow2gether, by the river at night",
+    alt: "Sumit Mishra, Full-Stack Developer",
     width: 909,
     height: 556,
   },
-  name: "Sumit",
-  lead: "As well-established team out of Bremen develop we individual Websites, Shops and Apps. We set on",
-  highlight: "Quality and personal Cooperation",
-  tail: ", with it the Result damned good looks and your Pursue advances.",
+  name: "Sumit Mishra",
+  lead: "I develop modern Websites, Shops and Apps with a focus on",
+  highlight: "quality, clean code and user experience",
+  tail: ". From frontend design to backend development, I turn ideas into reliable digital solutions.",
 };

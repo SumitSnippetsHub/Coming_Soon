@@ -24,7 +24,7 @@ export function HomePage() {
       <MatterOfCourse />
       <Investment />
       <Sequence />
-      <Industries />
+      {/* <Industries /> */}
       <Testimonials />
       <Faq />
     </SiteShell>
