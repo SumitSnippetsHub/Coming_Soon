@@ -18,6 +18,7 @@ describe("App", () => {
     expect(container.querySelectorAll("#work")).toHaveLength(1);
     expect(container.querySelectorAll("#why")).toHaveLength(1);
     expect(container.querySelector("#work")?.textContent).toContain("SeatsBrokers");
+    expect(container.querySelector("#work")?.textContent).toContain("Zynovate");
     expect(container.querySelector("#why")?.textContent).toContain("You write to Sumit directly.");
     expect(container.querySelector("#technologies")).not.toBeNull();
     expect(container.querySelector("#technologies")?.textContent).toContain("Tools behind");

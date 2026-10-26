@@ -95,6 +95,7 @@ export const projectStills = {
   blessingMens: shot("/projects/blessing-mens.jpg", "Blessings Mens Boutique homepage — Crafted for the Modern Groom"),
   anuraagKaushik: shot("/projects/anuraag-kaushik.png", "Anuraag Kaushik homepage — bridal beauty, gilded with quiet drama"),
   seatsGroup: shot("/projects/seats-group.jpg", "SeatsGroup homepage — powering the future of ticketing and live experiences"),
+  zynovate: shot("/projects/zynovate.jpg", "Zynovate homepage — Build. Launch. Evolve."),
 } satisfies Record<string, ImageAsset>;
 
 function shot(src: string, alt: string): ImageAsset {

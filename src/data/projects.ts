@@ -231,4 +231,24 @@ export const projects: Project[] = [
     capabilities: ["Corporate website", "Group positioning", "Enquiry contacts"],
     url: "https://seatsgroup.com/",
   },
+  {
+    id: "10",
+    title: "Zynovate",
+    category: "Software studio website",
+    tagline: "Company site for a Noida technology studio.",
+    summary:
+      "Website for Zynovate, a technology and software company: services, product types, process, contact and a featured case. Independently developed as freelance work. I do not own the company.",
+    description:
+      "Studio website for a software company — services from web and mobile to SaaS and automation, a public process, Noida contact, and a featured product case. Independently developed as freelance work.",
+    preview: projectStills.zynovate,
+    does: [
+      "Presents web, mobile, SaaS, custom software and automation services",
+      "Walks through a public idea-to-launch process",
+      "Features Amrut.ai as a built product case",
+      "Routes enquiries by form, email and phone",
+    ],
+    role: ["Independently developed as freelance work", "Do not own the company"],
+    capabilities: ["Studio website", "Service architecture", "Enquiry journeys"],
+    url: "https://www.zynovate.in/",
+  },
 ];
